@@ -11,7 +11,7 @@
 #include "EventObject.h"
 #include "ConnectionsManager.h"
 
-Timer::Timer(std::function<void()> function) {
+Timer::Timer(std    ::function<void()> function) {
     eventObject = new EventObject(this, EventObjectTypeTimer);
     callback = function;
 }
