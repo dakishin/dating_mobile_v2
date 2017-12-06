@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="living_room" translatable="false" >Гостинная комната</string>
+    <string name="ask_priest_room" translatable="false" >Вопрос священнику</string>
+    <string name="bogoslov_room" translatable="false" >Богословские беседы</string>
+    <string name="search" translatable="false" >Поиск</string>
+</resources>

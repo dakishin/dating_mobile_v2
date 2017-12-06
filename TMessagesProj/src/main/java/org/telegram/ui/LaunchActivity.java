@@ -10,6 +10,7 @@ package org.telegram.ui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,25 +41,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import org.telegram.messenger.AndroidUtilities;
 import org.telegram.PhoneFormat.PhoneFormat;
+import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildVars;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.ContactsController;
+import org.telegram.messenger.FileLog;
 import org.telegram.messenger.ImageLoader;
+import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NativeCrashManager;
-import org.telegram.messenger.SendMessagesHelper;
-import org.telegram.messenger.UserObject;
-import org.telegram.messenger.Utilities;
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.FileLog;
-import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.messenger.SendMessagesHelper;
+import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.UserObject;
+import org.telegram.messenger.Utilities;
 import org.telegram.messenger.browser.Browser;
 import org.telegram.messenger.camera.CameraController;
 import org.telegram.messenger.query.DraftQuery;
@@ -67,12 +69,12 @@ import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.RequestDelegate;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
-import org.telegram.messenger.UserConfig;
-import org.telegram.ui.ActionBar.AlertDialog;
-import org.telegram.ui.Adapters.DrawerLayoutAdapter;
 import org.telegram.ui.ActionBar.ActionBarLayout;
+import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.DrawerLayoutContainer;
+import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Adapters.DrawerLayoutAdapter;
 import org.telegram.ui.Cells.LanguageCell;
 import org.telegram.ui.Components.EmbedBottomSheet;
 import org.telegram.ui.Components.JoinGroupAlert;
@@ -81,7 +83,6 @@ import org.telegram.ui.Components.PasscodeView;
 import org.telegram.ui.Components.PipRoundVideoView;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.StickersAlert;
-import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.ThemeEditorView;
 
 import java.io.BufferedReader;
@@ -93,6 +94,11 @@ import java.util.List;
 import java.util.Map;
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
+
+    public static final int LIVING_ROOM_CHAT_ID = 1168886410;
+    public static final int ASK_PRIEST_CHAT_ID = 1356241276;
+    public static final int BOGOSLOV_CHAT_ID = 1200248648;
+
 
     private boolean finished;
     private String videoPath;
@@ -166,6 +172,9 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                 }
             }
         }
+
+
+        syncTelegramId();
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTheme(R.style.Theme_TMessages);
@@ -353,36 +362,58 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                     args.putInt("user_id", UserConfig.getClientUserId());
                     presentFragment(new ChatActivity(args));
                     drawerLayoutContainer.closeDrawer(false);
-                } else if (id == 2) {
-                    if (!MessagesController.isFeatureEnabled("chat_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
-                        return;
-                    }
-                    presentFragment(new GroupCreateActivity());
+                } else if (id == -2) {
+//                    if (!MessagesController.isFeatureEnabled("chat_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
+//                        return;
+//                    }
+//                    presentFragment(new GroupCreateActivity());
+                    runLinkRequest("christian_public",null,null,null,
+                        null,null,false,0,null,new String[]{},0);
                     drawerLayoutContainer.closeDrawer(false);
-                } else if (id == 3) {
-                    Bundle args = new Bundle();
-                    args.putBoolean("onlyUsers", true);
-                    args.putBoolean("destroyAfterSelect", true);
-                    args.putBoolean("createSecretChat", true);
-                    args.putBoolean("allowBots", false);
-                    presentFragment(new ContactsActivity(args));
+
+                } else if (id == -3) {
+//                    Bundle args = new Bundle();
+//                    args.putBoolean("onlyUsers", true);
+//                    args.putBoolean("destroyAfterSelect", true);
+//                    args.putBoolean("createSecretChat", true);
+//                    args.putBoolean("allowBots", false);
+//                    presentFragment(new ContactsActivity(args));
+//                    drawerLayoutContainer.closeDrawer(false);
+
+                    runLinkRequest("christian_questions",null,null,null,
+                        null,null,false,0,null,new String[]{},0);
                     drawerLayoutContainer.closeDrawer(false);
-                } else if (id == 4) {
-                    if (!MessagesController.isFeatureEnabled("broadcast_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
-                        return;
-                    }
-                    SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                    if (!BuildVars.DEBUG_VERSION && preferences.getBoolean("channel_intro", false)) {
-                        Bundle args = new Bundle();
-                        args.putInt("step", 0);
-                        presentFragment(new ChannelCreateActivity(args));
-                    } else {
-                        presentFragment(new ChannelIntroActivity());
-                        preferences.edit().putBoolean("channel_intro", true).commit();
-                    }
+
+                } else if (id == -4) {
+                    runLinkRequest("bogoslov_chat",null,null,null,
+                        null,null,false,0,null,new String[]{},0);
                     drawerLayoutContainer.closeDrawer(false);
-                } else if (id == 6) {
-                    presentFragment(new ContactsActivity(null));
+
+//                    if (!MessagesController.isFeatureEnabled("broadcast_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
+//                        return;
+//                    }
+//                    SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+//                    if (!BuildVars.DEBUG_VERSION && preferences.getBoolean("channel_intro", false)) {
+//                        Bundle args = new Bundle();
+//                        args.putInt("step", 0);
+//                        presentFragment(new ChannelCreateActivity(args));
+//                    } else {
+//                        presentFragment(new ChannelIntroActivity());
+//                        preferences.edit().putBoolean("channel_intro", true).commit();
+//                    }
+//                    drawerLayoutContainer.closeDrawer(false);
+                } else if (id == -1) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("christian_dating://search"));
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException exception) {
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pif.club")));
+                        } catch (Exception e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.pif.club")));
+                        }
+                    }
+//                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == 7) {
                     if (BuildVars.DEBUG_PRIVATE_VERSION) {
@@ -576,6 +607,12 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
             FileLog.e(e);
         }
         MediaController.getInstance().setBaseActivity(this, true);
+    }
+
+    private void syncTelegramId() {
+        Intent intent = new Intent("com.pif.club.APPLY_MY_TELEGRAM_ID");
+        intent.putExtra("telegram_id", UserConfig.getClientUserId());
+        sendBroadcast(intent);
     }
 
     private void checkLayout() {

@@ -19,7 +19,19 @@
           "client_type": 3
         },
         {
+          "client_id": "815047828573-sc0c9egnh872amja4tb5l67e0916sbep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pif.club",
+            "certificate_hash": "bded0284ccbc25d808c972b2e4ee61ec3490964e"
+          }
+        },
+        {
           "client_id": "815047828573-vjvb936j06sedqlkmqr0299869lhr9ko.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-a4q13vnr8c5a6unckc1ue5p0ie2he61g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -55,11 +67,31 @@
       },
       "oauth_client": [
         {
+          "client_id": "815047828573-13gor4mpd51vcal6cokq2pn1ojaou755.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pif.club.develop",
+            "certificate_hash": "bded0284ccbc25d808c972b2e4ee61ec3490964e"
+          }
+        },
+        {
+          "client_id": "815047828573-c3utrim65arrvbgd0fa3lhfnps6fugvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pif.club.develop",
+            "certificate_hash": "be2d50052abafbd20e265a5e55ee5364ded41ced"
+          }
+        },
+        {
           "client_id": "815047828573-tgt3bndgoh2jol4neqq51q7g4kv5mi3n.apps.googleusercontent.com",
           "client_type": 3
         },
         {
           "client_id": "815047828573-vjvb936j06sedqlkmqr0299869lhr9ko.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-a4q13vnr8c5a6unckc1ue5p0ie2he61g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -80,6 +112,84 @@
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815047828573:android:18abeae2c6584fce",
+        "android_client_info": {
+          "package_name": "com.christian.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815047828573-tgt3bndgoh2jol4neqq51q7g4kv5mi3n.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-vjvb936j06sedqlkmqr0299869lhr9ko.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-a4q13vnr8c5a6unckc1ue5p0ie2he61g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc2iX2boeADp86scCfOxqvlK-K11ZzAo8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815047828573:android:5256de3653398398",
+        "android_client_info": {
+          "package_name": "com.christian.messenger.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815047828573-tgt3bndgoh2jol4neqq51q7g4kv5mi3n.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-vjvb936j06sedqlkmqr0299869lhr9ko.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "815047828573-a4q13vnr8c5a6unckc1ue5p0ie2he61g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc2iX2boeADp86scCfOxqvlK-K11ZzAo8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

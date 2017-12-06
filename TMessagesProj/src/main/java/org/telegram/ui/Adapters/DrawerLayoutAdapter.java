@@ -91,11 +91,11 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
 
     @Override
     public int getItemViewType(int i) {
-        if (i == 0) {
+        if (i == 0) { // профиль
             return 0;
-        } else if (i == 1) {
+        } else if (i == 1) {// отступ
             return 1;
-        } else if (i == 5) {
+        } else if (i == 6) {
             return 2;
         }
         return 3;
@@ -106,19 +106,37 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         if (!UserConfig.isClientActivated()) {
             return;
         }
-        items.add(null); // profile
-        items.add(null); // padding
-        items.add(new Item(2, LocaleController.getString("NewGroup", R.string.NewGroup), R.drawable.menu_newgroup));
-        items.add(new Item(3, LocaleController.getString("NewSecretChat", R.string.NewSecretChat), R.drawable.menu_secret));
-        items.add(new Item(4, LocaleController.getString("NewChannel", R.string.NewChannel), R.drawable.menu_broadcast));
+        items.add(null); // profile  index 0
+        items.add(null); // padding  index 1
+//        index 2
+        items.add(new Item(-1, LocaleController.getString("search", R.string.search), R.drawable.menu_newgroup));
+
+//        index 3
+        items.add(new Item(-2, LocaleController.getString("living_room", R.string.living_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+
+//        index 4
+        items.add(new Item(-3, LocaleController.getString("ask_priest_room", R.string.ask_priest_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+//        index 5
+        items.add(new Item(-4, LocaleController.getString("bogoslov_room", R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+
+
+//        items.add(new Item(2, LocaleController.getString("NewGroup", R.string.NewGroup), R.drawable.menu_newgroup));
+//        items.add(new Item(3, LocaleController.getString("NewSecretChat", R.string.NewSecretChat), R.drawable.menu_secret));
+//        items.add(new Item(4, LocaleController.getString("NewChannel", R.string.NewChannel), R.drawable.menu_broadcast));
+
+
+//        index 6
         items.add(null); // divider
-        items.add(new Item(6, LocaleController.getString("Contacts", R.string.Contacts), R.drawable.menu_contacts));
-        if (MessagesController.getInstance().callsEnabled) {
-            items.add(new Item(10, LocaleController.getString("Calls", R.string.Calls), R.drawable.menu_calls));
-        }
-        items.add(new Item(7, LocaleController.getString("InviteFriends", R.string.InviteFriends), R.drawable.menu_invite));
+
+//        items.add(new Item(6, LocaleController.getString("Contacts", R.string.Contacts), R.drawable.menu_contacts));
+//        if (MessagesController.getInstance().callsEnabled) {
+//            items.add(new Item(10, LocaleController.getString("Calls", R.string.Calls), R.drawable.menu_calls));
+//        }
+//        items.add(new Item(7, LocaleController.getString("InviteFriends", R.string.InviteFriends), R.drawable.menu_invite));
+
+//        index 7
         items.add(new Item(8, LocaleController.getString("Settings", R.string.Settings), R.drawable.menu_settings));
-        items.add(new Item(9, LocaleController.getString("TelegramFaq", R.string.TelegramFaq), R.drawable.menu_help));
+//        items.add(new Item(9, LocaleController.getString("TelegramFaq", R.string.TelegramFaq), R.drawable.menu_help));
     }
 
     public int getId(int position) {

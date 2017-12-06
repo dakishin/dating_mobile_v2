@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.telegram.messenger"
-    android:installLocation="auto">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="org.telegram.messenger"
+          android:installLocation="auto">
 
     <supports-screens android:anyDensity="true"
                       android:largeScreens="true"
@@ -62,11 +63,11 @@
     <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS"/>
 
     <application
+        tools:replace="android:icon"
         android:name=".ApplicationLoader"
         android:allowBackup="false"
         android:hardwareAccelerated="@bool/useHardwareAcceleration"
-        android:icon="@drawable/ic_launcher"
-        android:roundIcon="@drawable/ic_launcher"
+        android:icon="@drawable/romash"
         android:largeHeap="true"
         android:theme="@style/Theme.TMessages.Start"
         android:manageSpaceActivity="org.telegram.ui.ManageSpaceActivity">
@@ -324,7 +325,6 @@
         <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:value="632dp" />
         <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:value="598dp" />
 
-        <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
 
         <meta-data android:name="com.google.android.gms.car.notification.SmallIcon" android:resource="@drawable/ic_player" />
         <meta-data android:name="com.google.android.gms.car.application" android:resource="@xml/automotive_app_desc" />

@@ -29,7 +29,7 @@ android {
     buildToolsVersion '25.0.2'
 
     useLibrary 'org.apache.http.legacy'
-    defaultConfig.applicationId = "com.pif.club"
+    defaultConfig.applicationId = "com.christian.messenger"
 
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
@@ -49,21 +49,35 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile file("config/release.keystore")
+            storePassword "qweasd"
+            keyAlias "key0"
+            keyPassword "qweasd"
+            v2SigningEnabled false
+        }
 
+        release {
+            storeFile file("config/release.keystore")
+            storePassword "qweasd"
+            keyAlias "key0"
+            keyPassword "qweasd"
+            v2SigningEnabled false
+        }
     }
 
     buildTypes {
         debug {
             debuggable true
             jniDebuggable true
-//            signingConfig signingConfigs.debug
-            applicationIdSuffix ".develop"
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".beta"
         }
 
         release {
             debuggable false
             jniDebuggable false
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -72,11 +86,11 @@ android {
         foss {
             debuggable false
             jniDebuggable false
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 
-    defaultConfig.versionCode = 1043
+    defaultConfig.versionCode = 1048
 
     sourceSets.debug {
         manifest.srcFile 'config/debug/AndroidManifest.xml'

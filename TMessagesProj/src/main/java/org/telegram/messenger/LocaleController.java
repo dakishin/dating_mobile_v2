@@ -159,6 +159,7 @@ public class LocaleController {
     private ArrayList<LocaleInfo> otherLanguages = new ArrayList<>();
 
     private static volatile LocaleController Instance = null;
+
     public static LocaleController getInstance() {
         LocaleController localInstance = Instance;
         if (localInstance == null) {
@@ -174,9 +175,9 @@ public class LocaleController {
 
     public LocaleController() {
         addRules(new String[]{"bem", "brx", "da", "de", "el", "en", "eo", "es", "et", "fi", "fo", "gl", "he", "iw", "it", "nb",
-                "nl", "nn", "no", "sv", "af", "bg", "bn", "ca", "eu", "fur", "fy", "gu", "ha", "is", "ku",
-                "lb", "ml", "mr", "nah", "ne", "om", "or", "pa", "pap", "ps", "so", "sq", "sw", "ta", "te",
-                "tk", "ur", "zu", "mn", "gsw", "chr", "rm", "pt", "an", "ast"}, new PluralRules_One());
+            "nl", "nn", "no", "sv", "af", "bg", "bn", "ca", "eu", "fur", "fy", "gu", "ha", "is", "ku",
+            "lb", "ml", "mr", "nah", "ne", "om", "or", "pa", "pap", "ps", "so", "sq", "sw", "ta", "te",
+            "tk", "ur", "zu", "mn", "gsw", "chr", "rm", "pt", "an", "ast"}, new PluralRules_One());
         addRules(new String[]{"cs", "sk"}, new PluralRules_Czech());
         addRules(new String[]{"ff", "fr", "kab"}, new PluralRules_French());
         addRules(new String[]{"hr", "ru", "sr", "uk", "be", "bs", "sh"}, new PluralRules_Balkan());
@@ -195,7 +196,7 @@ public class LocaleController {
         addRules(new String[]{"ga", "se", "sma", "smi", "smj", "smn", "sms"}, new PluralRules_Two());
         addRules(new String[]{"ak", "am", "bh", "fil", "tl", "guw", "hi", "ln", "mg", "nso", "ti", "wa"}, new PluralRules_Zero());
         addRules(new String[]{"az", "bm", "fa", "ig", "hu", "ja", "kde", "kea", "ko", "my", "ses", "sg", "to",
-                "tr", "vi", "wo", "yo", "zh", "bo", "dz", "id", "jv", "ka", "km", "kn", "ms", "th"}, new PluralRules_None());
+            "tr", "vi", "wo", "yo", "zh", "bo", "dz", "id", "jv", "ka", "km", "kn", "ms", "th"}, new PluralRules_None());
 
         LocaleInfo localeInfo = new LocaleInfo();
         localeInfo.name = "English";
@@ -451,8 +452,8 @@ public class LocaleController {
             String languageCode = stringMap.get("LanguageCode");
 
             if (languageName != null && languageName.length() > 0 &&
-                    languageNameInEnglish != null && languageNameInEnglish.length() > 0 &&
-                    languageCode != null && languageCode.length() > 0) {
+                languageNameInEnglish != null && languageNameInEnglish.length() > 0 &&
+                languageCode != null && languageCode.length() > 0) {
 
                 if (languageName.contains("&") || languageName.contains("|")) {
                     return false;
@@ -726,6 +727,9 @@ public class LocaleController {
         if (value == null) {
             value = "LOC_ERR:" + key;
         }
+        value = value.replace("Telegram", "Чаты");
+
+
         return value;
     }
 
@@ -1235,7 +1239,7 @@ public class LocaleController {
                     return getString("WithinAWeek", R.string.WithinAWeek);
                 } else if (user.status.expires == -102) {
                     return getString("WithinAMonth", R.string.WithinAMonth);
-                }  else {
+                } else {
                     return formatDateOnline(user.status.expires);
                 }
             }

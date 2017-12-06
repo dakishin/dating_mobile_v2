@@ -881,10 +881,10 @@ public class Theme {
         defaultColors.put(key_dialogCheckboxSquareDisabled, 0xffb0b0b0);
         defaultColors.put(key_dialogRadioBackground, 0xffb3b3b3);
         defaultColors.put(key_dialogRadioBackgroundChecked, 0xff37a9f0);
-        defaultColors.put(key_dialogProgressCircle, 0xff527da3);
-        defaultColors.put(key_dialogLineProgress, 0xff527da3);
+        defaultColors.put(key_dialogProgressCircle, getPrimaryColor());
+        defaultColors.put(key_dialogLineProgress, getPrimaryColor());
         defaultColors.put(key_dialogLineProgressBackground, 0xffdbdbdb);
-        defaultColors.put(key_dialogButton, 0xff4991cc);
+        defaultColors.put(key_dialogButton, getPrimaryColor());
         defaultColors.put(key_dialogButtonSelector, 0x0f000000);
         defaultColors.put(key_dialogScrollGlow, 0xfff5f6f7);
         defaultColors.put(key_dialogRoundCheckBox, 0xff3ec1f9);
@@ -893,7 +893,10 @@ public class Theme {
         defaultColors.put(key_dialogBadgeText, 0xffffffff);
 
         defaultColors.put(key_windowBackgroundWhite, 0xffffffff);
-        defaultColors.put(key_progressCircle, 0xff527da3);
+        defaultColors.put(key_progressCircle, getPrimaryColor());
+
+
+
         defaultColors.put(key_windowBackgroundWhiteGrayIcon, 0xff737373);
         defaultColors.put(key_windowBackgroundWhiteBlueText, 0xff3b84c0);
         defaultColors.put(key_windowBackgroundWhiteBlueText2, 0xff348bc1);
@@ -955,28 +958,40 @@ public class Theme {
 
         defaultColors.put(key_avatar_text, 0xffffffff);
 
-        defaultColors.put(key_avatar_backgroundRed, 0xffe56555);
-        defaultColors.put(key_avatar_backgroundOrange, 0xfff28c48);
-        defaultColors.put(key_avatar_backgroundViolet, 0xff8e85ee);
-        defaultColors.put(key_avatar_backgroundGreen, 0xff76c84d);
-        defaultColors.put(key_avatar_backgroundCyan, 0xff5fbed5);
-        defaultColors.put(key_avatar_backgroundBlue, 0xff549cdd);
-        defaultColors.put(key_avatar_backgroundPink, 0xfff2749a);
-        defaultColors.put(key_avatar_backgroundGroupCreateSpanBlue, 0xffbfd6ea);
-        defaultColors.put(key_avatar_backgroundInProfileRed, 0xffd86f65);
-        defaultColors.put(key_avatar_backgroundInProfileOrange, 0xfff69d61);
-        defaultColors.put(key_avatar_backgroundInProfileViolet, 0xff8c79d2);
-        defaultColors.put(key_avatar_backgroundInProfileGreen, 0xff67b35d);
-        defaultColors.put(key_avatar_backgroundInProfileCyan, 0xff56a2bb);
-        defaultColors.put(key_avatar_backgroundInProfileBlue, 0xff5085b1);
-        defaultColors.put(key_avatar_backgroundInProfilePink, 0xfff37fa6);
-        defaultColors.put(key_avatar_backgroundActionBarRed, 0xffca6056);
-        defaultColors.put(key_avatar_backgroundActionBarOrange, 0xfff18944);
-        defaultColors.put(key_avatar_backgroundActionBarViolet, 0xff7d6ac4);
-        defaultColors.put(key_avatar_backgroundActionBarGreen, 0xff56a14c);
-        defaultColors.put(key_avatar_backgroundActionBarCyan, 0xff4492ac);
-        defaultColors.put(key_avatar_backgroundActionBarBlue, 0xff598fba);
-        defaultColors.put(key_avatar_backgroundActionBarPink, 0xff598fba);
+        defaultColors.put(key_avatar_backgroundRed, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundOrange, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundViolet, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundGreen, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundCyan, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundBlue, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundPink, getColorSecondary());
+
+
+
+
+        defaultColors.put(key_avatar_backgroundGroupCreateSpanBlue, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileRed, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileOrange, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileViolet, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileGreen, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileCyan, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfileBlue, getColorSecondary());
+        defaultColors.put(key_avatar_backgroundInProfilePink, getColorSecondary());
+
+
+
+        defaultColors.put(key_avatar_backgroundActionBarRed, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarOrange, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarViolet, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarGreen, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarCyan, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarBlue, getPrimaryColor());
+        defaultColors.put(key_avatar_backgroundActionBarPink, getPrimaryColor());
+
+
+
+
+
         defaultColors.put(key_avatar_subtitleInProfileRed, 0xfff9cbc5);
         defaultColors.put(key_avatar_subtitleInProfileOrange, 0xfffdddc8);
         defaultColors.put(key_avatar_subtitleInProfileViolet, 0xffcdc4ed);
@@ -1006,7 +1021,7 @@ public class Theme {
         defaultColors.put(key_avatar_actionBarIconBlue, 0xffffffff);
         defaultColors.put(key_avatar_actionBarIconPink, 0xffffffff);
 
-        defaultColors.put(key_actionBarDefault, 0xff527da3);
+        defaultColors.put(key_actionBarDefault, getPrimaryColor());
         defaultColors.put(key_actionBarDefaultIcon, 0xffffffff);
         defaultColors.put(key_actionBarActionModeDefault, 0xffffffff);
         defaultColors.put(key_actionBarActionModeDefaultTop, 0x99000000);
@@ -1050,10 +1065,12 @@ public class Theme {
         defaultColors.put(key_chats_menuName, 0xffffffff);
         defaultColors.put(key_chats_menuPhone, 0xffffffff);
         defaultColors.put(key_chats_menuPhoneCats, 0xffc2e5ff);
+
         defaultColors.put(key_chats_menuCloud, 0xffffffff);
-        defaultColors.put(key_chats_menuCloudBackgroundCats, 0xff427ba9);
+        defaultColors.put(key_chats_menuCloudBackgroundCats, getColorSecondary());
+
         defaultColors.put(key_chats_actionIcon, 0xffffffff);
-        defaultColors.put(key_chats_actionBackground, 0xff6aa1ce);
+        defaultColors.put(key_chats_actionBackground, getPrimaryColor());
         defaultColors.put(key_chats_actionPressedBackground, 0xff5792c2);
 
         defaultColors.put(key_chat_lockIcon, 0xffffffff);
@@ -1454,6 +1471,14 @@ public class Theme {
         applyTheme(applyingTheme, false, false);
     }
 
+    private static int getColorSecondary() {
+        return ApplicationLoader.applicationContext.getResources().getColor(R.color.news_time);
+    }
+
+    private static int getPrimaryColor() {
+        return ApplicationLoader.applicationContext.getResources().getColor(R.color.primary);
+    }
+
     private static Method StateListDrawable_getStateDrawableMethod;
     private static Field BitmapDrawable_mColorFilter;
 
@@ -1640,8 +1665,8 @@ public class Theme {
         if (Build.VERSION.SDK_INT >= 21) {
             pressedDrawable.getPaint().setColor(0xffffffff);
             ColorStateList colorStateList = new ColorStateList(
-                    new int[][]{StateSet.WILD_CARD},
-                    new int[]{pressedColor}
+                new int[][]{StateSet.WILD_CARD},
+                new int[]{pressedColor}
             );
             return new RippleDrawable(colorStateList, defaultDrawable, pressedDrawable);
         } else {
@@ -1676,8 +1701,8 @@ public class Theme {
         if (Build.VERSION.SDK_INT >= 21) {
             Drawable maskDrawable = createRoundRectDrawable(AndroidUtilities.dp(3), 0xffffffff);
             ColorStateList colorStateList = new ColorStateList(
-                    new int[][]{StateSet.WILD_CARD},
-                    new int[]{getColor(key_dialogButtonSelector)}
+                new int[][]{StateSet.WILD_CARD},
+                new int[]{getColor(key_dialogButtonSelector)}
             );
             return new RippleDrawable(colorStateList, null, maskDrawable);
         } else {
@@ -1694,8 +1719,8 @@ public class Theme {
             if (Build.VERSION.SDK_INT >= 21) {
                 Drawable maskDrawable = new ColorDrawable(0xffffffff);
                 ColorStateList colorStateList = new ColorStateList(
-                        new int[][]{StateSet.WILD_CARD},
-                        new int[]{getColor(key_listSelector)}
+                    new int[][]{StateSet.WILD_CARD},
+                    new int[]{getColor(key_listSelector)}
                 );
                 return new RippleDrawable(colorStateList, new ColorDrawable(getColor(key_windowBackgroundWhite)), maskDrawable);
             } else {
@@ -1747,8 +1772,8 @@ public class Theme {
                 maskDrawable = new ColorDrawable(0xffffffff);
             }
             ColorStateList colorStateList = new ColorStateList(
-                    new int[][]{StateSet.WILD_CARD},
-                    new int[]{color}
+                new int[][]{StateSet.WILD_CARD},
+                new int[]{color}
             );
             return new RippleDrawable(colorStateList, null, maskDrawable);
         } else {
@@ -2782,8 +2807,8 @@ public class Theme {
             RippleDrawable rippleDrawable = (RippleDrawable) drawable;
             if (selected) {
                 rippleDrawable.setColor(new ColorStateList(
-                        new int[][]{StateSet.WILD_CARD},
-                        new int[]{color}
+                    new int[][]{StateSet.WILD_CARD},
+                    new int[]{color}
                 ));
             } else {
                 if (rippleDrawable.getNumberOfLayers() > 0) {
