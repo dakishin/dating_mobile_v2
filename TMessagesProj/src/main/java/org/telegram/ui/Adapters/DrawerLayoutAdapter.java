@@ -89,16 +89,62 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         }
     }
 
+    /*
+    @return
+        0 профиль
+        1 отступ
+        2 линия
+        3 пункт меню
+     */
     @Override
-    public int getItemViewType(int i) {
-        if (i == 0) { // профиль
-            return 0;
-        } else if (i == 1) {// отступ
-            return 1;
-        } else if (i == 6) {
-            return 2;
+    public int getItemViewType(int index) {
+        if (mContext.getResources().getBoolean(module.christian.ru.dating.R.bool.is_russian_mode)) {
+            switch (index) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                case 2:
+                    return 3;
+                case 3:
+                    return 3;
+                case 4:
+                    return 3;
+                case 5:
+                    return 3;
+                case 6:
+                    return 3;
+                case 7:
+                    return 2;
+                case 8:
+                    return 3;
+            }
+        } else {
+            switch (index) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                case 2:
+                    return 3;
+                case 3:
+                    return 3;
+                case 4:
+                    return 3;
+                case 5:
+                    return 1;
+                case 6:
+                    return 1;
+                case 7:
+                    return 2;
+                case 8:
+                    return 3;
+            }
         }
+
+
         return 3;
+
     }
 
     private void resetItems() {
@@ -109,15 +155,23 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         items.add(null); // profile  index 0
         items.add(null); // padding  index 1
 //        index 2
-        items.add(new Item(-1, LocaleController.getString("search", R.string.search), R.drawable.menu_newgroup));
+        items.add(new Item(-1, mContext.getString(module.christian.ru.dating.R.string.who_is_near), R.drawable.menu_newgroup));
 
 //        index 3
-        items.add(new Item(-2, LocaleController.getString("living_room", R.string.living_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+        items.add(new Item(-2, mContext.getString(module.christian.ru.dating.R.string.living_room), R.drawable.ic_chat_bubble_outline_white_24dp));
 
 //        index 4
-        items.add(new Item(-3, LocaleController.getString("ask_priest_room", R.string.ask_priest_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+        items.add(new Item(-3, mContext.getString(module.christian.ru.dating.R.string.ask_priest_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+
+        if (mContext.getResources().getBoolean(module.christian.ru.dating.R.bool.is_russian_mode)) {
 //        index 5
-        items.add(new Item(-4, LocaleController.getString("bogoslov_room", R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+            items.add(new Item(-4, mContext.getString(module.christian.ru.dating.R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+            //        index 6
+            items.add(new Item(-5, mContext.getString(module.christian.ru.dating.R.string.treba_menu), module.christian.ru.dating.R.drawable.chat_priest));
+        } else {
+            items.add(null); // profile  index 5
+            items.add(null); // padding  index 6
+        }
 
 
 //        items.add(new Item(2, LocaleController.getString("NewGroup", R.string.NewGroup), R.drawable.menu_newgroup));

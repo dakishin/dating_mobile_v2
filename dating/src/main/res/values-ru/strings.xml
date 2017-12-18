@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">Чаты</string>
+
+    <string name="app_name_tool_bar">Чаты</string>
+
+    <string name="who_is_near">Кто рядом</string>
+
+    <string name="coming_soon">Раздел переносится на новую платноформу.\nПодождите немного, скоро здесь будет еще лучше чем раньше.</string>
+
+
+    <string name="living_room">Гостинная комната</string>
+    <string name="ask_priest_room">Вопрос священнику</string>
+    <string name="bogoslov_room">Богословские беседы</string>
+    <string name="search">Поиск</string>
+    <string name="treba_menu">Заказать требы</string>
+
+
+</resources>

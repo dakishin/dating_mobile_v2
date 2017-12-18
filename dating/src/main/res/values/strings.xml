@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">Chats</string>
+
+    <string name="app_name_tool_bar">Chats</string>
+
+    <string name="who_is_near">Who is near me</string>
+    <string name="coming_soon">This page is under migration to new framework.\nPlease wait. New page will be better!</string>
+
+    <string name="living_room">Living room</string>
+    <string name="ask_priest_room">Ask priest room</string>
+    <string name="bogoslov_room">Talk about God room</string>
+
+    <string name="search">Поиск</string>
+    <string name="treba_menu">Заказать требы</string>
+
+
+</resources>

@@ -10,7 +10,6 @@ package org.telegram.ui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
@@ -92,6 +92,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import module.christian.ru.dating.DatingUtils;
+import module.christian.ru.dating.activity.NearMeActivity;
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
 
@@ -174,7 +177,12 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         }
 
 
-        syncTelegramId();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                DatingUtils.syncTelegramId(getApplicationContext(), UserConfig.getClientUserId());
+            }
+        });
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTheme(R.style.Theme_TMessages);
@@ -367,9 +375,19 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                        return;
 //                    }
 //                    presentFragment(new GroupCreateActivity());
-                    runLinkRequest("christian_public",null,null,null,
-                        null,null,false,0,null,new String[]{},0);
+                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.living_room_id);
+                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.living_room_public_name);
+
+                    if (MessagesController.getInstance().getChat(chatId) != null) {
+                        Bundle args = new Bundle();
+                        args.putInt("chat_id", chatId);
+                        presentFragment(new ChatActivity(args));
+                    } else {
+                        runLinkRequest(chatPublicName, null, null, null,
+                            null, null, false, 0, null, new String[]{}, 0);
+                    }
                     drawerLayoutContainer.closeDrawer(false);
+
 
                 } else if (id == -3) {
 //                    Bundle args = new Bundle();
@@ -380,13 +398,42 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    presentFragment(new ContactsActivity(args));
 //                    drawerLayoutContainer.closeDrawer(false);
 
-                    runLinkRequest("christian_questions",null,null,null,
-                        null,null,false,0,null,new String[]{},0);
+
+//                    if (MessagesController.checkCanOpenChat(args, LaunchActivity.this)) {
+//                        NotificationCenter.getInstance().postNotificationName(NotificationCenter.closeChats);
+//                        actionBarLayout.presentFragment(new ChatActivity(args), true, false, true);
+//                    }else{
+//                        runLinkRequest("christian_questions", null, null, null,
+//                            null, null, false, 0, null, new String[]{}, 0);
+//                    }
+
+                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.ask_priest_room_id);
+                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.ask_priest_public_name);
+
+                    if (MessagesController.getInstance().getChat(chatId) != null) {
+                        Bundle args = new Bundle();
+                        args.putInt("chat_id", chatId);
+                        presentFragment(new ChatActivity(args));
+                    } else {
+                        runLinkRequest(chatPublicName, null, null, null,
+                            null, null, false, 0, null, new String[]{}, 0);
+                    }
+
                     drawerLayoutContainer.closeDrawer(false);
 
                 } else if (id == -4) {
-                    runLinkRequest("bogoslov_chat",null,null,null,
-                        null,null,false,0,null,new String[]{},0);
+                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.bogoslov_room_id);
+                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.bogoslov_room_public_name);
+                    if (MessagesController.getInstance().getChat(chatId) != null) {
+                        Bundle args = new Bundle();
+                        args.putInt("chat_id", chatId);
+                        presentFragment(new ChatActivity(args));
+                    } else {
+                        runLinkRequest(chatPublicName, null, null, null,
+                            null, null, false, 0, null, new String[]{}, 0);
+                    }
+
+
                     drawerLayoutContainer.closeDrawer(false);
 
 //                    if (!MessagesController.isFeatureEnabled("broadcast_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
@@ -402,17 +449,13 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                        preferences.edit().putBoolean("channel_intro", true).commit();
 //                    }
 //                    drawerLayoutContainer.closeDrawer(false);
+                } else if (id == -5) {
+                    DatingUtils.startDatingTreba(LaunchActivity.this);
+//                    presentFragment(new ContactsActivity(null));
+                    drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("christian_dating://search"));
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException exception) {
-                        try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pif.club")));
-                        } catch (Exception e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.pif.club")));
-                        }
-                    }
+                    NearMeActivity.start(LaunchActivity.this);
+//                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == 7) {
@@ -609,11 +652,6 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         MediaController.getInstance().setBaseActivity(this, true);
     }
 
-    private void syncTelegramId() {
-        Intent intent = new Intent("com.pif.club.APPLY_MY_TELEGRAM_ID");
-        intent.putExtra("telegram_id", UserConfig.getClientUserId());
-        sendBroadcast(intent);
-    }
 
     private void checkLayout() {
         if (!AndroidUtilities.isTablet() || rightActionBarLayout == null) {

@@ -22,14 +22,15 @@ dependencies {
     compile 'net.hockeyapp.android:HockeySDK:4.1.3'
     compile 'com.googlecode.mp4parser:isoparser:1.0.6'
     compile 'com.stripe:stripe-android:2.0.2'
+    compile project(":dating")
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     useLibrary 'org.apache.http.legacy'
-    defaultConfig.applicationId = "com.christian.messenger"
+    defaultConfig.applicationId = "com.pif.club"
 
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
@@ -57,11 +58,19 @@ android {
             v2SigningEnabled false
         }
 
+//        release {
+//            storeFile file("config/release.keystore")
+//            storePassword "qweasd"
+//            keyAlias "key0"
+//            keyPassword "qweasd"
+//            v2SigningEnabled false
+//        }
+
         release {
-            storeFile file("config/release.keystore")
-            storePassword "qweasd"
-            keyAlias "key0"
-            keyPassword "qweasd"
+            storeFile file("config/pif.keystore.jks")
+            keyAlias "pif"
+            storePassword "nQixBpn5HVl4EuY"
+            keyPassword "nQixBpn5HVl4EuY"
             v2SigningEnabled false
         }
     }
@@ -90,7 +99,7 @@ android {
         }
     }
 
-    defaultConfig.versionCode = 1048
+    defaultConfig.versionCode = 1050
 
     sourceSets.debug {
         manifest.srcFile 'config/debug/AndroidManifest.xml'
@@ -163,6 +172,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionName "4.2.1"
+        multiDexEnabled true
 
         externalNativeBuild {
             ndkBuild {
