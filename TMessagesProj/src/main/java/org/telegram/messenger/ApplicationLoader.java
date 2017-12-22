@@ -37,6 +37,10 @@ import org.telegram.ui.Components.ForegroundDetector;
 import java.io.File;
 import java.io.RandomAccessFile;
 
+import modules.AndroidModule;
+import modules.AppComponent;
+import module.christian.ru.dating.util.DaggerAppComponent;
+
 public class ApplicationLoader extends Application {
 
     @SuppressLint("StaticFieldLeak")
@@ -134,7 +138,7 @@ public class ApplicationLoader extends Application {
         }
 
         try {
-            PowerManager pm = (PowerManager)ApplicationLoader.applicationContext.getSystemService(Context.POWER_SERVICE);
+            PowerManager pm = (PowerManager) ApplicationLoader.applicationContext.getSystemService(Context.POWER_SERVICE);
             isScreenOn = pm.isScreenOn();
             FileLog.e("screen state = " + isScreenOn);
         } catch (Exception e) {
@@ -188,7 +192,7 @@ public class ApplicationLoader extends Application {
             SendMessagesHelper.getInstance().checkUnsentMessages();
         }
 
-        ApplicationLoader app = (ApplicationLoader)ApplicationLoader.applicationContext;
+        ApplicationLoader app = (ApplicationLoader) ApplicationLoader.applicationContext;
         app.initPlayServices();
         FileLog.e("app initied");
 
@@ -208,6 +212,9 @@ public class ApplicationLoader extends Application {
         applicationHandler = new Handler(applicationContext.getMainLooper());
 
         startPushService();
+        AppComponent appComponent = DaggerAppComponent.builder()
+            .androidModule(new AndroidModule(getApplicationContext())).build();
+
     }
 
     /*public static void sendRegIdToBackend(final String token) {
@@ -243,7 +250,7 @@ public class ApplicationLoader extends Application {
         applicationContext.stopService(new Intent(applicationContext, NotificationsService.class));
 
         PendingIntent pintent = PendingIntent.getService(applicationContext, 0, new Intent(applicationContext, NotificationsService.class), 0);
-        AlarmManager alarm = (AlarmManager)applicationContext.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarm = (AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pintent);
     }
 

@@ -333,16 +333,16 @@ public class IdenticonActivity extends BaseFragment implements NotificationCente
     }
 
     private void showHint(boolean show) {
-        /*SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        /*SharedPreferences preferencesModule = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         if (show) {
-            if (preferences.getBoolean("secrethint", false)) {
+            if (preferencesModule.getBoolean("secrethint", false)) {
                 return;
             }
         } else {
             if (hintTextView.getAlpha() == 0.0f) {
                 return;
             }
-            preferences.edit().putBoolean("secrethint", true).commit();
+            preferencesModule.edit().putBoolean("secrethint", true).commit();
         }
         if (hintAnimatorSet != null) {
             hintAnimatorSet.cancel();

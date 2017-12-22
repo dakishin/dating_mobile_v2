@@ -1398,12 +1398,33 @@ public class LocaleController {
                             }
                             saveOtherLanguages();
                             NotificationCenter.getInstance().postNotificationName(NotificationCenter.suggestedLangpack);
-                            applyLanguage(currentLocaleInfo, true);
+                            LocaleInfo russian = getRussian();
+                            if ("ru".equalsIgnoreCase(systemDefaultLocale.getLanguage()) && russian != null) {
+                                applyLanguage(russian, true);
+                            } else {
+                                applyLanguage(currentLocaleInfo, true);
+                            }
                         }
                     });
                 }
             }
         }, ConnectionsManager.RequestFlagWithoutLogin);
+    }
+
+    private LocaleInfo getRussian() {
+        for (LocaleInfo localeInfo : languages) {
+            if (localeInfo.getKey().equalsIgnoreCase("ru")) {
+                return localeInfo;
+            }
+        }
+
+        for (LocaleInfo localeInfo : remoteLanguages) {
+            if (localeInfo.getKey().equalsIgnoreCase("ru")) {
+                return localeInfo;
+            }
+        }
+
+        return null;
     }
 
     public void applyRemoteLanguage(LocaleInfo localeInfo, TLRPC.TL_langPackLanguage language, boolean force) {

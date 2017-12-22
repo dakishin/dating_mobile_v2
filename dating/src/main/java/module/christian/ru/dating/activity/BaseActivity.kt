@@ -10,7 +10,7 @@ import module.christian.ru.dating.R
 open  class BaseActivity : Activity() {
 
 
-    protected fun setFragment(fragment: Fragment) {
+     fun setFragment(fragment: Fragment) {
         val transaction = fragmentManager.beginTransaction()
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back

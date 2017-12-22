@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = '1.2.10'
+    ext.butterKnifeVersion = "8.4.0"
 
     repositories {
         jcenter()
@@ -10,5 +11,11 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
     }
 }

@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
+import modules.AppComponentInstance;
+
 public class UserConfig {
 
     private static TLRPC.User currentUser;
@@ -174,10 +176,14 @@ public class UserConfig {
         }
     }
 
-    public static void setCurrentUser(TLRPC.User user) {
+    public static void setCurrentUser(final TLRPC.User user) {
         synchronized (sync) {
             currentUser = user;
+            AppComponentInstance.
+                getAppComponent(ApplicationLoader.applicationContext)
+                .getSyncWithDating().registerAsync(user.id + "", user.first_name, user.last_name);
         }
+
     }
 
     public static void loadConfig() {

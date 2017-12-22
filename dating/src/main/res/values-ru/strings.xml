@@ -16,4 +16,9 @@
     <string name="treba_menu">Заказать требы</string>
 
 
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="unexpected_error">Непредвиденная ошибка. Отчет выслан. Мы уже трудимя над ее исправлением. Попробуйте выполнить дейтвие позднее.</string>
+    <string name="choose_church">Выберите храм</string>
+
 </resources>

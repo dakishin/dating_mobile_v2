@@ -23,7 +23,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
@@ -93,8 +92,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import module.christian.ru.dating.DatingUtils;
 import module.christian.ru.dating.activity.NearMeActivity;
+import module.christian.ru.dating.activity.TrebaActivity;
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
 
@@ -145,6 +144,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         ApplicationLoader.postInitApplication();
         NativeCrashManager.handleDumpFiles(this);
         AndroidUtilities.checkDisplaySize(this, getResources().getConfiguration());
@@ -176,13 +176,6 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
             }
         }
 
-
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                DatingUtils.syncTelegramId(getApplicationContext(), UserConfig.getClientUserId());
-            }
-        });
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTheme(R.style.Theme_TMessages);
@@ -439,18 +432,18 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    if (!MessagesController.isFeatureEnabled("broadcast_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
 //                        return;
 //                    }
-//                    SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-//                    if (!BuildVars.DEBUG_VERSION && preferences.getBoolean("channel_intro", false)) {
+//                    SharedPreferences preferencesModule = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+//                    if (!BuildVars.DEBUG_VERSION && preferencesModule.getBoolean("channel_intro", false)) {
 //                        Bundle args = new Bundle();
 //                        args.putInt("step", 0);
 //                        presentFragment(new ChannelCreateActivity(args));
 //                    } else {
 //                        presentFragment(new ChannelIntroActivity());
-//                        preferences.edit().putBoolean("channel_intro", true).commit();
+//                        preferencesModule.edit().putBoolean("channel_intro", true).commit();
 //                    }
 //                    drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -5) {
-                    DatingUtils.startDatingTreba(LaunchActivity.this);
+                    TrebaActivity.start(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {

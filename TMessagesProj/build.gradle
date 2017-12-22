@@ -99,7 +99,6 @@ android {
         }
     }
 
-    defaultConfig.versionCode = 1050
 
     sourceSets.debug {
         manifest.srcFile 'config/debug/AndroidManifest.xml'
@@ -173,6 +172,7 @@ android {
         targetSdkVersion 25
         versionName "4.2.1"
         multiDexEnabled true
+        versionCode = 1056
 
         externalNativeBuild {
             ndkBuild {
