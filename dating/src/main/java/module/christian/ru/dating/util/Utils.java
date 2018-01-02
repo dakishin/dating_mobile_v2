@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * Created by dakishin@gmail.com
@@ -123,9 +124,6 @@ public class Utils {
     }
 
 
-    public static String getPackageName() {
-        return "com.pif.club";
-    }
 
     public static boolean isPermissionGranted(String permission, Activity activity) {
         return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
@@ -149,12 +147,9 @@ public class Utils {
         return string != null && !string.trim().equals("");
     }
 
-    public static Integer getAppVersion() {
-        return 389;
-    }
 
     @NotNull
     public static String getLanguage() {
-        return null;
+        return Locale.getDefault().getLanguage();
     }
 }

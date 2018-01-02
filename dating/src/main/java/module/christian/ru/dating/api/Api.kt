@@ -8,7 +8,6 @@ import module.christian.ru.dating.model.TelegramUser
 import module.christian.ru.dating.model.Treba
 import module.christian.ru.dating.model.TrebaType
 import module.christian.ru.dating.util.ErrorCode
-import module.christian.ru.dating.util.LocationUtils
 import module.christian.ru.dating.util.PifException
 import module.christian.ru.dating.util.Utils
 import okhttp3.ConnectionPool
@@ -18,8 +17,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import rx.Observable
-import rx.schedulers.Schedulers
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -69,25 +66,25 @@ class Api @Inject constructor() {
     }
 
 
-    fun decodeAddress(geoData: LocationUtils.GeoData) {
+    fun getCityByLocation(lat: Double, lon: Double): String? {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             throw RuntimeException("вы не должны использовать главный поток")
         }
-
         try {
-            val response = geoService.decodeAddress("AIzaSyAQDKe5g__ZimJCC1-dYowbQMJjaQN_oGA", geoData.lat.toString() + "," + geoData.lon, Utils.getLanguage())
+            val response = geoService.decodeAddress("AIzaSyAQDKe5g__ZimJCC1-dYowbQMJjaQN_oGA", lat.toString() + "," + lon, Utils.getLanguage())
                 .execute()
             val body = response.body()
-            geoData.country = body.getCountry()
-            geoData.city = body.getCity()
-            geoData.countryCode = body.getCountryCode()
-            if (geoData.city == null) {
-//                StatisticUtil.logInfo("ошибка декодирования координаты. lat " + geoData.lat + " lon " + geoData.lon)
-            }
+            val country = body.country
+            val city = body.city
+            val countryCode = body.countryCode
+            return city
+
         } catch (e: Throwable) {
             Log.e(TAG, e.message, e)
 //            StatisticUtil.logError(" ошибка декодирования координаты  lat " + geoData.lat + " lon " + geoData.lon, e)
         }
+
+        return null
 
     }
 
@@ -110,25 +107,14 @@ class Api @Inject constructor() {
     }
 
     @Throws(PifException::class)
-    fun sendGeoData(lat: Double, lon: Double, city: String?) {
-        executeApiMethod(createService().sendGeoData(PifService.GeoDataParam(lat, lon, city)))
+    fun sendGeoData(ownerUuid: String, lat: Double, lon: Double, city: String?) {
+        executeApiMethod(createService().sendGeoData(PifService.GeoDataParam(ownerUuid, lat, lon, city)))
     }
 
 
     enum class UserType {
         RUSSIANS,
         OTHERS
-    }
-
-
-    fun updateTelegramId(telegramId: Int?, userUuid: String) {
-        Observable
-            .fromCallable<Any> {
-                //                executeApiMethod(createService().updateTelegramId(telegramId, userUuid))
-                null
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe()
     }
 
 
@@ -146,7 +132,7 @@ class Api @Inject constructor() {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             var request = chain.request()
-//            val profile = PreferencesModule.getProfile()
+//            val profile = ProfilePreferences.getProfile()
 //            if (profile != null && !Utils.isEmpty(profile!!.email)) {
 //                request = request.newBuilder()
 //                    .addHeader(AUTH_HEADER, URLEncoder.encode(profile!!.email, "utf-8"))
@@ -180,7 +166,7 @@ class Api @Inject constructor() {
                 throw PifException(body.errorCode, response.raw().toString(), null)
             }
 
-            if (body.apiClientVersionCode > Utils.getAppVersion()) {
+            if (body.apiClientVersionCode > BuildConfig.APP_VERSION) {
                 throw PifException(ErrorCode.NEED_UPDATE, response.raw().toString(), null)
             }
 

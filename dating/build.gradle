@@ -8,6 +8,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
 
+    publishNonDefault true
+
 
     defaultConfig {
         minSdkVersion 16
@@ -15,21 +17,23 @@ android {
         versionCode 1
         versionName "1.0"
 
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'Integer', 'APP_VERSION', '389'
 
     }
     buildTypes {
 
         debug {
             ext.enableCrashlytics = false
-            buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/dating/"'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/datingdev/"'
+
         }
 
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/dating/"'
+
         }
     }
 
@@ -68,5 +72,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.google.android.gms:play-services-location:11.0.2'
 
 }

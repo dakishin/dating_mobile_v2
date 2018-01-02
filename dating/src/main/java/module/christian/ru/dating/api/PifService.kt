@@ -38,9 +38,11 @@ interface PifService {
     @Headers("Content-type: application/json")
     fun sendGeoData(@Body param: GeoDataParam): Call<PifResponse<Any>>
 
+
+
     class CreateTrebaParam(var userUuid: String?, var names: List<String>, var type: TrebaType, val priestUuid: String)
     class RegisterTelegramUserParam(val telegramId: String, val firstName: String?, val lastName: String?)
-    class GeoDataParam(val lat: Double, val lon: Double, val city: String?)
+    class GeoDataParam(val ownerUuid: String, val lat: Double, val lon: Double, val city: String?)
 
 
 }

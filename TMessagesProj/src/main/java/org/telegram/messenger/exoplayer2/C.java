@@ -278,7 +278,7 @@ public final class C {
       SELECTION_FLAG_AUTOSELECT})
   public @interface SelectionFlags {}
   /**
-   * Indicates that the track should be selected if user preferencesModule do not state otherwise.
+   * Indicates that the track should be selected if user profilePreferences do not state otherwise.
    */
   public static final int SELECTION_FLAG_DEFAULT = 1;
   /**

@@ -26,6 +26,8 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Base64;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -37,9 +39,10 @@ import org.telegram.ui.Components.ForegroundDetector;
 import java.io.File;
 import java.io.RandomAccessFile;
 
+import io.fabric.sdk.android.Fabric;
 import modules.AndroidModule;
 import modules.AppComponent;
-import module.christian.ru.dating.util.DaggerAppComponent;
+import modules.DaggerAppComponent;
 
 public class ApplicationLoader extends Application {
 
@@ -214,6 +217,11 @@ public class ApplicationLoader extends Application {
         startPushService();
         AppComponent appComponent = DaggerAppComponent.builder()
             .androidModule(new AndroidModule(getApplicationContext())).build();
+
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+            .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+            .build();
+        Fabric.with(this, crashlyticsKit);
 
     }
 

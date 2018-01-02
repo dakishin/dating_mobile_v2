@@ -478,19 +478,19 @@ public class NotificationsSettingsActivity extends BaseFragment implements Notif
 
     public void updateServerNotificationsSettings(boolean group) {
         //disable global settings sync
-        /*SharedPreferences preferencesModule = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+        /*SharedPreferences profilePreferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
         TLRPC.TL_account_updateNotifySettings req = new TLRPC.TL_account_updateNotifySettings();
         req.settings = new TLRPC.TL_inputPeerNotifySettings();
         req.settings.sound = "default";
         req.settings.events_mask = 0;
         if (!group) {
             req.peer = new TLRPC.TL_inputNotifyUsers();
-            req.settings.mute_until = preferencesModule.getBoolean("EnableAll", true) ? 0 : Integer.MAX_VALUE;
-            req.settings.show_previews = preferencesModule.getBoolean("EnablePreviewAll", true);
+            req.settings.mute_until = profilePreferences.getBoolean("EnableAll", true) ? 0 : Integer.MAX_VALUE;
+            req.settings.show_previews = profilePreferences.getBoolean("EnablePreviewAll", true);
         } else {
             req.peer = new TLRPC.TL_inputNotifyChats();
-            req.settings.mute_until = preferencesModule.getBoolean("EnableGroup", true) ? 0 : Integer.MAX_VALUE;
-            req.settings.show_previews = preferencesModule.getBoolean("EnablePreviewGroup", true);
+            req.settings.mute_until = profilePreferences.getBoolean("EnableGroup", true) ? 0 : Integer.MAX_VALUE;
+            req.settings.show_previews = profilePreferences.getBoolean("EnablePreviewGroup", true);
         }
         ConnectionsManager.getInstance().sendRequest(req, new RPCRequest.RPCRequestDelegate() {
             @Override

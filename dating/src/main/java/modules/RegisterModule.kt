@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class RegisterModule @Inject constructor() {
     @Inject lateinit var api: Api
-    @Inject lateinit var preferencesModule: PreferencesModule
+    @Inject lateinit var profilePreferences: ProfilePreferences
 
     val TAG = RegisterModule::javaClass.name
 
@@ -19,7 +19,10 @@ class RegisterModule @Inject constructor() {
         Thread(Runnable {
             try {
                 val user = api.registerTelegramUser(telegramId, firstName, lastName)
-                preferencesModule.saveProfile(user)
+                profilePreferences.saveTelegramId(telegramId)
+                profilePreferences.saveUUID(user?.uuid)
+                profilePreferences.saveFistName(firstName)
+                profilePreferences.saveLastName(lastName)
             } catch (e: Exception) {
                 Log.e(TAG, e.message, e)
             }

@@ -74,6 +74,7 @@ class TrebaCreateFragmentStep1 : BaseFragment() {
         create_treba_button.setOnClickListener({
             goToStep2()
         })
+
     }
 
 

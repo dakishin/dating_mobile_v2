@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
 
 repositories {
     mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 configurations {
@@ -22,7 +25,15 @@ dependencies {
     compile 'net.hockeyapp.android:HockeySDK:4.1.3'
     compile 'com.googlecode.mp4parser:isoparser:1.0.6'
     compile 'com.stripe:stripe-android:2.0.2'
-    compile project(":dating")
+
+    releaseCompile project(path: ':dating', configuration: 'release')
+    debugCompile project(path: ':dating', configuration: 'debug')
+
+
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+        transitive = true
+    }
 }
 
 android {
@@ -56,6 +67,7 @@ android {
             keyAlias "key0"
             keyPassword "qweasd"
             v2SigningEnabled false
+            ext.enableCrashlytics = false
         }
 
 //        release {
@@ -123,7 +135,7 @@ android {
             ndk {
                 abiFilter "armeabi-v7a"
             }
-            versionCode = 1
+//            versionCode = 1
         }
         x86_SDK23 {
             ndk {
@@ -162,17 +174,17 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
-        def abiVersion = variant.productFlavors.get(0).versionCode
-        variant.mergedFlavor.versionCode = defaultConfig.versionCode * 10 + abiVersion
-    }
+//    applicationVariants.all { variant ->
+//        def abiVersion = variant.productFlavors.get(0).versionCode
+//        variant.mergedFlavor.versionCode = defaultConfig.versionCode * 10 + abiVersion
+//    }
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
         versionName "4.2.1"
         multiDexEnabled true
-        versionCode = 1056
+        versionCode = 10572
 
         externalNativeBuild {
             ndkBuild {

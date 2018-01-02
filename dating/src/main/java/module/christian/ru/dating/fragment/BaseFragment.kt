@@ -4,9 +4,10 @@ import android.app.Fragment
 import android.support.v7.widget.Toolbar
 import module.christian.ru.dating.R
 import module.christian.ru.dating.api.Api
-import modules.AppComponentInstance
 import module.christian.ru.dating.util.DatingAsynkTask
-import modules.PreferencesModule
+import modules.AppComponentInstance
+import modules.GeoModule
+import modules.ProfilePreferences
 
 /**
  *   Created by dakishin@gmail.com
@@ -32,8 +33,12 @@ open class BaseFragment : Fragment() {
         return AppComponentInstance.getAppComponent(activity).getApi()
     }
 
-    protected fun getPreferences(): PreferencesModule {
-        return AppComponentInstance.getAppComponent(activity).getPreferences()
+    protected fun getPreferences(): ProfilePreferences {
+        return AppComponentInstance.getAppComponent(activity).getProfilePreferences()
+    }
+
+    protected fun getGeoModule(): GeoModule {
+        return AppComponentInstance.getAppComponent(activity).getGeoModule()
     }
 
 

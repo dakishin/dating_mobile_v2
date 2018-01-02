@@ -348,7 +348,7 @@ OPENSSL_EXPORT void SSL_set_max_version(SSL *ssl, uint16_t version);
 #define SSL_OP_NO_TICKET 0x00004000L
 
 /* SSL_OP_CIPHER_SERVER_PREFERENCE configures servers to select ciphers and
- * ECDHE curves according to the server's preferencesModule instead of the
+ * ECDHE curves according to the server's profilePreferences instead of the
  * client's. */
 #define SSL_OP_CIPHER_SERVER_PREFERENCE 0x00400000L
 
@@ -1199,7 +1199,7 @@ DECLARE_LHASH_OF(SSL_SESSION)
 /* ssl_cipher_preference_list_st contains a list of SSL_CIPHERs with
  * equal-preference groups. For TLS clients, the groups are moot because the
  * server picks the cipher and groups cannot be expressed on the wire. However,
- * for servers, the equal-preference groups allow the client's preferencesModule to
+ * for servers, the equal-preference groups allow the client's profilePreferences to
  * be partially respected. (This only has an effect with
  * SSL_OP_CIPHER_SERVER_PREFERENCE).
  *

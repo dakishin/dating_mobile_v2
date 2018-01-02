@@ -55,14 +55,14 @@ class TrebaInfoFragment : BaseFragment() {
 
 
     fun clickYevgeniy() {
-//        val yevgeniy = PreferencesModule.getYevgeniy()
+//        val yevgeniy = ProfilePreferences.getYevgeniy()
 //        yevgeniy ?: return
 //        UserViewActivity.start(activity, yevgeniy)
 
     }
 
     fun clickNikolay() {
-//        val nikolay = PreferencesModule.getNikolay()
+//        val nikolay = ProfilePreferences.getNikolay()
 //        nikolay ?: return
 //        UserViewActivity.start(activity, nikolay)
     }

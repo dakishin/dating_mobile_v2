@@ -75,6 +75,11 @@
         android:theme="@style/Theme.TMessages.Start"
         android:manageSpaceActivity="org.telegram.ui.ManageSpaceActivity">
 
+        <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="887cdfab89ad4eebcf664c3c48cc5945492062e1"
+        />
+
         <activity
             android:name="org.telegram.ui.LaunchActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"

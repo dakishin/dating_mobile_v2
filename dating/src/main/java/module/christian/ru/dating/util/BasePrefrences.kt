@@ -1,15 +1,15 @@
 package module.christian.ru.dating.util
 
+import android.content.Context
 import android.content.SharedPreferences
-import javax.inject.Inject
 
 /**
  *   Created by dakishin@gmail.com
  */
-class BasePreferences @Inject constructor() {
+class BasePreferences constructor(val context: Context, name: String) {
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+
 
     fun getBoolean(property: String, defaultValue: Boolean): Boolean {
         return sharedPreferences.getBoolean(property, defaultValue)
@@ -40,6 +40,20 @@ class BasePreferences @Inject constructor() {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
         editor.apply()
+    }
+
+    fun setFloat(key: String, value: Float) {
+        val editor = sharedPreferences.edit()
+        editor.putFloat(key, value)
+        editor.apply()
+    }
+
+    fun getFloat(property: String): Float? {
+        val value = sharedPreferences.getFloat(property, (-1).toFloat())
+        if (value == (-1).toFloat()) {
+            return null
+        }
+        return value
     }
 }
 

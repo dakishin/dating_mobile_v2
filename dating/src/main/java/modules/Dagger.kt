@@ -1,12 +1,10 @@
 package modules
 
 import android.content.Context
-import android.content.SharedPreferences
 import dagger.Component
 import dagger.Module
 import dagger.Provides
 import module.christian.ru.dating.api.Api
-import module.christian.ru.dating.util.DaggerAppComponent
 import javax.inject.Singleton
 
 
@@ -31,27 +29,19 @@ object AppComponentInstance {
 @Singleton
 @Component(modules = arrayOf(AndroidModule::class))
 interface AppComponent {
-    fun getPreferences(): PreferencesModule
+    fun getProfilePreferences(): ProfilePreferences
     fun getApi(): Api
     fun getSyncWithDating(): RegisterModule
+    fun getGeoModule():GeoModule
 }
 
 @Module
 class AndroidModule(val context: Context) {
-    private val PREFS = "settings"
-
     @Provides
     @Singleton
     fun provideContext(): Context {
         return context
     }
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(): SharedPreferences {
-        return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-    }
-
 
 }
 

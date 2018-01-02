@@ -8,6 +8,7 @@
 
 package org.telegram.ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -23,8 +24,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -94,6 +97,8 @@ import java.util.Map;
 
 import module.christian.ru.dating.activity.NearMeActivity;
 import module.christian.ru.dating.activity.TrebaActivity;
+import modules.AppComponent;
+import modules.AppComponentInstance;
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
 
@@ -432,14 +437,14 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    if (!MessagesController.isFeatureEnabled("broadcast_create", actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1))) {
 //                        return;
 //                    }
-//                    SharedPreferences preferencesModule = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-//                    if (!BuildVars.DEBUG_VERSION && preferencesModule.getBoolean("channel_intro", false)) {
+//                    SharedPreferences profilePreferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+//                    if (!BuildVars.DEBUG_VERSION && profilePreferences.getBoolean("channel_intro", false)) {
 //                        Bundle args = new Bundle();
 //                        args.putInt("step", 0);
 //                        presentFragment(new ChannelCreateActivity(args));
 //                    } else {
 //                        presentFragment(new ChannelIntroActivity());
-//                        preferencesModule.edit().putBoolean("channel_intro", true).commit();
+//                        profilePreferences.edit().putBoolean("channel_intro", true).commit();
 //                    }
 //                    drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -5) {
@@ -643,8 +648,26 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
             FileLog.e(e);
         }
         MediaController.getInstance().setBaseActivity(this, true);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                int grantedPermission = checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+                if (grantedPermission != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1234);
+                } else {
+                    getAppComponent().getGeoModule().sendGeoData();
+                }
+            }
+        });
+
     }
 
+    @NonNull
+    private AppComponent getAppComponent() {
+        return AppComponentInstance.
+            getAppComponent(ApplicationLoader.applicationContext);
+    }
 
     private void checkLayout() {
         if (!AndroidUtilities.isTablet() || rightActionBarLayout == null) {

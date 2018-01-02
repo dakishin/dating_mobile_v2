@@ -118,8 +118,8 @@ public abstract class BaseLocationAdapter extends RecyclerListView.SelectionAdap
                     JSONObject location = object.getJSONObject("geometry").getJSONObject("location");
                     TLRPC.TL_messageMediaVenue venue = new TLRPC.TL_messageMediaVenue();
                     venue.geo = new TLRPC.TL_geoPoint();
-                    venue.geo.lat = location.getDouble("lat");
-                    venue.geo._long = location.getDouble("lng");
+                    venue.geo.lat = location.getFloat("lat");
+                    venue.geo._long = location.getFloat("lng");
                     if (object.has("vicinity")) {
                         venue.address = object.getString("vicinity").trim();
                     } else {
