@@ -19,6 +19,7 @@ class ProfilePreferences @Inject constructor(context: Context) {
     private val FIRST_NAME_KEY = "FIRST_NAME_KEY"
     private val LAST_NAME_KEY = "LAST_NAME_KEY"
     private val UUID_KEY = "UUID_KEY"
+    private val ACCESS_HASH_KEY = "ACCESS_HASH_KEY"
 
 
     private val TAG = ProfilePreferences::javaClass.name
@@ -77,6 +78,10 @@ class ProfilePreferences @Inject constructor(context: Context) {
             userJson = Gson().toJson(telegramUser)
         }
         basePreferences.setString(PROFILE_KEY, userJson)
+    }
+
+    fun saveAccessHash(accessHash: Long) {
+        basePreferences.setLong(ACCESS_HASH_KEY, accessHash)
     }
 
 

@@ -124,7 +124,6 @@ public class Utils {
     }
 
 
-
     public static boolean isPermissionGranted(String permission, Activity activity) {
         return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
     }
@@ -141,8 +140,6 @@ public class Utils {
     }
 
 
-
-
     public static boolean isNotBlank(@Nullable String string) {
         return string != null && !string.trim().equals("");
     }
@@ -151,5 +148,9 @@ public class Utils {
     @NotNull
     public static String getLanguage() {
         return Locale.getDefault().getLanguage();
+    }
+
+    public static boolean isBlank(@Nullable String headerCurrentUser) {
+        return headerCurrentUser == null || headerCurrentUser.trim().equalsIgnoreCase("");
     }
 }

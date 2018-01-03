@@ -3,4 +3,5 @@
 
     <dimen name="treba_history_list_item_divider">32dp</dimen>
     <dimen name="font_size_20dp">20dp</dimen>
+    <dimen name="chat_list_avatar_size">44dp</dimen>
 </resources>

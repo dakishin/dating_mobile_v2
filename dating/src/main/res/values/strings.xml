@@ -95,4 +95,8 @@
     <string name="unexpected_error">Unexpected error. Please, try later.</string>
     <string name="choose_church">Choose church</string>
 
+    <string name="near_user_header_distance">ДО %1$d КМ</string>
+
+    <string name="who_near_menu">Кто рядом</string>
+
 </resources>

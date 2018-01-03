@@ -15,14 +15,15 @@ class RegisterModule @Inject constructor() {
 
     val TAG = RegisterModule::javaClass.name
 
-    fun registerAsync(telegramId: String, firstName: String?, lastName: String?) {
+    fun registerAsync(telegramId: Long, jsonValue: String) {
         Thread(Runnable {
             try {
-                val user = api.registerTelegramUser(telegramId, firstName, lastName)
-                profilePreferences.saveTelegramId(telegramId)
-                profilePreferences.saveUUID(user?.uuid)
-                profilePreferences.saveFistName(firstName)
-                profilePreferences.saveLastName(lastName)
+                api.registerTelegramUser(telegramId, jsonValue)
+//                profilePreferences.saveTelegramId(telegramId)
+//                profilePreferences.saveUUID(user?.uuid)
+//                profilePreferences.saveFistName(firstName)
+//                profilePreferences.saveLastName(jsonValue)
+//                profilePreferences.saveAccessHash(accessHash)
             } catch (e: Exception) {
                 Log.e(TAG, e.message, e)
             }

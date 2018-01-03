@@ -8,11 +8,6 @@
 
 
         <activity
-            android:name=".activity.NearMeActivity"
-            android:theme="@style/AppTheme"
-            />
-
-        <activity
             android:name=".activity.TrebaActivity"
             android:theme="@style/AppTheme"
             />

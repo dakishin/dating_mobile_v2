@@ -30,9 +30,15 @@ class BasePreferences constructor(val context: Context, name: String) {
         editor.apply()
     }
 
-    fun setInt(property: String, isEnabled: Int) {
+    fun setInt(key: String, value: Int) {
         val editor = sharedPreferences.edit()
-        editor.putInt(property, isEnabled)
+        editor.putInt(key, value)
+        editor.apply()
+    }
+
+    fun setLong(key: String, value: Long) {
+        val editor = sharedPreferences.edit()
+        editor.putLong(key, value)
         editor.apply()
     }
 

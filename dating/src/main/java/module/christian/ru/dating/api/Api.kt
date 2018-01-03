@@ -4,6 +4,7 @@ import android.os.Looper
 import android.util.Log
 import com.google.gson.stream.MalformedJsonException
 import module.christian.ru.dating.BuildConfig
+import module.christian.ru.dating.model.NearUser
 import module.christian.ru.dating.model.TelegramUser
 import module.christian.ru.dating.model.Treba
 import module.christian.ru.dating.model.TrebaType
@@ -17,6 +18,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -95,9 +99,9 @@ class Api @Inject constructor() {
     }
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: String, firstName: String?, lastName: String?): TelegramUser? {
-        return executeApiMethod(createService()
-            .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId, firstName, lastName))).result
+    fun registerTelegramUser(telegramId: Long, jsonValue: String) {
+        executeApiMethod(createService()
+            .registerTelegramUser(telegramId, jsonValue))
     }
 
     @Throws(PifException::class)
@@ -111,10 +115,27 @@ class Api @Inject constructor() {
         executeApiMethod(createService().sendGeoData(PifService.GeoDataParam(ownerUuid, lat, lon, city)))
     }
 
+    @Throws(PifException::class)
+    fun getNearMeUsers(): Observable<ArrayList<NearUser>> {
+        return Observable.just(arrayListOf<NearUser>().apply {
+            add(NearUser(326548570, 1, "Москва"))
+            add(NearUser(453627803, 3, "Москва"))
 
-    enum class UserType {
-        RUSSIANS,
-        OTHERS
+            add(NearUser(326548570, 5, "Москва"))
+            add(NearUser(453627803, 8, "Москва"))
+
+            add(NearUser(326548570, 8, "Москва"))
+            add(NearUser(453627803, 10, "Москва"))
+
+            add(NearUser(326548570, 20, "Зеленоград"))
+            add(NearUser(453627803, 40, "Зеленоград"))
+
+            add(NearUser(326548570, 200, "Ярославль"))
+            add(NearUser(453627803, 220, "Омск"))
+
+        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
 

@@ -1,0 +1,56 @@
+{
+  "access_hash": -6880103456444021685,
+  "bot": false,
+  "bot_chat_history": false,
+  "bot_info_version": 0,
+  "bot_inline_geo": false,
+  "bot_nochats": false,
+  "contact": false,
+  "deleted": false,
+  "explicit_content": false,
+  "first_name": "Модератор",
+  "flags": 83,
+  "id": 453627803,
+  "inactive": false,
+  "min": false,
+  "mutual_contact": false,
+  "phone": "79774994498",
+  "restricted": false,
+  "self": false,
+  "status": {
+    "expires": 1515438359,
+    "disableFree": false,
+    "networkType": 0
+  },
+  "verified": false,
+  "disableFree": false,
+  "networkType": 0
+}
+{
+  "access_hash": -4059421175047988132,
+  "bot": false,
+  "bot_chat_history": false,
+  "bot_info_version": 0,
+  "bot_inline_geo": false,
+  "bot_nochats": false,
+  "contact": false,
+  "deleted": false,
+  "explicit_content": false,
+  "first_name": "Модератор",
+  "flags": 1107,
+  "id": 453627803,
+  "inactive": false,
+  "min": false,
+  "mutual_contact": false,
+  "phone": "79774994498",
+  "restricted": false,
+  "self": true,
+  "status": {
+    "expires": 1515438515,
+    "disableFree": false,
+    "networkType": 0
+  },
+  "verified": false,
+  "disableFree": false,
+  "networkType": 0
+}

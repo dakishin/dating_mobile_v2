@@ -43,6 +43,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.dating.NearMeActivity;
+
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
@@ -95,7 +97,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import module.christian.ru.dating.activity.NearMeActivity;
 import module.christian.ru.dating.activity.TrebaActivity;
 import modules.AppComponent;
 import modules.AppComponentInstance;
@@ -452,7 +453,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
-                    NearMeActivity.start(LaunchActivity.this);
+                    presentFragment(new NearMeActivity());
 //                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
