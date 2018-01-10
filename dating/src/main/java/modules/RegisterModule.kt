@@ -2,6 +2,7 @@ package modules
 
 import android.util.Log
 import module.christian.ru.dating.api.Api
+import module.christian.ru.dating.util.PifException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,6 +24,8 @@ class RegisterModule @Inject constructor() {
                 profilePreferences.saveUUID(user?.uuid)
                 profilePreferences.saveFistName(firstName)
                 profilePreferences.saveLastName(lastName)
+            } catch (e: PifException) {
+                Log.e(TAG, e.error.toString(), e)
             } catch (e: Exception) {
                 Log.e(TAG, e.message, e)
             }

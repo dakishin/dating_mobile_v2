@@ -184,7 +184,7 @@ android {
         targetSdkVersion 25
         versionName "4.2.1"
         multiDexEnabled true
-        versionCode = 10572
+        versionCode = vertion_code_ext
 
         externalNativeBuild {
             ndkBuild {

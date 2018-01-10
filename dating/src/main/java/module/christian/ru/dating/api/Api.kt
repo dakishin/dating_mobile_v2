@@ -10,6 +10,7 @@ import module.christian.ru.dating.model.TrebaType
 import module.christian.ru.dating.util.ErrorCode
 import module.christian.ru.dating.util.PifException
 import module.christian.ru.dating.util.Utils
+import modules.ProfilePreferences
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -32,6 +33,8 @@ class Api @Inject constructor() {
     private val geoService: GeoService
     private val TAG = Api::class.java.name
 
+    @Inject
+    lateinit var profilePreferences: ProfilePreferences
 
     init {
         val logInterceptor = HttpLoggingInterceptor()
@@ -132,15 +135,15 @@ class Api @Inject constructor() {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             var request = chain.request()
-//            val profile = ProfilePreferences.getProfile()
-//            if (profile != null && !Utils.isEmpty(profile!!.email)) {
-//                request = request.newBuilder()
-//                    .addHeader(AUTH_HEADER, URLEncoder.encode(profile!!.email, "utf-8"))
-//                    .build()
-//
-//            }
+            request = request.newBuilder()
+                .addHeader("User-Agent", getUserAgent())
+                .build()
             return chain.proceed(request)
         }
+    }
+
+    private fun getUserAgent(): String {
+        return "TelegramID:" + profilePreferences.getTelegramId() + " / FirstName:"+ profilePreferences.getFirstName() + " / VersionCode:"+BuildConfig.VERSION_CODE
     }
 
     private fun createService(): PifService {
@@ -166,7 +169,7 @@ class Api @Inject constructor() {
                 throw PifException(body.errorCode, response.raw().toString(), null)
             }
 
-            if (body.apiClientVersionCode > BuildConfig.APP_VERSION) {
+            if (body.apiClientVersionCode > BuildConfig.VERSION_CODE) {
                 throw PifException(ErrorCode.NEED_UPDATE, response.raw().toString(), null)
             }
 
