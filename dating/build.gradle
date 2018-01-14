@@ -14,12 +14,11 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
+        versionCode vertion_code_ext
         versionName "1.0"
 
         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField 'Integer', 'APP_VERSION', '389'
 
     }
     buildTypes {

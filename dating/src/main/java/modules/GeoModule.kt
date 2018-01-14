@@ -31,6 +31,10 @@ class GeoModule @Inject constructor() {
 
     val TAG = GeoModule::javaClass.name
 
+    private var lastUpdateDate: Long? = null
+
+    private val _24_HOURS = 1000 * 60 * 60 * 24
+
 
     @SuppressLint("MissingPermission")
     fun sendGeoData() {
@@ -42,9 +46,13 @@ class GeoModule @Inject constructor() {
 
     private fun sendGeoDataSync() {
         val uuid = profilePreferences.getUUID() ?: return
-        if (geoPreferences.getLat() != null) {
+
+        val lastUpdateDate = this.lastUpdateDate
+
+        if (lastUpdateDate != null && lastUpdateDate < System.currentTimeMillis() + _24_HOURS) {
             return
         }
+
         val grantedPermission = context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         if (grantedPermission != PackageManager.PERMISSION_GRANTED) {
             return
@@ -58,6 +66,7 @@ class GeoModule @Inject constructor() {
                 location ?: return@addOnSuccessListener
                 Thread({
                     try {
+                        this.lastUpdateDate = System.currentTimeMillis()
                         geoPreferences.saveGeoData(location.latitude, location.longitude)
                         val city = api.getCityByLocation(location.latitude, location.longitude)
                         api.sendGeoData(uuid, location.latitude, location.longitude, city)
