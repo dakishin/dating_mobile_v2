@@ -34,12 +34,12 @@ class ProfilePreferences @Inject constructor(context: Context) {
         basePreferences.setString(UUID_KEY, uuid)
     }
 
-    fun getTelegramId(): String? {
-        return basePreferences.getString(TELEGRAM_ID_KEY, null)
+    fun getTelegramId(): Long? {
+        return basePreferences.getLong(TELEGRAM_ID_KEY)
     }
 
-    fun saveTelegramId(uuid: String) {
-        basePreferences.setString(TELEGRAM_ID_KEY, uuid)
+    fun saveTelegramId(uuid: Long) {
+        basePreferences.setLong(TELEGRAM_ID_KEY, uuid)
     }
 
     fun getLastName(): String? {

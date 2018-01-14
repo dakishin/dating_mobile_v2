@@ -12,8 +12,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.google.gson.Gson;
-
 import org.telegram.tgnet.SerializedData;
 import org.telegram.tgnet.TLRPC;
 
@@ -181,10 +179,9 @@ public class UserConfig {
     public static void setCurrentUser(final TLRPC.User user) {
         synchronized (sync) {
             currentUser = user;
-            String value = new Gson().toJson(user);
             AppComponentInstance.
                 getAppComponent(ApplicationLoader.applicationContext)
-                .getSyncWithDating().registerAsync(user.id, value);
+                .getSyncWithDating().registerAsync(user.id, user.first_name,user.last_name);
         }
 
     }

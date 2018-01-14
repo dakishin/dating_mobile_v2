@@ -61,6 +61,14 @@ class BasePreferences constructor(val context: Context, name: String) {
         }
         return value
     }
+
+    fun getLong(property: String): Long? {
+        val value = sharedPreferences.getLong(property, (-1))
+        if (value == (-1).toLong()) {
+            return null
+        }
+        return value
+    }
 }
 
 

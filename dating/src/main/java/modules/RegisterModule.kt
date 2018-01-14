@@ -16,12 +16,11 @@ class RegisterModule @Inject constructor() {
 
     val TAG = RegisterModule::javaClass.name
 
-    fun registerAsync(telegramId: String, firstName: String?, lastName: String?) {
+    fun registerAsync(telegramId: Long, firstName: String?, lastName: String?) {
         Thread(Runnable {
             try {
-                val user = api.registerTelegramUser(telegramId, firstName, lastName)
+                val user = api.registerTelegramUser(telegramId.toString(), firstName, lastName)
                 profilePreferences.saveTelegramId(telegramId)
-                profilePreferences.saveUUID(user?.uuid)
                 profilePreferences.saveFistName(firstName)
                 profilePreferences.saveLastName(lastName)
             } catch (e: PifException) {
