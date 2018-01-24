@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tabs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:id="@+id/privateTab"
+        style="@style/chat_tab"
+        tools:text="Cоздать"
+        />
+
+
+    <TextView
+        android:id="@+id/centerTab"
+        style="@style/chat_tab"
+        tools:visibility="visible"
+        tools:text="Cоздать"
+        android:visibility="gone"/>
+
+
+    <TextView
+        tools:text="Cоздать"
+        android:id="@+id/publicTab"
+        style="@style/chat_tab"
+        />
+
+
+</LinearLayout>

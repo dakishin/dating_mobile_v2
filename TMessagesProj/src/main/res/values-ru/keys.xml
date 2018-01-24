@@ -1,0 +1,13 @@
+<resources>
+
+    <integer name="living_room_id">1168886410</integer>
+    <string name="living_room_public_name">christian_public</string>
+
+    <integer name="ask_priest_room_id">1356241276</integer>
+    <string name="ask_priest_public_name">christian_questions</string>
+
+    <integer name="bogoslov_room_id">1200248648</integer>
+    <string name="bogoslov_room_public_name">bogoslov_chat</string>
+
+    <bool name="is_russian_mode">true</bool>
+</resources>

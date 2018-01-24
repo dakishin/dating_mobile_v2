@@ -102,9 +102,9 @@ class Api @Inject constructor() {
     }
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: String, firstName: String?, lastName: String?): TelegramUser? {
+    fun registerTelegramUser(telegramId: Long, firstName: String?, lastName: String?): TelegramUser? {
         return executeApiMethod(createService()
-            .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId, firstName, lastName))).result
+            .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))).result
     }
 
     @Throws(PifException::class)

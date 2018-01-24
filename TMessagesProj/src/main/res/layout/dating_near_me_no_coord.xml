@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:showIn="@layout/dating_near_me_no_coord"
+    >
+
+    <TextView
+        android:textColor="@color/textColorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/search_location_unavailable"
+        android:textSize="21dp"
+        tools:ignore="SpUsage"/>
+
+    <TextView
+        android:textColor="@color/textColorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="96dp"
+        android:padding="10dp"
+        android:text="@string/search_request_location"
+        android:textSize="16dp"
+        tools:ignore="SpUsage"/>
+
+
+    <Button
+        android:id="@+id/requestLocation"
+        style="@style/button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/allow"/>
+
+</LinearLayout>

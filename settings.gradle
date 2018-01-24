@@ -1,1 +1,1 @@
-include ':TMessagesProj', ':dating'
+include ':TMessagesProj'

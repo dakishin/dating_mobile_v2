@@ -206,6 +206,11 @@
                   android:excludeFromRecents="true"
                 android:theme="@style/Theme.TMessages.TransparentWithAlerts"/>
 
+        <activity
+            android:name="com.dating.activity.treba.TrebaActivity"
+            android:theme="@style/AppTheme"
+            />
+
         <receiver
             android:name=".AutoMessageHeardReceiver"
             android:exported="false">

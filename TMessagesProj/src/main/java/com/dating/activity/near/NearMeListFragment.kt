@@ -1,6 +1,7 @@
-package com.dating
+package com.dating.activity.near
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import module.christian.ru.dating.model.NearUser
-import module.christian.ru.dating.util.Utils
+import com.dating.model.CompoundUser
+import com.dating.model.NearUser
+import com.dating.modules.AppComponentInstance
+import com.dating.util.Utils
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
 import org.telegram.messenger.support.widget.DividerItemDecoration
 import org.telegram.messenger.support.widget.LinearLayoutManager
 import org.telegram.messenger.support.widget.RecyclerView
-import org.telegram.tgnet.ConnectionsManager
 import org.telegram.tgnet.TLRPC
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.BaseFragment
@@ -29,18 +34,32 @@ import java.util.*
 
 /**
  *   Created by dakishin@gmail.com
+ *
+ *   https://my.mail.ru/mail/serega.volodin.1975/video/_myvideo/8781.html?from=videoplayer
+ *
+ *
  */
-class NearMeActivity : BaseFragment() {
+class NearMeListFragment : BaseFragment() {
 
     private lateinit var mUserAdapter: UserAdapter
-    private val TAG = NearMeActivity::javaClass.name
+    private val TAG = NearMeListFragment::javaClass.name
 
+
+    companion object {
+        @JvmStatic
+        fun create(context: Context): BaseFragment {
+            if (AppComponentInstance.getAppComponent(context).getGeoModule().geoPreferences.getLat() == null) {
+                return NearMeNoCoordFragment.create()
+            }
+            return NearMeListFragment()
+        }
+    }
 
     override fun createView(context: Context): View? {
 
         actionBar.setBackButtonImage(R.drawable.ic_ab_back)
         actionBar.setAllowOverlayTitle(true)
-        actionBar.setTitle(context.getString(module.christian.ru.dating.R.string.who_near_menu))
+        actionBar.setTitle(context.getString(R.string.who_near_menu))
         actionBar.setActionBarMenuOnItemClick(object : ActionBar.ActionBarMenuOnItemClick() {
             override fun onItemClick(id: Int) {
                 if (id == -1) {
@@ -57,9 +76,17 @@ class NearMeActivity : BaseFragment() {
 
         val nearMeList = fragmentView.findViewById(R.id.nearMeList) as RecyclerView
         nearMeList.layoutManager = layoutManager
-        val decotator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        decotator.setDrawable(context.resources.getDrawable(R.drawable.shape_rectangle))
-        nearMeList.addItemDecoration(decotator)
+
+
+        nearMeList.addItemDecoration(object : DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL) {
+
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                val offset = context.resources.getDimensionPixelOffset(R.dimen.near_list_item_divider)
+                outRect.set(0, offset, 0, 0)
+            }
+        })
+
+
         mUserAdapter = UserAdapter()
         nearMeList.adapter = mUserAdapter
         nearMeList.setHasFixedSize(true)
@@ -121,8 +148,8 @@ class NearMeActivity : BaseFragment() {
 
 
     internal inner class NearListItem {
-        var user1: NearUser? = null
-        var user2: NearUser? = null
+        var user1: CompoundUser? = null
+        var user2: CompoundUser? = null
         var header: String? = null
         var isByDistance = true
     }
@@ -138,7 +165,7 @@ class NearMeActivity : BaseFragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_who_near_me, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.dating_list_item_who_near_me, parent, false)
             return ViewHolder(view)
         }
 
@@ -179,7 +206,7 @@ class NearMeActivity : BaseFragment() {
 
         }
 
-        private fun initUserView(holder: UserHolder, user: NearUser?) {
+        private fun initUserView(holder: UserHolder, user: CompoundUser?) {
             if (user == null) {
                 holder.itemView.visibility = View.GONE
                 return
@@ -187,7 +214,7 @@ class NearMeActivity : BaseFragment() {
 
             holder.itemView.visibility = View.VISIBLE
 
-            val remoteUser = getUser(user.telegramId)
+            val remoteUser = getUser(user.telegramUser.id)
 
             holder.nameView.text = remoteUser?.first_name
             holder.avatarDrawable.setInfo(remoteUser)
@@ -197,7 +224,7 @@ class NearMeActivity : BaseFragment() {
 
             holder.itemView.setOnClickListener {
                 val param = Bundle()
-                param.putInt("user_id", Integer.valueOf(user.telegramId)!!)
+                param.putInt("user_id", Integer.valueOf(user.telegramUser.id)!!)
                 presentFragment(ChatActivity(param))
             }
 
@@ -216,13 +243,13 @@ class NearMeActivity : BaseFragment() {
         }
 
 
-        fun add(users: List<NearUser>) {
+        fun add(users: List<CompoundUser>) {
             var index = 0
 
             while (index < users.size) {
                 var item: NearListItem
                 val user = users[index]
-                val isByDistance: Boolean = (user.distance <= 10)
+                val isByDistance: Boolean = (user.user != null) && (user.user.distance <= 10)
 
                 if (items.isEmpty()) {
                     item = NearListItem()
@@ -246,7 +273,7 @@ class NearMeActivity : BaseFragment() {
                     continue
                 }
 
-                val headerUser1 = getHeader(item.user1, isByDistance)
+                val headerUser1 = getHeader(item.user1!!, isByDistance)
                 if ((Utils.isBlank(headerCurrentUser) || headerUser1.equals(headerCurrentUser, ignoreCase = true)) && item.isByDistance == isByDistance) {
                     item.user2 = user
                     index++
@@ -254,7 +281,7 @@ class NearMeActivity : BaseFragment() {
                 }
 
                 item = NearListItem()
-                item.isByDistance = isByDistance!!
+                item.isByDistance = isByDistance
                 items.add(item)
                 item.user1 = user
                 item.header = headerCurrentUser
@@ -264,11 +291,11 @@ class NearMeActivity : BaseFragment() {
             notifyDataSetChanged()
         }
 
-        private fun getHeader(user: NearUser?, isByDistance: Boolean?): String {
-            return if (isByDistance!!) {
-                parentActivity!!.getString(R.string.near_user_header_distance, getGroup(user!!.distance))
+        private fun getHeader(user: CompoundUser, isByDistance: Boolean): String {
+            return if (isByDistance) {
+                parentActivity!!.getString(R.string.near_user_header_distance, getGroup(user.user!!.distance))
             } else {
-                user!!.city
+                user.user?.city ?: parentActivity!!.getString(R.string.city_not_specified)
             }
         }
 
@@ -287,30 +314,60 @@ class NearMeActivity : BaseFragment() {
     }
 
     private fun loadUsers() {
-        val req = TLRPC.TL_channels_getParticipants()
-        val chat_id = parentActivity.resources.getInteger(module.christian.ru.dating.R.integer.living_room_id)
-        req.channel = MessagesController.getInputChannel(chat_id)
-        req.filter = TLRPC.TL_channelParticipantsRecent()
-        req.offset = 0
-        req.limit = 300
-        val reqId = ConnectionsManager.getInstance().sendRequest(req) { response, error ->
-            if (error != null) {
-                Log.e(TAG, error.text)
-                return@sendRequest
-            }
-            val res = response as TLRPC.TL_channels_channelParticipants
-            MessagesController.getInstance().putUsers(res.users, false)
-            appComponent.getApi()
-                .getNearMeUsers()
-                .doOnError { exception -> }
-                .subscribe({ users ->
-                    mUserAdapter.add(users)
-                })
+        val chat_id = parentActivity.resources.getInteger(R.integer.living_room_id)
+        telegramApi()
+            .getUsersFromChat(chat_id)
+            .zipWith(datingApi().getNearMeUsers(), BiFunction<List<TLRPC.User>, List<NearUser>, Observable<CompoundUser>>
+            { telegramUsers, nearUsers ->
 
-        }
-        ConnectionsManager.getInstance().bindRequestToGuid(reqId, classGuid)
+                val usersWithCity = arrayListOf<CompoundUser>()
+                val usersWithoutCity = arrayListOf<CompoundUser>()
+
+                nearUsers.forEach {
+                    val near = it
+                    val find = telegramUsers.findLast { it.id == near.telegramId }
+                    if (find != null) {
+                        usersWithCity.add(CompoundUser(near, find))
+                    }
+                }
+                telegramUsers.forEach {
+                    val telegamUser = it
+                    if (usersWithCity.findLast { it.telegramUser.id == telegamUser.id } == null) {
+                        usersWithoutCity.add(CompoundUser(null, telegamUser))
+                    }
+
+                }
+
+                Observable.fromIterable(usersWithCity.apply { this.addAll(usersWithoutCity) })
+            }
+            )
+
+            .flatMap { v -> v }
+            .toList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { users ->
+                    try {
+
+                        mUserAdapter.add(users)
+                    } catch (e: Throwable) {
+                        (this@NearMeListFragment::errorHandle)()(e)
+                    }
+
+                }, errorHandle)
+
+
     }
 
+    val errorHandle: (Throwable) -> Unit = { e ->
+        Log.e("TAG", e.message, e)
+    }
+
+    private fun telegramApi() = AppComponentInstance.
+        getAppComponent(parentActivity).getTelegramApi()
+
+    private fun datingApi() = AppComponentInstance.
+        getAppComponent(parentActivity).getDatingApi()
 
     private fun getUser(telegramId: Int): TLRPC.User? {
         return MessagesController.getInstance().getUser(telegramId)

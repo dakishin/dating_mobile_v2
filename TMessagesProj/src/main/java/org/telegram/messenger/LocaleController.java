@@ -728,7 +728,7 @@ public class LocaleController {
             value = "LOC_ERR:" + key;
         }
 
-        value = value.replace("Telegram", ApplicationLoader.applicationContext.getString(module.christian.ru.dating.R.string.app_name_tool_bar));
+        value = value.replace("Telegram", ApplicationLoader.applicationContext.getString(R.string.app_name_tool_bar));
 
         return value;
     }

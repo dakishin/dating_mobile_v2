@@ -19,8 +19,9 @@ class RegisterModule @Inject constructor() {
     fun registerAsync(telegramId: Long, firstName: String?, lastName: String?) {
         Thread(Runnable {
             try {
-                val user = api.registerTelegramUser(telegramId.toString(), firstName, lastName)
+                val user = api.registerTelegramUser(telegramId, firstName, lastName)
                 profilePreferences.saveTelegramId(telegramId)
+                profilePreferences.saveUUID(user?.uuid)
                 profilePreferences.saveFistName(firstName)
                 profilePreferences.saveLastName(lastName)
             } catch (e: PifException) {

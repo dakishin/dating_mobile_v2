@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -43,7 +42,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dating.NearMeActivity;
+import com.dating.activity.near.NearMeListFragment;
+import com.dating.activity.treba.TrebaActivity;
+import com.dating.modules.AppComponentInstance;
 
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
@@ -97,9 +98,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import module.christian.ru.dating.activity.TrebaActivity;
-import modules.AppComponent;
-import modules.AppComponentInstance;
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
 
@@ -374,8 +372,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                        return;
 //                    }
 //                    presentFragment(new GroupCreateActivity());
-                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.living_room_id);
-                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.living_room_public_name);
+                    int chatId = getResources().getInteger(R.integer.living_room_id);
+                    String chatPublicName = getResources().getString(R.string.living_room_public_name);
 
                     if (MessagesController.getInstance().getChat(chatId) != null) {
                         Bundle args = new Bundle();
@@ -406,8 +404,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                            null, null, false, 0, null, new String[]{}, 0);
 //                    }
 
-                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.ask_priest_room_id);
-                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.ask_priest_public_name);
+                    int chatId = getResources().getInteger(R.integer.ask_priest_room_id);
+                    String chatPublicName = getResources().getString(R.string.ask_priest_public_name);
 
                     if (MessagesController.getInstance().getChat(chatId) != null) {
                         Bundle args = new Bundle();
@@ -421,8 +419,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                     drawerLayoutContainer.closeDrawer(false);
 
                 } else if (id == -4) {
-                    int chatId = getResources().getInteger(module.christian.ru.dating.R.integer.bogoslov_room_id);
-                    String chatPublicName = getResources().getString(module.christian.ru.dating.R.string.bogoslov_room_public_name);
+                    int chatId = getResources().getInteger(R.integer.bogoslov_room_id);
+                    String chatPublicName = getResources().getString(R.string.bogoslov_room_public_name);
                     if (MessagesController.getInstance().getChat(chatId) != null) {
                         Bundle args = new Bundle();
                         args.putInt("chat_id", chatId);
@@ -453,7 +451,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
-                    presentFragment(new NearMeActivity());
+                    presentFragment(NearMeListFragment.create(getBaseContext()));
 //                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
@@ -657,18 +655,14 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                 if (grantedPermission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1234);
                 } else {
-                    getAppComponent().getGeoModule().sendGeoData();
+                    AppComponentInstance.getAppComponent(getBaseContext())
+                        .getGeoModule().sendGeoDataIfNeeded();
                 }
             }
         });
 
     }
 
-    @NonNull
-    private AppComponent getAppComponent() {
-        return AppComponentInstance.
-            getAppComponent(ApplicationLoader.applicationContext);
-    }
 
     private void checkLayout() {
         if (!AndroidUtilities.isTablet() || rightActionBarLayout == null) {

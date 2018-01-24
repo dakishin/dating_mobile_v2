@@ -40,9 +40,6 @@ import java.io.File;
 import java.io.RandomAccessFile;
 
 import io.fabric.sdk.android.Fabric;
-import modules.AndroidModule;
-import modules.AppComponent;
-import modules.DaggerAppComponent;
 
 public class ApplicationLoader extends Application {
 
@@ -215,8 +212,6 @@ public class ApplicationLoader extends Application {
         applicationHandler = new Handler(applicationContext.getMainLooper());
 
         startPushService();
-        AppComponent appComponent = DaggerAppComponent.builder()
-            .androidModule(new AndroidModule(getApplicationContext())).build();
 
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
             .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())

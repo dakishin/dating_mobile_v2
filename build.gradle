@@ -1,8 +1,36 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+ext{
+//    ext.kotlin_version = '1.2.10'
+//    ext.butterKnifeVersion = "8.4.0"
+    version_code_ext=10574
+
+    androidCompileSdkVersion = 26
+    androidBuildToolsVersion = "26.0.1"
+    androidMinSdkVersion = 19
+    androidDevSdkVersion = 21
+    androidTargetSdkVersion = 27
+
+    libraryAndroidSupportVersion = "26.1.0"
+
+    kotlinVersion = '1.2.10'
+    ankoVersion = '0.10.4'
+
+    playServicesVersion = "11.4.2"
+    rxVersion = "2.1.5"
+    rxAndroidVersion = "2.0.1"
+    junitVersion = "4.12"
+    daggerVersion = "2.10"
+    okhttpVersion = "3.9.0"
+    retrofitVersion = "2.2.0"
+    jacksonVersion = "2.8.8"
+    smartLocation = "3.3.3"
+
+}
+
+
 buildscript {
-    ext.kotlin_version = '1.2.10'
-    ext.butterKnifeVersion = "8.4.0"
-    ext.vertion_code_ext=10574
+
 
     repositories {
         jcenter()
@@ -12,7 +40,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.google.gms:google-services:3.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.10"
         classpath 'io.fabric.tools:gradle:1.24.2'
     }
 }
@@ -20,5 +48,6 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven { url "https://maven.google.com" }
     }
 }

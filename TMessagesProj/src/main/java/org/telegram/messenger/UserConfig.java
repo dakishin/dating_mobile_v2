@@ -12,14 +12,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
+import com.dating.modules.AppComponentInstance;
+
 import org.telegram.tgnet.SerializedData;
 import org.telegram.tgnet.TLRPC;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
-
-import modules.AppComponentInstance;
 
 public class UserConfig {
 
@@ -181,7 +181,7 @@ public class UserConfig {
             currentUser = user;
             AppComponentInstance.
                 getAppComponent(ApplicationLoader.applicationContext)
-                .getSyncWithDating().registerAsync(user.id, user.first_name,user.last_name);
+                .getRegisterModule().registerAsync(user.id, user.first_name,user.last_name);
         }
 
     }

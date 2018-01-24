@@ -98,7 +98,7 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
      */
     @Override
     public int getItemViewType(int index) {
-        if (mContext.getResources().getBoolean(module.christian.ru.dating.R.bool.is_russian_mode)) {
+        if (mContext.getResources().getBoolean(R.bool.is_russian_mode)) {
             switch (index) {
                 case 0:
                     return 0;
@@ -155,19 +155,19 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         items.add(null); // profile  index 0
         items.add(null); // padding  index 1
 //        index 2
-        items.add(new Item(-1, mContext.getString(module.christian.ru.dating.R.string.who_is_near), R.drawable.menu_newgroup));
+        items.add(new Item(-1, mContext.getString(R.string.who_is_near), R.drawable.menu_newgroup));
 
 //        index 3
-        items.add(new Item(-2, mContext.getString(module.christian.ru.dating.R.string.living_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+        items.add(new Item(-2, mContext.getString(R.string.living_room), R.drawable.ic_chat_bubble_outline_white_24dp));
 
 //        index 4
-        items.add(new Item(-3, mContext.getString(module.christian.ru.dating.R.string.ask_priest_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+        items.add(new Item(-3, mContext.getString(R.string.ask_priest_room), R.drawable.ic_chat_bubble_outline_white_24dp));
 
-        if (mContext.getResources().getBoolean(module.christian.ru.dating.R.bool.is_russian_mode)) {
+        if (mContext.getResources().getBoolean(R.bool.is_russian_mode)) {
 //        index 5
-            items.add(new Item(-4, mContext.getString(module.christian.ru.dating.R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
+            items.add(new Item(-4, mContext.getString(R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
             //        index 6
-            items.add(new Item(-5, mContext.getString(module.christian.ru.dating.R.string.treba_menu), module.christian.ru.dating.R.drawable.chat_priest));
+            items.add(new Item(-5, mContext.getString(R.string.treba_menu), R.drawable.chat_priest));
         } else {
             items.add(null); // profile  index 5
             items.add(null); // padding  index 6
