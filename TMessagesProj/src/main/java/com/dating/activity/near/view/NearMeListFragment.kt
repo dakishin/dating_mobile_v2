@@ -1,4 +1,4 @@
-package com.dating.activity.near
+package com.dating.activity.near.view
 
 import android.content.Context
 import android.graphics.Rect
@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.arellomobile.mvp.MvpDelegate
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.dating.activity.near.*
 import com.dating.model.CompoundUser
-import com.dating.model.NearUser
 import com.dating.modules.AppComponentInstance
 import com.dating.util.Utils
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
@@ -30,32 +30,57 @@ import org.telegram.ui.ActionBar.ThemeDescription
 import org.telegram.ui.ChatActivity
 import org.telegram.ui.Components.AvatarDrawable
 import org.telegram.ui.Components.BackupImageView
+import org.telegram.ui.LaunchActivity
 import java.util.*
 
 /**
  *   Created by dakishin@gmail.com
  *
- *   https://my.mail.ru/mail/serega.volodin.1975/video/_myvideo/8781.html?from=videoplayer
  *
  *
  */
-class NearMeListFragment : BaseFragment() {
+class NearMeListFragment : BaseFragment(), NearMeView {
+
+    @ProvidePresenter
+    fun providePresenter() = NearMeContainer()
+
+    @InjectPresenter
+    lateinit var container: NearMeContainer
+
+    private var mMvpDelegate: MvpDelegate<Any>? = null
+
+    fun getMvpDelegate(): MvpDelegate<Any> {
+        if (mMvpDelegate == null) {
+            mMvpDelegate = MvpDelegate<Any>(this)
+        }
+        return mMvpDelegate!!
+    }
+
+    private lateinit var presenter: NearMePresenter
+
 
     private lateinit var mUserAdapter: UserAdapter
     private val TAG = NearMeListFragment::javaClass.name
 
-
     companion object {
         @JvmStatic
-        fun create(context: Context): BaseFragment {
-            if (!AppComponentInstance.getAppComponent(context).getGeoModule().hasLocation()) {
-                return NearMeNoCoordFragment.create()
-            }
+        fun create(): BaseFragment {
             return NearMeListFragment()
         }
     }
 
     override fun createView(context: Context): View? {
+
+
+        getMvpDelegate().onCreate()
+        getMvpDelegate().onAttach()
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, getMvpDelegate()))
+        presenter = component.presenter()
+        presenter.container = container
+
+
+
+
 
         actionBar.setBackButtonImage(R.drawable.ic_ab_back)
         actionBar.setAllowOverlayTitle(true)
@@ -92,7 +117,12 @@ class NearMeListFragment : BaseFragment() {
         nearMeList.setHasFixedSize(true)
 
         mUserAdapter.clear()
-        loadUsers()
+        val chatId = parentActivity.resources.getInteger(R.integer.living_room_id)
+        presenter.action.onNext(Action.SHOW_USER_LIST(chatId))
+
+//        presenter.action.onNext(Action.CONSUME("test_inapp2"))
+//        presenter.action.onNext(Action.CONSUME("test_app"))
+
         return fragmentView
     }
 
@@ -313,51 +343,6 @@ class NearMeListFragment : BaseFragment() {
 
     }
 
-    private fun loadUsers() {
-        val chat_id = parentActivity.resources.getInteger(R.integer.living_room_id)
-        telegramApi()
-            .getUsersFromChat(chat_id)
-            .zipWith(datingApi().getNearMeUsers(), BiFunction<List<TLRPC.User>, List<NearUser>, Observable<CompoundUser>>
-            { telegramUsers, nearUsers ->
-
-                val usersWithCity = arrayListOf<CompoundUser>()
-                val usersWithoutCity = arrayListOf<CompoundUser>()
-
-                nearUsers.forEach {
-                    val near = it
-                    val find = telegramUsers.findLast { it.id == near.telegramId }
-                    if (find != null) {
-                        usersWithCity.add(CompoundUser(near, find))
-                    }
-                }
-                telegramUsers.forEach {
-                    val telegamUser = it
-                    if (usersWithCity.findLast { it.telegramUser.id == telegamUser.id } == null) {
-                        usersWithoutCity.add(CompoundUser(null, telegamUser))
-                    }
-
-                }
-
-                Observable.fromIterable(usersWithCity.apply { this.addAll(usersWithoutCity) })
-            }
-            )
-
-            .flatMap { v -> v }
-            .toList()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { users ->
-                    try {
-
-                        mUserAdapter.add(users)
-                    } catch (e: Throwable) {
-                        (this@NearMeListFragment::errorHandle)()(e)
-                    }
-
-                }, errorHandle)
-
-
-    }
 
     val errorHandle: (Throwable) -> Unit = { e ->
         Log.e("TAG", e.message, e)
@@ -373,5 +358,19 @@ class NearMeListFragment : BaseFragment() {
         return MessagesController.getInstance().getUser(telegramId)
     }
 
+
+    override fun renderViewModel(viewModel: NearMeViewModel) {
+        viewModel.users?.let {
+            mUserAdapter.add(it)
+        }
+    }
+
+
+    override fun onFragmentDestroy() {
+        presenter.onDestroy()
+        getMvpDelegate().onDestroyView()
+        getMvpDelegate().onDestroy()
+        super.onFragmentDestroy()
+    }
 
 }

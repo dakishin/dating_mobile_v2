@@ -75,6 +75,13 @@ dependencies {
 
     compile 'com.arello-mobile:moxy-app-compat:1.5.3'
     kapt 'com.arello-mobile:moxy-compiler:1.5.3'
+
+    compile 'com.jakewharton:butterknife:8.7.0'
+    kapt 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    compile 'com.android.billingclient:billing:1.0'
+
+
 }
 
 android {
@@ -137,12 +144,23 @@ android {
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/datingdev/"'
         }
 
+        prerel{
+            debuggable true
+            jniDebuggable false
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/datingdev/"'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
+            buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/dating/"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

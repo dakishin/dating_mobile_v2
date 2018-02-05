@@ -3,7 +3,7 @@
 ext{
 //    ext.kotlin_version = '1.2.10'
 //    ext.butterKnifeVersion = "8.4.0"
-    version_code_ext=10574
+    version_code_ext=10578
 
     androidCompileSdkVersion = 26
     androidBuildToolsVersion = "26.0.1"

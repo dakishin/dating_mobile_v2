@@ -17,6 +17,9 @@ import org.telegram.messenger.R
  */
 
 val GOOGLE_INAPP_API_VERSION = 3
+
+val GOOGLE_INAPP_PACKAGE_NAME = ""
+
 val PRODUCT_SKU = "test_inapp2"
 val PRODUCT_TYPE = "inapp"
 

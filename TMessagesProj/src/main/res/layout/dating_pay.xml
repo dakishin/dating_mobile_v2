@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:showIn="@layout/dating_near_me_no_coord"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="Доброе дело"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="21dp"
+            tools:ignore="SpUsage"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+
+            android:text="Создание и поддержание сервиса - тяжелый труд. Пожалуйста, сделайте доброе дело: поддержите наш проект и получите доступ к людям вокруг вас."
+            android:textColor="@color/textColorPrimary"
+            android:textSize="16dp"
+            tools:ignore="SpUsage"/>
+
+
+        <Button
+            android:id="@+id/donate_200"
+            style="@style/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:text="Пожертвовать 200 руб"/>
+
+        <Button
+            android:id="@+id/donate_400"
+            style="@style/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:text="Пожертвовать 400 руб"/>
+
+        <Button
+            android:id="@+id/donate_1000"
+            style="@style/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:text="Пожертвовать 1000 руб. Спасибо!"/>
+
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/progress_bar"
+        tools:visibility="gone"/>
+
+
+</RelativeLayout>

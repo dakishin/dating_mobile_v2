@@ -15,8 +15,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -107,35 +105,59 @@ class DatingApi @Inject constructor() {
 
     @Throws(PifException::class)
     fun getUserTrebs(userUuid: String): List<Treba>? {
-        return executeApiMethod(createService().getTrebas(userUuid)).result
+        return executeApiMethod(service.getTrebas(userUuid)).result
     }
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: Long, firstName: String?, lastName: String?): TelegramUser? {
-        return executeApiMethod(createService()
-            .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))).result
-    }
+    fun registerTelegramUser(telegramId: Long, firstName: String?, lastName: String?) =
+        service
+            .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))
+
 
     @Throws(PifException::class)
     fun createTreba(owner: TelegramUser, type: TrebaType, names: List<String>, priestUuid: String) {
-        executeApiMethod(createService()
+        executeApiMethod(service
             .createTreba(PifService.CreateTrebaParam(owner.uuid, names, type, priestUuid)))
     }
 
     @Throws(PifException::class)
-    fun sendGeoData(ownerUuid: String, lat: Double, lon: Double, city: String?) {
-        executeApiMethod(createService()
-            .sendGeoData(PifService.GeoDataParam(ownerUuid, lat, lon, city)))
+    fun sendGeoData(telegramId: Long, lat: Double, lon: Double, city: String?) {
+        executeApiMethod(service.sendGeoData(PifService.GeoDataParam(telegramId, lat, lon, city)))
     }
+
+
+    @Throws(PifException::class)
+    fun createPurchase(sku: String, orderId: String): Observable<PifResponse<Any>> =
+        Observable
+            .fromCallable { profilePreferences.getTelegramId()!! }
+            .flatMap {
+                service.createPurchase(PifService.CreatePurchaseParam(it, sku, orderId))
+            }
+            .checkApiVersion()
 
     @Throws(PifException::class)
     fun getNearMeUsers(): Observable<List<NearUser>> =
-        createService()
-            .searchNear(profilePreferences.getTelegramId()!!)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .flatMap { responce -> Observable.just(responce.result ?: arrayListOf()) }
+        Observable
+            .fromCallable { profilePreferences.getTelegramId()!! }
+            .flatMap { service.searchNear(it) }
+            .checkApiVersion()
+            .flatMap { response -> Observable.just(response.result ?: arrayListOf()) }
 
+
+    private fun <T> Observable<PifResponse<T>>.checkApiVersion(): Observable<PifResponse<T>> {
+        return this.map {
+            if (1==1){
+                throw ClientNeedUpdateException("Client need update")
+            }
+
+
+            if ((it.errorCode == ErrorCode.OK) &&
+                (it.apiClientVersionCode > BuildConfig.VERSION_CODE)) {
+                throw ClientNeedUpdateException("Client need update")
+            }
+            it
+        }
+    }
 
     private inner class UserAgentInterceptor : Interceptor {
 
@@ -150,12 +172,10 @@ class DatingApi @Inject constructor() {
     }
 
     private fun getUserAgent(): String {
-        return "TelegramID:" + profilePreferences.getTelegramId() + " / VersionCode:" + BuildConfig.VERSION_CODE
+        val telegramId = profilePreferences.getTelegramId() ?: "null"
+        return "TelegramID:" + telegramId + " / VersionCode:" + BuildConfig.VERSION_CODE
     }
 
-    private fun createService(): PifService {
-        return service
-    }
 
     @Throws(PifException::class)
     fun <T> executeApiMethod(call: Call<PifResponse<T>>): PifResponse<T> {

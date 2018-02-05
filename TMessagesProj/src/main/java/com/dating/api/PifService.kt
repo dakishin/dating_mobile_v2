@@ -33,9 +33,15 @@ interface PifService {
     fun createTreba(@Body param: CreateTrebaParam): Call<PifResponse<Any>>
 
 
-    @POST("api/api_v3/sendGeoDataIfNeeded")
+    @POST("api/api_v3/sendGeoDataV2")
     @Headers("Content-type: application/json")
     fun sendGeoData(@Body param: GeoDataParam): Call<PifResponse<Any>>
+
+
+    @POST("api/api_v3/createPurchase")
+    @Headers("Content-type: application/json")
+    fun createPurchase(@Body param: CreatePurchaseParam): Observable<PifResponse<Any>>
+
 
     @GET("api/api_v3/search/{telegramId}")
     @Headers("Content-type: application/json")
@@ -44,12 +50,13 @@ interface PifService {
 
     @POST("api/api_v3/registerTelegramUser")
     @Headers("Content-type: application/json")
-    fun registerTelegramUser(@Body param: RegisterTelegramUserParam): Call<PifResponse<TelegramUser>>
+    fun registerTelegramUser(@Body param: RegisterTelegramUserParam): Observable<PifResponse<TelegramUser>>
 
 
     class CreateTrebaParam(var userUuid: String?, var names: List<String>, var type: TrebaType, val priestUuid: String)
     class RegisterTelegramUserParam(val telegramId: String, val firstName: String?, val lastName: String?)
-    class GeoDataParam(val ownerUuid: String, val lat: Double, val lon: Double, val city: String?)
+    class GeoDataParam(val telegramId: Long, val lat: Double, val lon: Double, val city: String?)
+    class CreatePurchaseParam(val telegramId: Long, val sku: String, val orderId: String)
 
 
 }

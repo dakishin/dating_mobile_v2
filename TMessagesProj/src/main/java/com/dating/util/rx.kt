@@ -25,7 +25,7 @@ fun <T, M, V : View<M>, A, O> DisposableObserver<T>.bindPresenter(observer: Pres
     return this
 }
 
-fun <T, I : Any, O : Any> DisposableObserver<T>.bindRouter(observer: Router<I, O>):
+fun <T, I : Any, O : Any,V:Any> DisposableObserver<T>.bindRouter(observer: Router<I, O,V>):
     DisposableObserver<T> {
     observer.bind(this)
     return this

@@ -1,7 +1,6 @@
 package com.dating.viper
 
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 
@@ -13,11 +12,6 @@ interface Presenter<M, V : View<M>, A, O> {
     val container: Container<M, V>
     val viewModel: M get() = container.viewModel
 
-    @Deprecated("", ReplaceWith("NextObserver { }"))
-    fun actionObserver(): Observer<A> = NextObserver { }
-
-    @Deprecated("", ReplaceWith("NextObserver { }"))
-    fun outputObserver(): Observer<O> = NextObserver { }
 
     fun start()
 

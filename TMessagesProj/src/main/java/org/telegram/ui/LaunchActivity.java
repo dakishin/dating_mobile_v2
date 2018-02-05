@@ -42,10 +42,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dating.activity.near.NearMeListFragment;
-import com.dating.activity.near.NearMeNoCoordFragment;
+import com.dating.activity.near.NearModuleStarter;
+import com.dating.activity.near.view.BuySearchFragment;
+import com.dating.activity.near.view.NearMeNoCoordFragment;
 import com.dating.activity.treba.TrebaActivity;
 import com.dating.modules.AppComponentInstance;
+import com.dating.util.Optional;
 
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
@@ -452,7 +454,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
-                    presentFragment(NearMeListFragment.create(getBaseContext()));
+                    NearModuleStarter.start(LaunchActivity.this);
 //                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
@@ -1915,6 +1917,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (UserConfig.passcodeHash.length() != 0 && UserConfig.lastPauseTime != 0) {
             UserConfig.lastPauseTime = 0;
             UserConfig.saveConfig(false);
@@ -1945,10 +1948,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == NearMeNoCoordFragment.REQUEST_GEO_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                AppComponentInstance.getAppComponent(getBaseContext())
-                    .getGeoModule().notifyPermissionGranted();
-            }
+            AppComponentInstance.getAppComponent(getBaseContext())
+                .getGeoModule().notifyPermissionGranted();
             return;
         }
         if (requestCode == 3 || requestCode == 4 || requestCode == 5 || requestCode == 19 || requestCode == 20) {

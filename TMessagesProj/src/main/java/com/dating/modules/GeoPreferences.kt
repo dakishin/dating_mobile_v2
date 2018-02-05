@@ -23,9 +23,9 @@ class GeoPreferences @Inject constructor(val context: Context) {
     }
 
     fun getLat(): Double? {
-        if (1==1){
-            return null
-        }
+//        if (1==1){
+//            return null
+//        }
         return basePreferences.getFloat(LAT_KEY)?.toDouble()
     }
 

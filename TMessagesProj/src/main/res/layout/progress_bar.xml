@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/progressBar"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/dim_color_dark"
+    android:visibility="gone"
+    tools:visibility="visible"
+    >
+
+    <com.dating.widget.ProgressBar
+        style="@style/progress_bar"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

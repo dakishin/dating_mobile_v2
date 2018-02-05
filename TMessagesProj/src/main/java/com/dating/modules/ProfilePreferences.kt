@@ -19,20 +19,12 @@ class ProfilePreferences @Inject constructor(context: Context) {
     private val FIRST_NAME_KEY = "FIRST_NAME_KEY"
     private val LAST_NAME_KEY = "LAST_NAME_KEY"
     private val UUID_KEY = "UUID_KEY"
-    private val ACCESS_HASH_KEY = "ACCESS_HASH_KEY"
+    private val HAS_SEARCH_PURCHASE = "HAS_SEARCH_PURCHASE"
 
-
-    private val TAG = ProfilePreferences::javaClass.name
+    private val TAG = ProfilePreferences::class.java.name
     val basePreferences: BasePreferences = BasePreferences(context, "ProfilePreferences")
 
 
-    fun getUUID(): String? {
-        return basePreferences.getString(UUID_KEY, null)
-    }
-
-    fun saveUUID(uuid: String?) {
-        basePreferences.setString(UUID_KEY, uuid)
-    }
 
     fun getTelegramId(): Long? {
         return basePreferences.getLong(TELEGRAM_ID_KEY)
@@ -70,18 +62,13 @@ class ProfilePreferences @Inject constructor(context: Context) {
 
     }
 
-    fun saveProfile(telegramUser: TelegramUser?) {
-        val userJson: String?
-        if (telegramUser == null) {
-            userJson = null
-        } else {
-            userJson = Gson().toJson(telegramUser)
-        }
-        basePreferences.setString(PROFILE_KEY, userJson)
+
+    fun hasSearchPurchase(): Boolean {
+        return basePreferences.getBoolean(HAS_SEARCH_PURCHASE, false)
     }
 
-    fun saveAccessHash(accessHash: Long) {
-        basePreferences.setLong(ACCESS_HASH_KEY, accessHash)
+    fun saveHasSearchPurchase(value:Boolean) {
+        basePreferences.setBoolean(HAS_SEARCH_PURCHASE, value)
     }
 
 

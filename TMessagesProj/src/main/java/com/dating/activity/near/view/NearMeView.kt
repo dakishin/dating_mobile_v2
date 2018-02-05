@@ -1,5 +1,6 @@
-package com.dating.activity.near
+package com.dating.activity.near.view
 
+import com.dating.activity.near.NearMeViewModel
 import com.dating.viper.View
 
 /**
