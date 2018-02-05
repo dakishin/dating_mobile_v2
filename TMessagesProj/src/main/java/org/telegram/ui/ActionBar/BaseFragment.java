@@ -19,6 +19,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dating.modules.AppComponent;
+import com.dating.modules.AppComponentInstance;
+
 import org.telegram.messenger.FileLog;
 import org.telegram.tgnet.ConnectionsManager;
 
@@ -359,6 +362,11 @@ public class BaseFragment {
 
     public ThemeDescription[] getThemeDescriptions() {
         return null;
+    }
+
+
+    protected AppComponent getAppComponent() {
+        return AppComponentInstance.getAppComponent(getParentActivity());
     }
 
 }

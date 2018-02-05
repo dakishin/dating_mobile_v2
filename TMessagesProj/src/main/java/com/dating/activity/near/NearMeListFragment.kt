@@ -48,7 +48,7 @@ class NearMeListFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun create(context: Context): BaseFragment {
-            if (AppComponentInstance.getAppComponent(context).getGeoModule().geoPreferences.getLat() == null) {
+            if (!AppComponentInstance.getAppComponent(context).getGeoModule().hasLocation()) {
                 return NearMeNoCoordFragment.create()
             }
             return NearMeListFragment()

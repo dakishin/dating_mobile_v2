@@ -11,6 +11,7 @@ import io.nlopez.smartlocation.location.config.LocationParams
 import io.nlopez.smartlocation.rx.ObservableFactory
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,6 +39,8 @@ class GeoModule @Inject constructor(context: Context) {
     private var lastUpdateDate: Long? = null
 
     private val _24_HOURS = 1000 * 60 * 60 * 24
+
+    var geoPermissionGranted: PublishSubject<Unit> = PublishSubject.create()
 
 
     val sendGeoDataObserver =
@@ -78,6 +81,12 @@ class GeoModule @Inject constructor(context: Context) {
         sendGeoDataObserver
             .subscribe({}, {}, {})
     }
+
+    fun notifyPermissionGranted() {
+        geoPermissionGranted.onNext(Unit)
+    }
+
+    fun hasLocation() = geoPreferences.getLat() != null
 
 
 }

@@ -43,6 +43,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dating.activity.near.NearMeListFragment;
+import com.dating.activity.near.NearMeNoCoordFragment;
 import com.dating.activity.treba.TrebaActivity;
 import com.dating.modules.AppComponentInstance;
 
@@ -1942,6 +1943,14 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == NearMeNoCoordFragment.REQUEST_GEO_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                AppComponentInstance.getAppComponent(getBaseContext())
+                    .getGeoModule().notifyPermissionGranted();
+            }
+            return;
+        }
         if (requestCode == 3 || requestCode == 4 || requestCode == 5 || requestCode == 19 || requestCode == 20) {
             boolean showAlert = true;
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
