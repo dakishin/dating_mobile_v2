@@ -8,7 +8,6 @@
 
 package org.telegram.ui;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -27,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -43,11 +43,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dating.activity.near.NearModuleStarter;
-import com.dating.activity.near.view.BuySearchFragment;
 import com.dating.activity.near.view.NearMeNoCoordFragment;
 import com.dating.activity.treba.TrebaActivity;
+import com.dating.modules.AppComponent;
 import com.dating.modules.AppComponentInstance;
-import com.dating.util.Optional;
+import com.dating.util.Utils;
 
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
@@ -100,6 +100,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import kotlin.Unit;
 
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
@@ -654,18 +659,22 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                int grantedPermission = checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-                if (grantedPermission != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1234);
+                if (!Utils.isGeoPermissionGranted(LaunchActivity.this)) {
+                    Utils.requestGeoPermission(LaunchActivity.this, REQUEST_LOCATION_CODE);
                 } else {
-                    AppComponentInstance.getAppComponent(getBaseContext())
-                        .getGeoModule().sendGeoDataIfNeeded();
+                    getAppComponent().getRegisterModule().registerTelegramUser();
                 }
             }
         });
 
     }
 
+    @NonNull
+    private AppComponent getAppComponent() {
+        return AppComponentInstance.getAppComponent(getBaseContext());
+    }
+
+    int REQUEST_LOCATION_CODE = 123;
 
     private void checkLayout() {
         if (!AndroidUtilities.isTablet() || rightActionBarLayout == null) {
@@ -1948,10 +1957,18 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == NearMeNoCoordFragment.REQUEST_GEO_PERMISSION) {
-            AppComponentInstance.getAppComponent(getBaseContext())
+            getAppComponent()
                 .getGeoModule().notifyPermissionGranted();
             return;
         }
+
+        if (requestCode == REQUEST_LOCATION_CODE) {
+            getAppComponent()
+                .getGeoModule().sendGeoDataIfNeeded();
+            return;
+        }
+
+
         if (requestCode == 3 || requestCode == 4 || requestCode == 5 || requestCode == 19 || requestCode == 20) {
             boolean showAlert = true;
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

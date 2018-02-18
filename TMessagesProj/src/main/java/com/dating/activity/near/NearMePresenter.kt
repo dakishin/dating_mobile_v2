@@ -14,6 +14,7 @@ import com.dating.util.Utils
 import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
 import com.dating.viper.*
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -30,6 +31,8 @@ sealed class Action {
     class CLICK_GET_LOCATION : Action()
     class CONSUME(val sku: String) : Action()
     class UPDATE : Action()
+    class AskAdmin : Action()
+    class UNEXPECTED_ERROR : Action()
 }
 
 @InjectViewState
@@ -61,24 +64,11 @@ class NearMePresenter(
             .subscribeWith(NextObserver {
 
                 when (it) {
-                    is Action.UPDATE -> {
-                        router.toRoute.onNext(ToRoute.UPDATE())
-                    }
                     is Action.SHOW_USER_LIST -> {
-                        renderVm {
-                            copy(isLoading = true)
-                        }
-
-
                         nearMeListInteractor
                             .loadUsers(it.chatId)
                             .ioScheduler()
-                            .subscribeWith(object : NearMeObserver<List<CompoundUser>>(router as NearMeRouter) {
-                                override fun onError(e: Throwable) {
-                                    super.onError(e)
-                                    router.changeView.onNext(ChangeViewRoute.UNEXPECTED_ERROR())
-                                }
-
+                            .subscribeWith(object : NearMeObserver<List<CompoundUser>>(this@NearMePresenter) {
                                 override fun onNext(next: List<CompoundUser>) {
                                     super.onNext(next)
                                     renderVm {
@@ -86,10 +76,6 @@ class NearMePresenter(
                                     }
                                 }
 
-                                override fun onComplete() {
-                                    super.onComplete()
-                                    router.changeView.onNext(ChangeViewRoute.UNEXPECTED_ERROR())
-                                }
                             })
                             .bindPresenter(this)
 
@@ -137,13 +123,16 @@ class NearMePresenter(
                             .buy(sku)
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->
-                                val purchase = purchaseEvent.purchases!!.findLast { it.sku == sku }
-                                profilePreferences.saveHasSearchPurchase(true)
-                                api.createPurchase(purchase!!.sku, purchase.orderId)
+                                val purchase = purchaseEvent.purchases?.findLast { it.sku == sku }
+                                purchase?.let {
+                                    profilePreferences.saveHasSearchPurchase(true)
+                                    api.createPurchase(purchase.sku, purchase.orderId)
+                                }
+
                             }
                             .ioScheduler()
                             .subscribeWith(
-                                object : NearMeObserver<Any>(router as NearMeRouter) {
+                                object : NearMeObserver<Any>(this) {
                                     override fun onNext(next: Any) {
                                         super.onNext(next)
                                         if (profilePreferences.hasSearchPurchase()) {
@@ -152,18 +141,9 @@ class NearMePresenter(
                                     }
 
                                     override fun onComplete() {
-                                        super.onComplete()
-                                        renderVm {
-                                            copy(isLoading = true)
-                                        }
+                                        onError(RuntimeException("complete error"))
                                     }
 
-                                    override fun onError(e: Throwable) {
-                                        super.onError(e)
-                                        renderVm {
-                                            copy(isLoading = true)
-                                        }
-                                    }
                                 }
                             ).bindPresenter(this)
                     }
@@ -206,6 +186,20 @@ class NearMePresenter(
                             .bindPresenter(this)
 
                     }
+
+                    is Action.UNEXPECTED_ERROR -> {
+                        renderVm {
+                            copy(isLoading = false, hasError = true)
+                        }
+                    }
+
+                    is Action.AskAdmin -> {
+                        router.toRoute.onNext(ToRoute.ASK_ADMIN())
+                    }
+
+                    is Action.UPDATE -> {
+                        router.toRoute.onNext(ToRoute.UPDATE())
+                    }
                 }
             })
             .bindPresenter(this)
@@ -215,7 +209,16 @@ class NearMePresenter(
             .subscribeWith(NextObserver {
                 when (it) {
                     is InRoute.UPDATE_NEEDED -> {
-                        activity.presentFragment(NeedUpdateFragment.create(), true, true)
+                        renderVm {
+                            copy(isLoading = true)
+                        }
+                        Observable.interval(1500, TimeUnit.MILLISECONDS)
+                            .ioScheduler()
+                            .subscribeWith(NextObserver {
+                                activity.presentFragment(NeedUpdateFragment.create(), true, false)
+                            })
+                            .bindPresenter(this)
+
                     }
                 }
             })

@@ -3,19 +3,22 @@ package com.dating.activity.near.view
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
+import butterknife.Unbinder
 import com.arellomobile.mvp.MvpDelegate
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.dating.activity.near.*
 import com.dating.model.CompoundUser
-import com.dating.modules.AppComponentInstance
 import com.dating.util.Utils
+import com.dating.util.updateVisibility
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
@@ -47,6 +50,17 @@ class NearMeListFragment : BaseFragment(), NearMeView {
     @InjectPresenter
     lateinit var container: NearMeContainer
 
+    @BindView(R.id.progressBar)
+    lateinit var progressBar: View
+
+    @BindView(R.id.unexpected_error)
+    lateinit var unexpectedError: View
+
+    @BindView(R.id.nearMeList)
+    lateinit var nearMeList: RecyclerView
+
+
+
     private var mMvpDelegate: MvpDelegate<Any>? = null
 
     fun getMvpDelegate(): MvpDelegate<Any> {
@@ -57,6 +71,7 @@ class NearMeListFragment : BaseFragment(), NearMeView {
     }
 
     private lateinit var presenter: NearMePresenter
+    private lateinit var binder: Unbinder
 
 
     private lateinit var mUserAdapter: UserAdapter
@@ -74,7 +89,7 @@ class NearMeListFragment : BaseFragment(), NearMeView {
 
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, getMvpDelegate()))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
         presenter = component.presenter()
         presenter.container = container
 
@@ -96,10 +111,10 @@ class NearMeListFragment : BaseFragment(), NearMeView {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         fragmentView = inflater.inflate(R.layout.dating_near_me, null)
 
+        binder = ButterKnife.bind(this, fragmentView)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        val nearMeList = fragmentView.findViewById(R.id.nearMeList) as RecyclerView
         nearMeList.layoutManager = layoutManager
 
 
@@ -119,6 +134,7 @@ class NearMeListFragment : BaseFragment(), NearMeView {
         mUserAdapter.clear()
         val chatId = parentActivity.resources.getInteger(R.integer.living_room_id)
         presenter.action.onNext(Action.SHOW_USER_LIST(chatId))
+
 
 //        presenter.action.onNext(Action.CONSUME("test_inapp2"))
 //        presenter.action.onNext(Action.CONSUME("test_app"))
@@ -344,22 +360,15 @@ class NearMeListFragment : BaseFragment(), NearMeView {
     }
 
 
-    val errorHandle: (Throwable) -> Unit = { e ->
-        Log.e("TAG", e.message, e)
-    }
-
-    private fun telegramApi() = AppComponentInstance.
-        getAppComponent(parentActivity).getTelegramApi()
-
-    private fun datingApi() = AppComponentInstance.
-        getAppComponent(parentActivity).getDatingApi()
-
     private fun getUser(telegramId: Int): TLRPC.User? {
         return MessagesController.getInstance().getUser(telegramId)
     }
 
 
     override fun renderViewModel(viewModel: NearMeViewModel) {
+        progressBar.updateVisibility(viewModel.isLoading)
+        unexpectedError.updateVisibility(viewModel.hasError)
+        nearMeList.updateVisibility(!viewModel.hasError)
         viewModel.users?.let {
             mUserAdapter.add(it)
         }
@@ -370,7 +379,13 @@ class NearMeListFragment : BaseFragment(), NearMeView {
         presenter.onDestroy()
         getMvpDelegate().onDestroyView()
         getMvpDelegate().onDestroy()
+        binder.unbind()
         super.onFragmentDestroy()
+    }
+
+    @OnClick(R.id.ask_admin_button)
+    fun clickAskAdmin() {
+        presenter.action.onNext(Action.AskAdmin())
     }
 
 }

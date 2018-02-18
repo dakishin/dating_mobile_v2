@@ -21,7 +21,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:minHeight="48dp"
-            android:text="Доброе дело"
+            android:text="@string/donate_title"
             android:textColor="@color/textColorPrimary"
             android:textSize="21dp"
             tools:ignore="SpUsage"/>
@@ -32,7 +32,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
 
-            android:text="Создание и поддержание сервиса - тяжелый труд. Пожалуйста, сделайте доброе дело: поддержите наш проект и получите доступ к людям вокруг вас."
+            android:text="@string/donate_text"
             android:textColor="@color/textColorPrimary"
             android:textSize="16dp"
             tools:ignore="SpUsage"/>
@@ -46,7 +46,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
-            android:text="Пожертвовать 200 руб"/>
+            android:text="@string/donate_200"/>
 
         <Button
             android:id="@+id/donate_400"
@@ -56,7 +56,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
-            android:text="Пожертвовать 400 руб"/>
+            android:text="@string/donate_400"/>
 
         <Button
             android:id="@+id/donate_1000"
@@ -66,7 +66,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
-            android:text="Пожертвовать 1000 руб. Спасибо!"/>
+            android:text="@string/donate_1000"/>
 
 
     </LinearLayout>

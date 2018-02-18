@@ -1720,4 +1720,6 @@
     <string name="formatterDay24H">HH:mm</string>
     <string name="formatterDay12H">h:mm a</string>
     <string name="formatDateAtTime">%1$s at %2$s</string>
+    <string name="donate_title">Доброе дело</string>
+    <string name="treba_info_eugen_info">иерей Евгений Храм святого Николая Чудотворца. Калужская область.</string>
 </resources>

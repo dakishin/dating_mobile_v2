@@ -1,6 +1,7 @@
 package com.dating.activity.near.view
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import butterknife.BindView
@@ -50,7 +51,7 @@ class NeedUpdateFragment : DatingBaseFragment(), NearMeView {
     override fun createView(context: Context): View? {
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, getMvpDelegate()))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
         presenter = component.presenter()
         presenter.container = container
 
@@ -72,8 +73,8 @@ class NeedUpdateFragment : DatingBaseFragment(), NearMeView {
         binder = ButterKnife.bind(this, fragmentView)
 
 
-        presenter.action.onNext(Action.DOWNLOAD_PURCHASES())
 
+        Log.e("UPDATE_TAG", "created update")
         return fragmentView
 
     }
@@ -87,6 +88,8 @@ class NeedUpdateFragment : DatingBaseFragment(), NearMeView {
 
     override fun onFragmentDestroy() {
         presenter.onDestroy()
+        getMvpDelegate().onDestroyView()
+        getMvpDelegate().onDestroy()
         binder.unbind()
         super.onFragmentDestroy()
     }

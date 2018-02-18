@@ -1,7 +1,6 @@
 package com.dating.activity.near
 
 import android.app.Activity
-import com.arellomobile.mvp.MvpDelegate
 import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
 import com.dating.modules.GeoModule
@@ -15,7 +14,7 @@ import org.telegram.ui.LaunchActivity
  *   Created by dakishin@gmail.com
  */
 @Module
-class NearMeModule(val activity: LaunchActivity, val delegate: MvpDelegate<Any>) {
+class NearMeModule(val activity: LaunchActivity) {
 
     val bag = CompositeDisposable()
 
@@ -31,7 +30,8 @@ class NearMeModule(val activity: LaunchActivity, val delegate: MvpDelegate<Any>)
 
     @Provides
     @NearMeScope
-    fun provideNearMeListInteractor(datingApi: DatingApi, telegramApi: TelegramApi) = NearMeListInteractor(telegramApi, datingApi)
+    fun provideNearMeListInteractor(datingApi: DatingApi, telegramApi: TelegramApi,profilePreferences: ProfilePreferences)
+        = NearMeListInteractor(telegramApi, datingApi,profilePreferences)
 
 
     @Provides
@@ -45,9 +45,9 @@ class NearMeModule(val activity: LaunchActivity, val delegate: MvpDelegate<Any>)
     fun provideActivity(): Activity = activity
 
 
-    @Provides
-    @NearMeScope
-    fun provideDelegate(): MvpDelegate<Any> = delegate
+//    @Provides
+//    @NearMeScope
+//    fun provideDelegate(): MvpDelegate<Any> = delegate
 
 
 }

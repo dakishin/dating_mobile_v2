@@ -23,7 +23,6 @@ sealed class ChangeViewRoute {
     class NEAR_ME_LIST : ChangeViewRoute()
     class NO_LOCATION : ChangeViewRoute()
     class BUY : ChangeViewRoute()
-    class UNEXPECTED_ERROR : ChangeViewRoute()
 }
 
 sealed class ToRoute {
@@ -32,6 +31,7 @@ sealed class ToRoute {
     class BOGOSLOV_ROOM : ToRoute()
     class CREATE_TREBA_ROOM : ToRoute()
     class UPDATE : ToRoute()
+    class ASK_ADMIN : ToRoute()
 }
 
 sealed class InRoute {
@@ -93,6 +93,9 @@ class NearMeRouter(val activity: LaunchActivity, override val bag: CompositeDisp
                     }
                     is ToRoute.UPDATE -> {
                         Utils.startUpdate(activity)
+                    }
+                    is ToRoute.ASK_ADMIN -> {
+                        Utils.startAskAdmin(activity)
                     }
                 }
             })

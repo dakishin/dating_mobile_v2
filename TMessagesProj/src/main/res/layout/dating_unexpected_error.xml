@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/unexpected_error"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible"
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:showIn="@layout/dating_near_me_no_coord"
-        >
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:layout_marginTop="64dp"
             android:gravity="center"
-            android:text="@string/update_text"
+            android:text="@string/un_expected_error_text"
             android:textColor="@color/textColorPrimary"
             android:textSize="16dp"
             tools:ignore="SpUsage"/>
 
 
         <Button
-            android:id="@+id/button_update"
+            android:id="@+id/ask_admin_button"
             style="@style/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/update_button"/>
-
-
+            android:layout_marginTop="32dp"
+            android:text="@string/un_expected_button"
+            />
     </LinearLayout>
 
-    <include
-        layout="@layout/progress_bar"
-        tools:visibility="gone"/>
 
-
-</RelativeLayout>
+</LinearLayout>

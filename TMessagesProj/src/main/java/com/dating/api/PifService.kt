@@ -45,7 +45,7 @@ interface PifService {
 
     @GET("api/api_v3/search/{telegramId}")
     @Headers("Content-type: application/json")
-    fun searchNear(@Path("telegramId") telegramId: Long): Observable<PifResponse<List<NearUser>>>
+    fun searchNear(@Path("telegramId") telegramId: Int): Observable<PifResponse<List<NearUser>>>
 
 
     @POST("api/api_v3/registerTelegramUser")
@@ -55,8 +55,8 @@ interface PifService {
 
     class CreateTrebaParam(var userUuid: String?, var names: List<String>, var type: TrebaType, val priestUuid: String)
     class RegisterTelegramUserParam(val telegramId: String, val firstName: String?, val lastName: String?)
-    class GeoDataParam(val telegramId: Long, val lat: Double, val lon: Double, val city: String?)
-    class CreatePurchaseParam(val telegramId: Long, val sku: String, val orderId: String)
+    class GeoDataParam(val telegramId: Int, val lat: Double, val lon: Double, val city: String?)
+    class CreatePurchaseParam(val telegramId: Int, val sku: String, val orderId: String)
 
 
 }

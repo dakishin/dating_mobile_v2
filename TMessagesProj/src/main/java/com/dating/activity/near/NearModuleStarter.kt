@@ -3,9 +3,8 @@ package com.dating.activity.near
 import com.dating.activity.near.view.BuySearchFragment
 import com.dating.activity.near.view.NearMeListFragment
 import com.dating.activity.near.view.NearMeNoCoordFragment
+import com.dating.activity.near.view.moderatorsIds
 import com.dating.modules.AppComponentInstance
-import com.dating.util.ioScheduler
-import com.dating.viper.IgnoreErrorsObserver
 import org.telegram.ui.LaunchActivity
 
 /**
@@ -15,14 +14,13 @@ object NearModuleStarter {
 
     @JvmStatic
     fun start(activity: LaunchActivity) {
-        AppComponentInstance.getAppComponent(activity).getDatingApi().createPurchase("test_sku","test_order")
-            .ioScheduler()
-            .subscribe(IgnoreErrorsObserver {  })
 
         val hasSearchPurchase = AppComponentInstance.getAppComponent(activity)
             .getProfilePreferences().hasSearchPurchase()
 
-        if (!hasSearchPurchase) {
+        val telegramId = AppComponentInstance.getAppComponent(activity).getProfilePreferences().getTelegramId() ?: 0
+
+        if (!hasSearchPurchase && !moderatorsIds.contains(telegramId)) {
             activity.presentFragment(BuySearchFragment.create())
             return
         }

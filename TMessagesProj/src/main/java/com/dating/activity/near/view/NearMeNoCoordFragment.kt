@@ -53,7 +53,7 @@ class NearMeNoCoordFragment : DatingBaseFragment(), NearMeView {
 
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, getMvpDelegate()))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
         presenter = component.presenter()
         presenter.container = container
 
@@ -87,6 +87,7 @@ class NearMeNoCoordFragment : DatingBaseFragment(), NearMeView {
 
     override fun onFragmentDestroy() {
         presenter.onDestroy()
+        getMvpDelegate().onDestroyView()
         binder.unbind()
         super.onFragmentDestroy()
     }

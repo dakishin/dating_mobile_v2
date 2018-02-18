@@ -65,7 +65,7 @@ class TrebaCreateFragmentStep1 : BaseFragment() {
         TrebaType.values().forEach {
             trebs.add(getString(it.nameRes))
         }
-        trebsList.adapter = ArrayAdapter(activity, R.layout.trebs_list_item, android.R.id.text1, trebs)
+        trebsList.adapter = ArrayAdapter(activity, R.layout.dating_trebs_list_item, android.R.id.text1, trebs)
 
         trebsList.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

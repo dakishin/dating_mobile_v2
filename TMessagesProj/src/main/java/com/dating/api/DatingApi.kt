@@ -109,7 +109,7 @@ class DatingApi @Inject constructor() {
     }
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: Long, firstName: String?, lastName: String?) =
+    fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?) =
         service
             .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))
 
@@ -121,7 +121,7 @@ class DatingApi @Inject constructor() {
     }
 
     @Throws(PifException::class)
-    fun sendGeoData(telegramId: Long, lat: Double, lon: Double, city: String?) {
+    fun sendGeoData(telegramId: Int, lat: Double, lon: Double, city: String?) {
         executeApiMethod(service.sendGeoData(PifService.GeoDataParam(telegramId, lat, lon, city)))
     }
 
@@ -146,11 +146,6 @@ class DatingApi @Inject constructor() {
 
     private fun <T> Observable<PifResponse<T>>.checkApiVersion(): Observable<PifResponse<T>> {
         return this.map {
-            if (1==1){
-                throw ClientNeedUpdateException("Client need update")
-            }
-
-
             if ((it.errorCode == ErrorCode.OK) &&
                 (it.apiClientVersionCode > BuildConfig.VERSION_CODE)) {
                 throw ClientNeedUpdateException("Client need update")

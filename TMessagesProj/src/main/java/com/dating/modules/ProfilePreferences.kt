@@ -15,10 +15,9 @@ import javax.inject.Singleton
 class ProfilePreferences @Inject constructor(context: Context) {
 
     private val PROFILE_KEY = "PROFILE_KEY"
-    private val TELEGRAM_ID_KEY = "TELEGRAM_ID_KEY_v2"
+    private val TELEGRAM_ID_KEY = "TELEGRAM_ID_KEY_v4"
     private val FIRST_NAME_KEY = "FIRST_NAME_KEY"
     private val LAST_NAME_KEY = "LAST_NAME_KEY"
-    private val UUID_KEY = "UUID_KEY"
     private val HAS_SEARCH_PURCHASE = "HAS_SEARCH_PURCHASE"
 
     private val TAG = ProfilePreferences::class.java.name
@@ -26,12 +25,12 @@ class ProfilePreferences @Inject constructor(context: Context) {
 
 
 
-    fun getTelegramId(): Long? {
-        return basePreferences.getLong(TELEGRAM_ID_KEY)
+    fun getTelegramId(): Int? {
+        return basePreferences.getInt(TELEGRAM_ID_KEY)
     }
 
-    fun saveTelegramId(uuid: Long) {
-        basePreferences.setLong(TELEGRAM_ID_KEY, uuid)
+    fun saveTelegramId(uuid: Int) {
+        basePreferences.setInt(TELEGRAM_ID_KEY, uuid)
     }
 
     fun getLastName(): String? {
