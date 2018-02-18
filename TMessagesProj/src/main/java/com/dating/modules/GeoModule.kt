@@ -1,11 +1,10 @@
 package com.dating.modules
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.util.Log
 import com.dating.api.DatingApi
+import com.dating.util.Utils
 import io.nlopez.smartlocation.SmartLocation
 import io.nlopez.smartlocation.location.config.LocationAccuracy
 import io.nlopez.smartlocation.location.config.LocationParams
@@ -50,11 +49,11 @@ class GeoModule @Inject constructor(context: Context) {
             .map {
                 profilePreferences.getTelegramId() ?: throw RuntimeException("empty telegramId")
 
-                val grantedPermission = context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                if (grantedPermission != PackageManager.PERMISSION_GRANTED) {
+                if (!Utils.isGeoPermissionGranted(context)) {
                     throw RuntimeException("need permission")
                 }
 
+                Log.d(TAG, "get location requested")
                 ObservableFactory
                     .from(SmartLocation.with(context)
                         .location()
@@ -76,14 +75,14 @@ class GeoModule @Inject constructor(context: Context) {
 
 
     @SuppressLint("MissingPermission")
-    fun sendGeoDataIfNeeded() {
+    fun sendGeoDataIfNeeded(): Observable<Unit> {
         val lastUpdateDate = this.lastUpdateDate
         if (lastUpdateDate != null && lastUpdateDate < System.currentTimeMillis() + _24_HOURS) {
-            return
+            return Observable.just(Unit)
         }
-        sendGeoDataObserver
+        return sendGeoDataObserver
+            .take(1)
             .timeout(20, TimeUnit.SECONDS)
-            .subscribe({}, {}, {})
     }
 
     fun notifyPermissionGranted() {

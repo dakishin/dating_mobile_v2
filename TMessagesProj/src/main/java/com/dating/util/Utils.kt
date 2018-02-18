@@ -12,6 +12,7 @@ import android.util.Base64
 import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import org.telegram.ui.LaunchActivity
 import java.io.*
 import java.nio.charset.Charset
 import java.util.*
@@ -22,10 +23,6 @@ import java.util.*
  * 17.08.2014.
  */
 object Utils {
-    private val DAY_FORMAT = "dd.MM.yyyy EE"
-    private val EXTRA_PUSH = "EXTRA_PUSH"
-    private val PERMISSION = "com.club.pif.permission.RECEIVER"
-
 
     @JvmStatic
     fun getLanguage() = Locale.getDefault().language
@@ -123,7 +120,8 @@ object Utils {
 
     val geoPermission = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
-    fun isGeoPermissionGranted(activity: Activity): Boolean {
+    @JvmStatic
+    fun isGeoPermissionGranted(activity: Context): Boolean {
         geoPermission.forEach {
             if (ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED) {
                 return false
@@ -133,24 +131,9 @@ object Utils {
         return true
     }
 
+    @JvmStatic
     fun requestGeoPermission(activity: Activity, requestCode: Int) {
         ActivityCompat.requestPermissions(activity, geoPermission, requestCode)
-    }
-
-
-    fun isPermissionGranted(permission: String, activity: Activity): Boolean {
-        return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
-    }
-
-    fun requestPermission(activity: Activity, permissions: Array<String>, requestCode: Int) {
-        ActivityCompat.requestPermissions(activity, permissions, requestCode)
-    }
-
-
-    fun sendBroadCast(context: Context, action: String, param: Serializable) {
-        val intent = Intent(action)
-        intent.putExtra(EXTRA_PUSH, param)
-        context.sendOrderedBroadcast(intent, PERMISSION)
     }
 
 
@@ -170,6 +153,13 @@ object Utils {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)))
         }
 
+    }
 
+    fun startAskAdmin(activity: Activity) {
+        val url = "https://t.me/DatingAdmin"
+        val intent = Intent(activity, LaunchActivity::class.java)
+        intent.data = Uri.parse(url)
+        intent.action = Intent.ACTION_VIEW
+        activity.startActivity(intent)
     }
 }

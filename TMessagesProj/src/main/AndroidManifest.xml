@@ -205,7 +205,7 @@
                 android:theme="@style/Theme.TMessages.TransparentWithAlerts"/>
 
         <activity
-            android:name="com.dating.activity.treba.TrebaActivity"
+            android:name="com.dating.ui.treba.TrebaActivity"
             android:theme="@style/AppTheme"
             />
 

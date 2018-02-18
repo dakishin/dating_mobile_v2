@@ -1,0 +1,125 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation"
+    >
+
+
+    <string name="living_room">Гостинная комната</string>
+    <string name="ask_priest_room">Вопрос священнику</string>
+    <string name="bogoslov_room">Богословские беседы</string>
+
+
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="unexpected_error">Непредвиденная ошибка. Отчет выслан. Мы уже трудимя над ее исправлением. Попробуйте выполнить дейтвие позднее.</string>
+    <string name="choose_church">Выберите храм</string>
+
+
+
+    <string name="app_name">Чаты</string>
+
+    <string name="app_name_tool_bar">Чаты</string>
+
+    <string name="who_is_near">Кто рядом с вами</string>
+
+
+    <string name="search">Поиск</string>
+    <string name="treba_menu">Заказать требы</string>
+
+
+    <string name="trebi_item_title">Заказать Требы</string>
+
+    <string name="trebi_title_new">Создать</string>
+    <string name="trebi_title_history">История</string>
+    <string name="trebi_title_info">О требах</string>
+
+    <string name="treba_type_view">Выберите записку</string>
+
+
+    <string name="temp_wait">Пожалуйста, подождите</string>
+    <string name="create_treba_error_type">Записка или треба не выбрана</string>
+    <string name="create_treba_error_name">Имя не указано</string>
+
+    <string name="treba_status_wait">Ожидайте.\nЗаписку скоро доставят %1$s</string>
+    <string name="treba_status_taken">Записка доставлена %1$s</string>
+
+    <string name="treba_info_text1">Сервис помогает передавать Ваши требы и записки в храм, когда у Вас нет возможности посетить службу самостоятельно.\nТреба будет выполнена в одном из храмов наших батюшек.</string>
+    <string name="treba_info_text2">«О здравии» и «Об упокоении» - это молитвенное упоминание имен живых и умерших для вечного блага и спасения поминаемых.</string>
+    <string name="treba_info_text3">Слово «Треба», которое в древнерусском языке имело сакральный смысл и означало: «жертва», «жертвоприношение», «молитва», «исполнение священного обряда». В настоящее время словом «треба» называются молитвословия и священнодействия, совершаемые по просьбе (по потребам, нуждам) одного или нескольких христиан в особых обстоятельствах их жизни.</string>
+    <string name="treba_info_text5">Важно!</string>
+    <string name="treba_info_text6">В записках пишутся имена только тех, кто был крещен в православной Церкви. Нельзя писать имена некрещеных, самоубийц, еретиков. Пожертвования от записок пойдут батюшкам на храм и на развитие приложения.</string>
+
+    <string name="dialog_select_treba_price_title">Сколько вы хотите пожертвовать?</string>
+    <string name="dialog_select_treba_price_message">Ваши пожертвования пойдут батюшке на храм и на развитие приложения.</string>
+    <string name="treba_petr_i_fevr">Молебен о замужестве Петру и Фервории</string>
+
+
+    <array name="treba_prices_o_zdravii">
+        <item>100 руб</item>
+        <item>200 руб</item>
+        <item>500 руб. Спасибо!</item>
+    </array>
+
+    <array name="treba_prices_moleben">
+        <item>300 руб</item>
+        <item>500 руб</item>
+        <item>1000 руб. Спасибо!</item>
+    </array>
+
+    <string name="treba_ozdravii">Записка о здравии</string>
+    <string name="treba_ob_upokoenii">Записка об упокоении</string>
+    <string name="treba_sorokoust_zdrav">Сорокоуст о здравии</string>
+    <string name="treba_sorokoust_upok">Сорокоуст об упокоении</string>
+
+
+    <string name="treba_alko">Молебен o страдающих алкоголизмом и наркоманией</string>
+    <string name="treba_k_rodam">Молебен для готовящихся к родам</string>
+    <string name="treba_pered_dobrim_delom">Перед началом всякого доброго дела</string>
+    <string name="treba_blagodarstvenniy">Молебен благодарственный</string>
+    <string name="treba_petru_i_fevronii">Молебен Петру и Февронии о супружеском счастье</string>
+    <string name="create_treba_step2">Шаг 2. Укажите имена</string>
+    <string name="create_treba_step1">Шаг 1. Выберите требу или записку</string>
+    <string name="create_treba_step3">Шаг 3. Выберите храм</string>
+
+    <string name="near_user_header_distance">ДО %1$d КМ</string>
+
+    <string name="city_not_specified">ГОРОД НЕ УКАЗАН</string>
+
+    <string name="who_near_menu">Кто рядом с вами</string>
+
+
+    <string name="search_location_unavailable">Ваше местоположение не доступно</string>
+    <string name="search_request_location">Чтобы показать людей вокруг вас, разрешите определять ваше местоположение.</string>
+
+
+
+    <string name="allow">Разрешить</string>
+    <string name="update_fragment_title">Обновление</string>
+
+
+    <string name="un_expected_error_text">Если вы видите это сообщение, значит что-то пошло не так. Напишите об этом администратору. И мы вам поможем.</string>
+    <string name="un_expected_button">Написать</string>
+
+
+
+    <string name="show_more">Показать еще</string>
+    <string name="update_text">Вышла новая улучшенная версия раздела. Пожалуйста, обновите приложение.</string>
+    <string name="update_button">Обновить</string>
+    <string name="donate_text">Создание и поддержание сервиса - тяжелый труд. Пожалуйста, сделайте доброе дело: поддержите наш проект и получите доступ к людям вокруг вас.</string>
+    <string name="donate_200">Пожертвовать 200 руб</string>
+    <string name="donate_400">Пожертвовать 400 руб</string>
+    <string name="donate_1000">Пожертвовать 1000 руб. Спасибо!</string>
+    <string name="treba_step2_name">Имя</string>
+    <string name="yeugen_info">Иерей Евгений. Храм святого Николая Чудотворца. Калужская область.</string>
+    <string name="nikolay_info">Иерей Николай. Никольский кафедральный собор. Ишим.</string>
+    <string name="traba_info_priests">Наши батюшки</string>
+    <string name="empty_treba_text">Пока у вас нет ни одной записки.</string>
+    <string name="empty_treba_make_order">Заказать</string>
+    <string name="donate_title">Доброе дело</string>
+
+
+    <string name="father_nikolas">отцу Николаю</string>
+    <string name="father_eugen">отцу Евгению</string>
+    <string name="priest">священнику</string>
+
+</resources>

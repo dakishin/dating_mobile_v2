@@ -57,7 +57,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:checkMark="?android:attr/textCheckMark"
-            android:text="Иерей Евгений.\nХрам святого Николая Чудотворца. Калужская область."
+            android:text="@string/yeugen_info"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
@@ -92,7 +92,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:checkMark="?android:attr/textCheckMark"
-            android:text="Иерей Николай.\nНикольский кафедральный собор. Ишим."
+            android:text="@string/nikolay_info"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
@@ -125,5 +125,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
+    <include
+        layout="@layout/progress_bar"
+        tools:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>

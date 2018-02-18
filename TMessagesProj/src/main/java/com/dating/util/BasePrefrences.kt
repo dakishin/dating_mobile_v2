@@ -69,6 +69,14 @@ class BasePreferences constructor(val context: Context, name: String) {
         }
         return value
     }
+
+    fun getInt(property: String): Int? {
+        val value = sharedPreferences.getInt(property, (-1))
+        if (value == (-1)) {
+            return null
+        }
+        return value
+    }
 }
 
 

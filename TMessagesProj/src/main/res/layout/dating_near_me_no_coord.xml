@@ -52,7 +52,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/progress_bar"/>
+    <include layout="@layout/progress_bar" tools:visibility="gone"/>
 
 
 </RelativeLayout>

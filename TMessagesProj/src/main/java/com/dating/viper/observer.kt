@@ -62,7 +62,7 @@ fun <T> IgnoreErrorsObserver(doOnComplete: () -> Unit): Observer<T> {
         }
 
         override fun onError(e: Throwable) {
-            super.onComplete()
+            super.onError(e)
             doOnComplete()
         }
     }

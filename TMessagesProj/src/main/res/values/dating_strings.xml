@@ -8,107 +8,120 @@
     <string name="app_name_tool_bar">Chats</string>
 
     <string name="who_is_near">Who is near me</string>
-    <string name="coming_soon">This page is under migration to new framework.\nPlease wait. New page will be better!</string>
 
     <string name="living_room">Living room</string>
     <string name="ask_priest_room">Ask priest room</string>
     <string name="bogoslov_room">Talk about God room</string>
 
-    <string name="search">Поиск</string>
-    <string name="treba_menu">Заказать требы</string>
+    <string name="search">Search</string>
+    <string name="treba_menu">Submit religious rite</string>
 
 
-    <string name="trebi_item_title">Заказать Требы</string>
+    <string name="trebi_item_title">Submit religious rite</string>
 
-    <string name="trebi_title_new">Создать</string>
-    <string name="trebi_title_history">История</string>
-    <string name="trebi_title_info">О требах</string>
+    <string name="trebi_title_new">Create</string>
+    <string name="trebi_title_history">History</string>
+    <string name="trebi_title_info">About</string>
 
-    <string name="treba_type_view">Выберите записку</string>
+    <string name="treba_type_view">Choose type</string>
 
 
-    <string name="temp_wait">Пожалуйста, подождите</string>
-    <string name="create_treba_error_type">Записка или треба не выбрана</string>
-    <string name="create_treba_error_name">Имя не указано</string>
+    <string name="temp_wait">Please, wait</string>
+    <string name="create_treba_error_type">Rite is not selected</string>
+    <string name="create_treba_error_name">Name is empty</string>
 
-    <string name="treba_status_wait">Ожидайте.\nЗаписку скоро доставят %1$s</string>
-    <string name="treba_status_taken">Записка доставлена %1$s</string>
+    <string name="treba_status_wait">Please, wait.\nRite will be delivered soon to %1$s</string>
+    <string name="treba_status_taken">Rite was delivered to %1$s</string>
 
-    <string name="treba_info_text1">Сервис помогает передавать Ваши требы и записки в храм, когда у Вас нет возможности посетить службу самостоятельно.\nТреба будет выполнена в одном из храмов наших батюшек.</string>
-    <string name="treba_info_text2">«О здравии» и «Об упокоении» - это молитвенное упоминание имен живых и умерших для вечного блага и спасения поминаемых.</string>
-    <string name="treba_info_text3">Слово «Треба», которое в древнерусском языке имело сакральный смысл и означало: «жертва», «жертвоприношение», «молитва», «исполнение священного обряда». В настоящее время словом «треба» называются молитвословия и священнодействия, совершаемые по просьбе (по потребам, нуждам) одного или нескольких христиан в особых обстоятельствах их жизни.</string>
-    <string name="treba_info_text5">Важно!</string>
-    <string name="treba_info_text6">В записках пишутся имена только тех, кто был крещен в православной Церкви. Нельзя писать имена некрещеных, самоубийц, еретиков. Пожертвования от записок пойдут батюшкам на храм и на развитие приложения.</string>
+    <string name="treba_info_text1">Our service help you to deliver religious rite to Orthodox christian church.\nReligious rite will be executed in one of churches of our priests.</string>
+    <string name="treba_info_text2">Priers «for the health of» and «For the lay to rest of» - it is prayer requests for the live and dead peoples to get theirs salvation.</string>
 
-    <string name="dialog_select_treba_price_title">Сколько вы хотите пожертвовать?</string>
-    <string name="dialog_select_treba_price_message">Ваши пожертвования пойдут батюшке на храм и на развитие приложения.</string>
-    <string name="treba_petr_i_fevr">Молебен о замужестве Петру и Фервории</string>
+
+    <string name="treba_info_text3">Rite is a public prayer or church-office. It was made by church members request for helping ones.</string>
+    <string name="treba_info_text5">Important!</string>
+    <string name="treba_info_text6">Names should be names of members of Orthodox Christian Church only. Names of non members, suicides, heretics are forbidden. Your donations goes to priests and application development.</string>
+
+    <string name="dialog_select_treba_price_title">How much do you want to donate?</string>
+    <string name="dialog_select_treba_price_message">Your donation goes to priests and application development.</string>
 
 
     <array name="treba_prices_o_zdravii">
-        <item>100 руб</item>
-        <item>200 руб</item>
-        <item>500 руб. Спасибо!</item>
+        <item>3$</item>
+        <item>6$</item>
+        <item>15$</item>
     </array>
-
-    <array name="treba_skus_o_zdravii">
-        <item>treba_1_o_zdravii_v2</item>3
-        <item>treba_2_o_zdravii_v2</item>6
-        <item>treba_3_o_zdravii_v2</item>15
-    </array>
-
 
     <array name="treba_prices_moleben">
-        <item>300 руб</item>5
-        <item>500 руб</item>10
-        <item>1000 руб. Спасибо!</item>
+        <item>5$</item>
+        <item>10$</item>
+        <item>20$</item>
     </array>
 
-    <array name="treba_skus_moleben">
-        <item>treba_moleben1_v2</item>
-        <item>treba_moleben2_v2</item>
-        <item>treba_moleben3_v2</item>
-    </array>
+    <string name="treba_ozdravii">Prayer for the health of</string>
+    <string name="treba_ob_upokoenii">Prayer for the lay to rest of</string>
+    <string name="treba_sorokoust_zdrav">Forty days prayers for the health</string>
+    <string name="treba_sorokoust_upok">Forty days prayers for the dead</string>
 
+    <string name="treba_alko">Prayer to help tippler and drug addicted</string>
+    <string name="treba_k_rodam">Prayer for success childbed</string>
+    <string name="treba_pered_dobrim_delom">Prayer for good beginning</string>
+    <string name="treba_blagodarstvenniy">Prayer of thanksgiving</string>
+    <string name="treba_petru_i_fevronii">Prayer for marriage to Petr and Fevronia from Murom</string>
+    <string name="create_treba_step2">Step 2. Specify names</string>
+    <string name="create_treba_step1">Step 1. Choose prayer</string>
+    <string name="create_treba_step3">Step 3. Choose orthodox priest</string>
 
-    <string name="treba_ozdravii">Записка о здравии</string>
-    <string name="treba_ob_upokoenii">Записка об упокоении</string>
-    <string name="treba_sorokoust_zdrav">Сорокоуст о здравии</string>
-    <string name="treba_sorokoust_upok">Сорокоуст об упокоении</string>
-
-
-    <string name="treba_alko">Молебен o страдающих алкоголизмом и наркоманией</string>
-    <string name="treba_k_rodam">Молебен для готовящихся к родам</string>
-    <string name="treba_pered_dobrim_delom">Перед началом всякого доброго дела</string>
-    <string name="treba_blagodarstvenniy">Молебен благодарственный</string>
-    <string name="treba_petru_i_fevronii">Молебен Петру и Февронии о супружеском счастье</string>
-    <string name="create_treba_step2">Шаг 2. Укажите имена</string>
-    <string name="create_treba_step1">Шаг 1. Выберите требу или записку</string>
-    <string name="create_treba_step3">Шаг 3. Выберите храм</string>
-    <string name="telegram_chats_connect_text">Подключите наш новый чат. Мы используем платформу от Telegram. Ваш номер телефона никому не будет виден, пока вы не добавите контакт в друзья.</string>
-    <string name="fragment_telegram_connect_button">Подключить</string>
-
-    <string name="fragment_chat_no_telegram">Этот пользователь еще не установил новый чат. Напишите ему, используя старый.</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="unexpected_error">Unexpected error. Please, try later.</string>
     <string name="choose_church">Choose church</string>
 
-    <string name="near_user_header_distance">ДО %1$d КМ</string>
+    <string name="near_user_header_distance">UP TO %1$d KM</string>
 
-    <string name="city_not_specified">ГОРОД НЕ УКАЗАН</string>
+    <string name="city_not_specified">CITY IS NOT SET</string>
 
-    <string name="who_near_menu">Кто рядом</string>
-
-
-    <string name="search_location_unavailable">Ваше местоположение не доступно</string>
-    <string name="search_location_error">Включите определение местоположения в настройках телефона.</string>
-    <string name="search_turn_on">Включить</string>
-    <string name="search_request_location">Чтобы показать людей вокруг вас, разрешите определять ваше местоположение.</string>
+    <string name="who_near_menu">Who is near</string>
 
 
+    <string name="search_location_unavailable">Your location is unavailable</string>
+    <string name="search_request_location">You should allow getting your location to see peoples near you.</string>
 
-    <string name="allow">Разрешить</string>
-    <string name="update_fragment_title">Обновление</string>
+    <string name="allow">Allow</string>
+    <string name="update_fragment_title">Update</string>
+
+    <string name="un_expected_error_text">Something is going wrong. Please, ask Admin. He will help you.</string>
+    <string name="un_expected_button">Ask</string>
+
+
+    <string name="show_more">Show more</string>
+    <string name="update_text">New version is released. Please, update.</string>
+    <string name="update_button">Update</string>
+
+    <string name="donate_text">Creation and supporting this service is a hard work. Please, help to our project: make donation. After that you will get access to peoples near you.</string>
+
+    <string name="donate_200">Donate 3$</string>
+    <string name="donate_400">Donate 6$</string>
+    <string name="donate_1000">Donate 15%. Thanks!</string>
+
+    <string name="treba_step2_name">Name</string>
+
+    <string name="yeugen_info">Father Eugeniy. Ierey. Sant Nikolas church. Russia. Kaluga.</string>
+    <string name="nikolay_info">Father Nikolas. Ierey. Sant Nikolas Cathedral church. Russia. Ishim.</string>
+
+    <string name="traba_info_priests">Our priests</string>
+
+
+    <string name="donate_title">Donation</string>
+
+    <string name="empty_treba_text">You have no rites yet.</string>
+    <string name="empty_treba_make_order">Make rite request</string>
+
+    <string name="father_nikolas">Father Nikolas</string>
+    <string name="father_eugen">Father Eugeniy</string>
+
+    <string name="priest">priest</string>
+
+
+
 </resources>

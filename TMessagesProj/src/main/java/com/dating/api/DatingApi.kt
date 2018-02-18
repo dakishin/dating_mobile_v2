@@ -4,7 +4,6 @@ import android.os.Looper
 import android.util.Log
 import android.util.MalformedJsonException
 import com.dating.model.NearUser
-import com.dating.model.TelegramUser
 import com.dating.model.Treba
 import com.dating.model.TrebaType
 import com.dating.modules.ProfilePreferences
@@ -104,24 +103,34 @@ class DatingApi @Inject constructor() {
 
 
     @Throws(PifException::class)
-    fun getUserTrebs(userUuid: String): List<Treba>? {
-        return executeApiMethod(service.getTrebas(userUuid)).result
-    }
+    fun getUserTrebs(): Observable<List<Treba>> =
+        Observable
+            .fromCallable { profilePreferences.getTelegramId()!! }
+            .flatMap {
+                service.getTrebas(it)
+            }
+            .checkApiVersion()
+            .map { t: PifResponse<List<Treba>> -> t.result }
+
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: Long, firstName: String?, lastName: String?) =
+    fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?) =
         service
             .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))
 
 
     @Throws(PifException::class)
-    fun createTreba(owner: TelegramUser, type: TrebaType, names: List<String>, priestUuid: String) {
-        executeApiMethod(service
-            .createTreba(PifService.CreateTrebaParam(owner.uuid, names, type, priestUuid)))
-    }
+    fun createTreba(type: TrebaType, names: List<String>, priestUuid: String) =
+        Observable
+            .fromCallable { profilePreferences.getTelegramId()!! }
+            .flatMap {
+                service.createTreba(PifService.CreateTrebaParam(it, names, type, priestUuid))
+            }
+            .checkApiVersion()
+
 
     @Throws(PifException::class)
-    fun sendGeoData(telegramId: Long, lat: Double, lon: Double, city: String?) {
+    fun sendGeoData(telegramId: Int, lat: Double, lon: Double, city: String?) {
         executeApiMethod(service.sendGeoData(PifService.GeoDataParam(telegramId, lat, lon, city)))
     }
 
@@ -141,16 +150,11 @@ class DatingApi @Inject constructor() {
             .fromCallable { profilePreferences.getTelegramId()!! }
             .flatMap { service.searchNear(it) }
             .checkApiVersion()
-            .flatMap { response -> Observable.just(response.result ?: arrayListOf()) }
+            .map { response -> response.result ?: arrayListOf() }
 
 
     private fun <T> Observable<PifResponse<T>>.checkApiVersion(): Observable<PifResponse<T>> {
         return this.map {
-            if (1==1){
-                throw ClientNeedUpdateException("Client need update")
-            }
-
-
             if ((it.errorCode == ErrorCode.OK) &&
                 (it.apiClientVersionCode > BuildConfig.VERSION_CODE)) {
                 throw ClientNeedUpdateException("Client need update")
@@ -178,7 +182,7 @@ class DatingApi @Inject constructor() {
 
 
     @Throws(PifException::class)
-    fun <T> executeApiMethod(call: Call<PifResponse<T>>): PifResponse<T> {
+    private fun <T> executeApiMethod(call: Call<PifResponse<T>>): PifResponse<T> {
 
         try {
             val response = call.execute()

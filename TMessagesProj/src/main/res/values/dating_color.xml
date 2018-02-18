@@ -46,6 +46,10 @@
     <color name="hint_color">#3F000000</color>
     <color name="hint_color_1">#7A000000</color>
 
+    <color name="near_me_header_color">#ababab</color>
+    <color name="near_me_divider_color">#e6e5e4</color>
+
+
     <color name="chat_background">#FFFFFFFF</color>
     <color name="filter_background">#FFE7E4DB</color>
     <color name="chat_list_divider">#FF979797</color>

@@ -44,6 +44,7 @@ dependencies {
 
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true
+        exclude group: 'com.android.support', module: 'support-annotations'
     }
 
 
@@ -115,7 +116,7 @@ android {
             keyAlias "key0"
             keyPassword "qweasd"
             v2SigningEnabled false
-            ext.enableCrashlytics = false
+//            ext.enableCrashlytics = false
         }
 
 //        release {
@@ -239,20 +240,6 @@ android {
 //        variant.mergedFlavor.versionCode = defaultConfig.versionCode * 10 + abiVersion
 //    }
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionName "4.2.1"
-        multiDexEnabled true
-        versionCode = version_code_ext
-
-        externalNativeBuild {
-            ndkBuild {
-                arguments "NDK_APPLICATION_MK:=jni/Application.mk", "APP_PLATFORM:=android-14"
-                abiFilters "armeabi-v7a", "x86"
-            }
-        }
-    }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -264,6 +251,24 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
+    }
+
+
+
+    defaultConfig {
+        versionName "4.2.3"
+        versionCode = 10583
+
+        minSdkVersion 16
+        targetSdkVersion 25
+        multiDexEnabled true
+
+        externalNativeBuild {
+            ndkBuild {
+                arguments "NDK_APPLICATION_MK:=jni/Application.mk", "APP_PLATFORM:=android-14"
+                abiFilters "armeabi-v7a", "x86"
+            }
+        }
     }
 }
 

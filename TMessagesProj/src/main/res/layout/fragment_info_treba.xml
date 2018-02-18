@@ -36,7 +36,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="Наши батюшки"
+                android:text="@string/traba_info_priests"
                 android:textColor="@color/primary"
                 android:textSize="18sp"
                 tools:visibility="visible"/>
@@ -69,7 +69,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
                         android:gravity="center"
-                        android:text="иерей Евгений\nХрам святого Николая Чудотворца. Калужская область. "
+                        android:text="@string/yeugen_info"
                         android:textSize="12sp"/>
                 </LinearLayout>
 
@@ -99,7 +99,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="4dp"
                         android:gravity="center"
-                        android:text="иерей Николай\nНикольский кафедральный собор. Ишим."
+                        android:text="@string/nikolay_info"
                         android:textSize="12sp"/>
                 </LinearLayout>
 

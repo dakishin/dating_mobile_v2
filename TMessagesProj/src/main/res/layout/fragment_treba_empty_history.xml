@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="64dp"
-        android:text="Пока у вас нет ни одной записки."
+        android:text="@string/empty_treba_text"
         android:textSize="16sp"/>
 
     <Button
@@ -33,7 +33,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Заказать"/>
+        android:text="@string/empty_treba_make_order"/>
 
 
 </LinearLayout>
