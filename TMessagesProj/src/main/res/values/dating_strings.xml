@@ -72,6 +72,7 @@
     <string name="create_treba_step3">Step 3. Choose orthodox priest</string>
 
 
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="unexpected_error">Unexpected error. Please, try later.</string>
@@ -95,14 +96,14 @@
 
 
     <string name="show_more">Show more</string>
-    <string name="update_text">New version is released. Please, update.</string>
+    <string name="update_text">New version was released. Please, update.</string>
     <string name="update_button">Update</string>
 
     <string name="donate_text">Creation and supporting this service is a hard work. Please, help to our project: make donation. After that you will get access to peoples near you.</string>
 
     <string name="donate_200">Donate 3$</string>
     <string name="donate_400">Donate 6$</string>
-    <string name="donate_1000">Donate 15%. Thanks!</string>
+    <string name="donate_1000">Donate 15$. Thanks!</string>
 
     <string name="treba_step2_name">Name</string>
 

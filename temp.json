@@ -1,40 +1,6 @@
 {
-  "errorCode": "OK",
-  "result": [
-    {
-      "owner": "c81d47f2-8e02-4226-bf10-9646820dbe2d",
-      "names": [
-        "Vvvvvvv"
-      ],
-      "type": "O_ZDRAVII",
-      "priestUuid": "e54b93bb-1143-4681-8399-a79f0c3c3e1e",
-      "uuid": "bc8bc14e-b7b0-49f8-ab79-0ecc7ca10e6b",
-      "createDate": 1519574814302,
-      "status": "WAIT"
-    },
-    {
-      "owner": "c81d47f2-8e02-4226-bf10-9646820dbe2d",
-      "names": [
-        "Ddddddd"
-      ],
-      "type": "PERED_DOBR_DELOM",
-      "priestUuid": "e54b93bb-1143-4681-8399-a79f0c3c3e1e",
-      "uuid": "d485af4f-8922-42a8-8ffd-31e9582d1b78",
-      "createDate": 1519574646209,
-      "status": "WAIT"
-    },
-    {
-      "owner": "c81d47f2-8e02-4226-bf10-9646820dbe2d",
-      "names": [
-        "Dddd"
-      ],
-      "type": "ALKO",
-      "priestUuid": "e54b93bb-1143-4681-8399-a79f0c3c3e1e",
-      "uuid": "07a42fba-01f6-4756-a160-7786743bd1d8",
-      "createDate": 1519573945511,
-      "status": "WAIT"
-    }
-  ],
-  "apiClientVersionCode": 10572,
-  "isLastPage": false
+  "productId": "test_inapp2",
+  "purchaseToken": "elcjgdoicgehphnbinpcfiij.AO-J1OwHVxdHxzWbCS-FW11L4wBeGxJT4o6wKmzdRHTMU3MWgf9aXFlZGsJiRPzzyNhhc9A1k2tlan9-yp0AkWelglsisrPMvcOnRgOHp_bszhNfQz3yPwU",
+  "purchaseTime": 1519070024522,
+  "developerPayload": null
 }

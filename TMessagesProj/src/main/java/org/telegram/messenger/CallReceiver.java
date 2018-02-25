@@ -11,7 +11,6 @@ package org.telegram.messenger;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import org.telegram.PhoneFormat.PhoneFormat;
@@ -20,7 +19,8 @@ public class CallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (intent.getAction().equals("android.intent.action.PHONE_STATE")) {
+        String action = intent.getAction();
+        if (action != null && action.equals("android.intent.action.PHONE_STATE")) {
             String phoneState = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
             if (phoneState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                 String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);

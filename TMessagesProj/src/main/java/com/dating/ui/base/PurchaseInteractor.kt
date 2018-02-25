@@ -20,10 +20,12 @@ class PurchaseInteractor(val activity: Activity, bag: CompositeDisposable) : Pur
 
     var mBillingClient: BillingClient? = null
 
-    val destroyInAppService = object : Disposable {
+    private val destroyInAppService = object : Disposable {
         override fun dispose() {
             try {
-                mBillingClient?.endConnection()
+                if (mBillingClient?.isReady == true) {
+                    mBillingClient?.endConnection()
+                }
                 Log.d(TAG, "billing disconnected")
             } catch (e: Exception) {
 
@@ -80,38 +82,38 @@ class PurchaseInteractor(val activity: Activity, bag: CompositeDisposable) : Pur
             }
 
 
-    fun downloadPurchases(): Observable<List<Purchase>> {
-        val subject = PublishSubject.create<List<Purchase>>()
-        return Observable
+    fun downloadPurchases(): Observable<List<Purchase>> =
+        Observable
             .intervalRange(1, 10, 0, 1, TimeUnit.SECONDS)
             .skipWhile { !mBillingClient!!.isReady }
             .take(1)
             .flatMap {
-                mBillingClient!!.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP) { responseCode, purchasesList ->
-                    if (responseCode == BillingClient.BillingResponse.OK) {
-                        subject.onNext(purchasesList)
-                        subject.onComplete()
-                    } else {
-                        subject.onError(RuntimeException("error while queryPurchaseHistoryAsync. code $responseCode"))
+                Observable.fromPublisher<List<Purchase>> { subscriber ->
+                    mBillingClient!!.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP) { responseCode, purchasesList ->
+                        if (responseCode == BillingClient.BillingResponse.OK) {
+                            subscriber.onNext(purchasesList)
+                            subscriber.onComplete()
+                        } else {
+                            subscriber.onError(RuntimeException("error while queryPurchaseHistoryAsync. code $responseCode"))
+                        }
                     }
                 }
-                subject
             }
-    }
 
-    fun consume(sku: String): Observable<Int> {
-        val subject = PublishSubject.create<Int>()
-        return downloadPurchases()
-            .flatMap { items ->
-                val purchase = items.findLast { it.sku == sku }
-                mBillingClient?.consumeAsync(purchase!!.purchaseToken) { responseCode, purchaseToken ->
-                    subject.onNext(responseCode)
-                    subject.onComplete()
-                }
 
-                subject
+    fun consumeByPurchaseToken(purchaseToken: String): Observable<Int> =
+        Observable.fromPublisher<Int> { subject ->
+            Log.d(TAG, "start consuming token:$purchaseToken")
+            mBillingClient?.consumeAsync(purchaseToken) { responseCode, purchaseToken ->
+                Log.d(TAG, "end consuming code:$responseCode token:$purchaseToken")
+                subject.onNext(responseCode)
+                subject.onComplete()
             }
-    }
+        }
+            .doOnError {
+                Log.d(TAG, "error consuming $purchaseToken")
+            }
+
 
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
         purchaseCreated.onNext(PurchaseEvent(responseCode, purchases))

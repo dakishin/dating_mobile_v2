@@ -137,7 +137,8 @@ class TrebaCreateFragmentStep3 : BaseFragment(), TrebaView {
                     prices = this@TrebaCreateFragmentStep3.activity.resources.getStringArray(selectedTrebaType.prices).toList()
                     clickItemListener = Consumer<Int> { position ->
                         val sku = activity.resources.getStringArray(selectedTrebaType.skus)[position]
-                        presenter.action.onNext(Action.START_PURCHASE(sku))
+                        presenter.action.onNext(Action.BUY(sku))
+//                        presenter.action.onNext(Action.BUY("test_inapp2"))
                     }
                 }
                 ?.show(fragmentManager, "SelectTrebaTypeDialog")

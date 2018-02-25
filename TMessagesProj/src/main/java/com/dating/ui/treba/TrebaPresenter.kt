@@ -1,5 +1,6 @@
 package com.dating.ui.treba
 
+import android.util.Log
 import com.android.billingclient.api.Purchase
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
@@ -13,10 +14,8 @@ import com.dating.ui.base.PurchaseInteractor
 import com.dating.ui.treba.view.TrebaView
 import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
-import com.dating.viper.Container
-import com.dating.viper.NextObserver
-import com.dating.viper.Presenter
-import com.dating.viper.Router
+import com.dating.viper.*
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -38,12 +37,12 @@ sealed class Action {
     class ClickCreateTreba(val selectedTrebaType: TrebaType, val names: List<String>, val selectedPriestUuid: String?) : Action()
 
 
-    class START_PURCHASE(val sku: String) : Action()
+    class BUY(val sku: String) : Action()
 
     class AskAdmin : Action()
     class UPDATE : Action()
     class DownloadTretbaList : Action()
-
+    class CONSUME : Action()
 }
 
 @InjectViewState
@@ -116,14 +115,26 @@ class TrebaPresenter(
                         }
                     }
 
-                    is Action.START_PURCHASE -> {
+                    is Action.BUY -> {
                         renderVm {
                             copy(isLoading = false, showBuyDialog = false, hasError = false)
                         }
                         val sku = it.sku
                         purchaseInteractor
-                            .buy(sku)
-//                        Observable.just(1)
+                            .downloadPurchases()
+                            .flatMap { list ->
+                                list.forEach {
+                                    if (sku == it.sku) {
+                                        return@flatMap purchaseInteractor.consumeByPurchaseToken(it.purchaseToken)
+                                    }
+                                }
+                                Observable.just(0)
+                            }
+                            .doOnNext { Log.d(TAG, "start buying") }
+                            .flatMap {
+                                purchaseInteractor.buy(sku)
+                            }
+
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->
                                 val purchase: Purchase = purchaseEvent.purchases?.findLast { it.sku == sku }!!
@@ -138,6 +149,29 @@ class TrebaPresenter(
                                     }
                                 }
                             ).bindPresenter(this)
+
+                    }
+
+                    is Action.CONSUME -> {
+                        renderVm {
+                            copy(isLoading = true)
+                        }
+                        purchaseInteractor
+                            .downloadPurchases()
+                            .flatMap {
+                                Observable.fromIterable(it)
+                            }
+                            .flatMap {
+                                purchaseInteractor.consumeByPurchaseToken(it.purchaseToken)
+                            }
+                            .ioScheduler()
+                            .subscribeWith(IgnoreErrorsObserver {
+                                Log.e(TAG, "end subscriber")
+                                renderVm {
+                                    copy(isLoading = false)
+                                }
+                            })
+                            .bindPresenter(this)
 
                     }
 

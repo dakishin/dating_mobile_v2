@@ -1,6 +1,5 @@
 package com.dating.ui.near
 
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
 import com.dating.model.CompoundUser
@@ -34,7 +33,6 @@ sealed class Action {
     class DOWNLOAD_PURCHASES : Action()
     class SHOW_USER_LIST(val chatId: Int) : Action()
     class CLICK_GET_LOCATION : Action()
-    class CONSUME(val sku: String) : Action()
 
     class UPDATE : Action()
     class AskAdmin : Action()
@@ -182,19 +180,6 @@ class NearMePresenter(
                             .bindPresenter(this)
                     }
 
-                    is Action.CONSUME -> {
-                        val sku = it.sku
-                        purchaceInteractor
-                            .consume(sku)
-                            .timeout(20, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .subscribeWith(NextObserver {
-                                profilePreferences.saveHasSearchPurchase(false)
-                                Log.d(TAG, "Consuming completed. Sku:$sku Code:$it")
-                            })
-                            .bindPresenter(this)
-
-                    }
 
                     is Action.AskAdmin -> {
                         router.toRoute.onNext(ToRoute.ASK_ADMIN())

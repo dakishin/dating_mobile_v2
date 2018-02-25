@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.dating.model.TrebaType
 import com.dating.ui.treba.*
+import com.dating.util.updateVisibility
 import com.dating.widget.TabsWidget
 import kotlinx.android.synthetic.main.fragment_create_treba_step1.*
 import org.telegram.messenger.R
@@ -35,6 +37,9 @@ class TrebaCreateFragmentStep1 : BaseFragment(), TrebaView {
 
 
     private lateinit var binder: Unbinder
+
+    @BindView(R.id.progressBar)
+    lateinit var progressBar: View
 
 
 
@@ -86,6 +91,8 @@ class TrebaCreateFragmentStep1 : BaseFragment(), TrebaView {
             presenter.action.onNext(Action.ClickCreateTrebaStep2(selectedTrebaType))
         })
 
+
+//        presenter.action.onNext(Action.CONSUME())
     }
 
 
@@ -103,6 +110,7 @@ class TrebaCreateFragmentStep1 : BaseFragment(), TrebaView {
     }
 
     override fun renderViewModel(viewModel: TrebaViewModel) {
+        progressBar.updateVisibility(viewModel.isLoading)
 
     }
 
