@@ -60,25 +60,11 @@
         <item>500 руб. Спасибо!</item>
     </array>
 
-    <array name="treba_skus_o_zdravii">
-        <item>treba_1_o_zdravii_v2</item>3
-        <item>treba_2_o_zdravii_v2</item>6
-        <item>treba_3_o_zdravii_v2</item>15
-    </array>
-
-
     <array name="treba_prices_moleben">
-        <item>300 руб</item>5
-        <item>500 руб</item>10
+        <item>300 руб</item>
+        <item>500 руб</item>
         <item>1000 руб. Спасибо!</item>
     </array>
-
-    <array name="treba_skus_moleben">
-        <item>treba_moleben1_v2</item>
-        <item>treba_moleben2_v2</item>
-        <item>treba_moleben3_v2</item>
-    </array>
-
 
     <string name="treba_ozdravii">Записка о здравии</string>
     <string name="treba_ob_upokoenii">Записка об упокоении</string>
@@ -127,7 +113,13 @@
     <string name="yeugen_info">Иерей Евгений. Храм святого Николая Чудотворца. Калужская область.</string>
     <string name="nikolay_info">Иерей Николай. Никольский кафедральный собор. Ишим.</string>
     <string name="traba_info_priests">Наши батюшки</string>
-    <string name="traba_info_nikolay">иерей Николай Никольский кафедральный собор. Ишим.</string>
     <string name="empty_treba_text">Пока у вас нет ни одной записки.</string>
     <string name="empty_treba_make_order">Заказать</string>
+    <string name="donate_title">Доброе дело</string>
+
+
+    <string name="father_nikolas">отцу Николаю</string>
+    <string name="father_eugen">отцу Евгению</string>
+    <string name="priest">священнику</string>
+
 </resources>

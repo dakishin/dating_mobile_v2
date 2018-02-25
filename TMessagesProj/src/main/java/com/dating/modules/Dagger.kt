@@ -1,8 +1,10 @@
 package com.dating.modules
 
 import android.content.Context
-import com.dating.activity.near.NearMeComponent
-import com.dating.activity.near.NearMeModule
+import com.dating.ui.near.NearMeComponent
+import com.dating.ui.near.NearMeModule
+import com.dating.ui.treba.TrebaComponent
+import com.dating.ui.treba.TrebaModule
 import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
 import dagger.Component
@@ -38,6 +40,7 @@ interface AppComponent {
     fun getTelegramApi(): TelegramApi
     fun getDatingApi(): DatingApi
     fun nearMeComponent(nearMeModule: NearMeModule): NearMeComponent
+    fun trebaComponent(trebaModule: TrebaModule): TrebaComponent
 }
 
 @Module

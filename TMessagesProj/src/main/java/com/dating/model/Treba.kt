@@ -2,6 +2,7 @@ package com.dating.model
 
 import android.support.annotation.ArrayRes
 import android.support.annotation.StringRes
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.telegram.messenger.R
 
 /**
@@ -11,12 +12,25 @@ val PRIEST_EVGEN_UUID = "3ce429f4-9a76-42f0-9337-4ed03235460d"
 val PRIEST_NOKOLAY_UUID = "e54b93bb-1143-4681-8399-a79f0c3c3e1e"
 
 class Treba(
+    @JsonProperty("uuid")
     val uuid: String,
+
+    @JsonProperty("priestUuid")
     val priestUuid: String?,
+
+    @JsonProperty("owner")
     val owner: String,
+
+    @JsonProperty("type")
     val type: TrebaType,
+
+    @JsonProperty("createDate")
     val createDate: Long,
+
+    @JsonProperty("names")
     val names: List<String>?,
+
+    @JsonProperty("status")
     val status: TrebaStatus
 )
 enum class TrebaStatus {

@@ -14,4 +14,19 @@
 
     <bool name="is_russian_mode">false</bool>
 
+
+    <array name="treba_skus_o_zdravii">
+        <item>treba_1_o_zdravii_v2</item>
+        <item>treba_2_o_zdravii_v2</item>
+        <item>treba_3_o_zdravii_v2</item>
+    </array>
+
+
+    <array name="treba_skus_moleben">
+        <item>treba_moleben1_v2</item>
+        <item>treba_moleben2_v2</item>
+        <item>treba_moleben3_v2</item>
+    </array>
+
+
 </resources>

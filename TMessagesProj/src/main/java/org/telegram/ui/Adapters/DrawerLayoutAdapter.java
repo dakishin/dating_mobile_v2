@@ -134,7 +134,7 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
                 case 5:
                     return 1;
                 case 6:
-                    return 1;
+                    return 3;
                 case 7:
                     return 2;
                 case 8:
@@ -166,13 +166,12 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         if (mContext.getResources().getBoolean(R.bool.is_russian_mode)) {
 //        index 5
             items.add(new Item(-4, mContext.getString(R.string.bogoslov_room), R.drawable.ic_chat_bubble_outline_white_24dp));
-            //        index 6
-            items.add(new Item(-5, mContext.getString(R.string.treba_menu), R.drawable.chat_priest));
         } else {
             items.add(null); // profile  index 5
-            items.add(null); // padding  index 6
         }
 
+        //        index 6
+        items.add(new Item(-5, mContext.getString(R.string.treba_menu), R.drawable.chat_priest));
 
 //        items.add(new Item(2, LocaleController.getString("NewGroup", R.string.NewGroup), R.drawable.menu_newgroup));
 //        items.add(new Item(3, LocaleController.getString("NewSecretChat", R.string.NewSecretChat), R.drawable.menu_secret));

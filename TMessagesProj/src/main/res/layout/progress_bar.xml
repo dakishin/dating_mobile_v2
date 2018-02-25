@@ -9,7 +9,6 @@
     android:focusable="true"
     android:background="@color/dim_color_dark"
     android:visibility="gone"
-    tools:visibility="visible"
     >
 
     <com.dating.widget.ProgressBar

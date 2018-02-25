@@ -126,4 +126,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <include
+        layout="@layout/progress_bar"
+        tools:visibility="gone"/>
+
 </android.support.constraint.ConstraintLayout>

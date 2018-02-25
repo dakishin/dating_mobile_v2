@@ -42,9 +42,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dating.activity.near.NearModuleStarter;
-import com.dating.activity.near.view.NearMeNoCoordFragment;
-import com.dating.activity.treba.TrebaActivity;
+import com.dating.ui.near.NearModuleStarter;
+import com.dating.ui.near.view.NearMeNoCoordFragment;
 import com.dating.modules.AppComponent;
 import com.dating.modules.AppComponentInstance;
 import com.dating.util.Utils;
@@ -100,11 +99,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import kotlin.Unit;
 
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
@@ -455,7 +449,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    }
 //                    drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -5) {
-                    TrebaActivity.start(LaunchActivity.this);
+                    com.dating.ui.treba.TrebaActivity.start(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
