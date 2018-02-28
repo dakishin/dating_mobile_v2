@@ -2271,15 +2271,22 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             addMemberRow = rowCount++;
                         }
                     }
+
                     if (info != null && currentChat.megagroup && info.participants != null && !info.participants.participants.isEmpty()) {
+                        boolean showUsers=com.dating.util.Utils.isShowChannelUsers(info.id,UserConfig.getClientUserId(),getParentActivity());
                         emptyRowChat = rowCount++;
                         membersSectionRow = rowCount++;
                         emptyRowChat2 = rowCount++;
-                        rowCount += info.participants.participants.size();
-                        membersEndRow = rowCount;
-                        if (!usersEndReached) {
-                            loadMoreMembersRow = rowCount++;
+                        if (showUsers){
+                            rowCount += info.participants.participants.size();
                         }
+                        membersEndRow = rowCount;
+                        if (showUsers) {
+                            if (!usersEndReached) {
+                                loadMoreMembersRow = rowCount++;
+                            }
+                        }
+//
                     }
                 } else {
                     if (info != null) {

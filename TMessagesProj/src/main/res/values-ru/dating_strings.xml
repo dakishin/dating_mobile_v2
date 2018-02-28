@@ -20,7 +20,7 @@
 
     <string name="app_name_tool_bar">Чаты</string>
 
-    <string name="who_is_near">Кто рядом с вами</string>
+    <string name="who_is_near">Найти пару</string>
 
 
     <string name="search">Поиск</string>
@@ -84,7 +84,7 @@
 
     <string name="city_not_specified">ГОРОД НЕ УКАЗАН</string>
 
-    <string name="who_near_menu">Кто рядом с вами</string>
+    <string name="who_near_menu">Участники</string>
 
 
     <string name="search_location_unavailable">Ваше местоположение не доступно</string>
@@ -104,7 +104,7 @@
     <string name="show_more">Показать еще</string>
     <string name="update_text">Вышла новая улучшенная версия раздела. Пожалуйста, обновите приложение.</string>
     <string name="update_button">Обновить</string>
-    <string name="donate_text">Создание и поддержание сервиса - тяжелый труд. Пожалуйста, сделайте доброе дело: поддержите наш проект и получите доступ к людям вокруг вас.</string>
+    <string name="donate_text">Создание и поддержание сервиса - тяжелый труд. Пожалуйста, сделайте доброе дело: поддержите наш проект и получите доступ ко всем участиникам сообщества.</string>
     <string name="donate_200">Пожертвовать 200 руб</string>
     <string name="donate_400">Пожертвовать 400 руб</string>
     <string name="donate_1000">Пожертвовать 1000 руб. Спасибо!</string>

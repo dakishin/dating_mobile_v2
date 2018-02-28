@@ -21,14 +21,6 @@ import org.telegram.ui.LaunchActivity
  *   Created by dakishin@gmail.com
  */
 val searchSkus = arrayOf("inapp_search_v2_200", "inapp_search_v2_400", "inapp_search_v2_1000", "test_inapp2", "test_app")
-val moderatorsIds = arrayListOf(
-    131287297//Виталий
-    , 500934221 //Отец Евгений
-    , 545721132// Мила
-    , 390363236 //Наталия
-    , 411437832 //Отец Николай
-    , 501729897 //Admin
-)
 
 class BuySearchFragment : DatingBaseFragment(), NearMeView {
 

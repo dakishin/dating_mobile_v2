@@ -7,7 +7,7 @@
 
     <string name="app_name_tool_bar">Chats</string>
 
-    <string name="who_is_near">Who is near me</string>
+    <string name="who_is_near">Members</string>
 
     <string name="living_room">Living room</string>
     <string name="ask_priest_room">Ask priest room</string>
@@ -82,11 +82,11 @@
 
     <string name="city_not_specified">CITY IS NOT SET</string>
 
-    <string name="who_near_menu">Who is near</string>
+    <string name="who_near_menu">Members</string>
 
 
     <string name="search_location_unavailable">Your location is unavailable</string>
-    <string name="search_request_location">You should allow getting your location to see peoples near you.</string>
+    <string name="search_request_location">You should allow getting your location to see other members.</string>
 
     <string name="allow">Allow</string>
     <string name="update_fragment_title">Update</string>
@@ -99,7 +99,7 @@
     <string name="update_text">New version was released. Please, update.</string>
     <string name="update_button">Update</string>
 
-    <string name="donate_text">Creation and supporting this service is a hard work. Please, help to our project: make donation. After that you will get access to peoples near you.</string>
+    <string name="donate_text">You will see other members after donation.</string>
 
     <string name="donate_200">Donate 3$</string>
     <string name="donate_400">Donate 6$</string>

@@ -12,6 +12,7 @@ import android.util.Base64
 import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import org.telegram.messenger.R
 import org.telegram.ui.LaunchActivity
 import java.io.*
 import java.nio.charset.Charset
@@ -161,5 +162,36 @@ object Utils {
         intent.data = Uri.parse(url)
         intent.action = Intent.ACTION_VIEW
         activity.startActivity(intent)
+    }
+
+    val moderatorsIds = arrayListOf(
+        131287297//Виталий
+        , 500934221 //Отец Евгений
+        , 545721132// Мила
+        , 390363236 //Наталия
+        , 411437832 //Отец Николай
+        , 501729897 //Admin
+    )
+
+    @JvmStatic
+    fun isModerator(telegramId: Int): Boolean {
+        return moderatorsIds.contains(telegramId)
+    }
+
+    @JvmStatic
+    fun isShowChannelUsers(chatId: Int?, currentUser: Int?, context: Context?): Boolean {
+        chatId ?: return true
+        currentUser ?: return true
+        context?:return false
+
+        if (isModerator(currentUser)) {
+            return true
+        }
+        val datingChats = arrayOf(context.resources.getInteger(R.integer.living_room_id),
+            context.resources.getInteger(R.integer.ask_priest_room_id),
+            context.resources.getInteger(R.integer.bogoslov_room_id))
+
+        return !datingChats.contains(chatId)
+
     }
 }

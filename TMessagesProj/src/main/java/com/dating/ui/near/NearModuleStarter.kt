@@ -1,10 +1,10 @@
 package com.dating.ui.near
 
+import com.dating.modules.AppComponentInstance
 import com.dating.ui.near.view.BuySearchFragment
 import com.dating.ui.near.view.NearMeListFragment
 import com.dating.ui.near.view.NearMeNoCoordFragment
-import com.dating.ui.near.view.moderatorsIds
-import com.dating.modules.AppComponentInstance
+import com.dating.util.Utils
 import org.telegram.ui.LaunchActivity
 
 /**
@@ -20,7 +20,7 @@ object NearModuleStarter {
 
         val telegramId = AppComponentInstance.getAppComponent(activity).getProfilePreferences().getTelegramId() ?: 0
 
-        if (!hasSearchPurchase && !moderatorsIds.contains(telegramId)) {
+        if (!hasSearchPurchase && !Utils.isModerator(telegramId)) {
             activity.presentFragment(BuySearchFragment.create())
             return
         }
