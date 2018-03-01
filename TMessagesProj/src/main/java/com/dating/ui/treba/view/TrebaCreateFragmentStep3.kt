@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.dating.model.PRIEST_EVGEN_UUID
 import com.dating.model.PRIEST_NOKOLAY_UUID
 import com.dating.model.TrebaType
+import com.dating.ui.base.BaseFragment
 import com.dating.ui.treba.*
 import com.dating.util.updateVisibility
 import com.dating.widget.SelectTrebaPriceDialog

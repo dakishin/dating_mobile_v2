@@ -46,6 +46,7 @@ import com.dating.ui.near.NearModuleStarter;
 import com.dating.ui.near.view.NearMeNoCoordFragment;
 import com.dating.modules.AppComponent;
 import com.dating.modules.AppComponentInstance;
+import com.dating.ui.registration.RegistrationActivity;
 import com.dating.util.Utils;
 
 import org.telegram.PhoneFormat.PhoneFormat;
@@ -453,7 +454,9 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
-                    NearModuleStarter.start(LaunchActivity.this);
+
+//                    NearModuleStarter.start(LaunchActivity.this);
+                    RegistrationActivity.start(LaunchActivity.this);
 //                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);

@@ -1,23 +1,23 @@
-package com.dating.ui.treba
+package com.dating.ui.registration
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.dating.ui.base.BaseActivity
-import com.dating.ui.treba.view.TrebaCreateFragmentStep1
+import com.dating.ui.registration.view.EnterMainDataFragment
 import org.telegram.messenger.R
 
 /**
  *   Created by dakishin@gmail.com
  */
 
-class TrebaActivity : BaseActivity() {
+class RegistrationActivity : BaseActivity() {
 
     companion object {
 
         @JvmStatic
         fun start(context: Context) {
-            val intent = Intent(context, TrebaActivity::class.java)
+            val intent = Intent(context, RegistrationActivity::class.java)
             context.startActivity(intent)
         }
 
@@ -26,8 +26,8 @@ class TrebaActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_treba)
-        setFragment(TrebaCreateFragmentStep1.create())
+        setContentView(R.layout.activity_registration)
+        setFragment(EnterMainDataFragment.create())
     }
 
 

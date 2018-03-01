@@ -1,4 +1,4 @@
-package com.dating.ui.treba
+package com.dating.ui.base
 
 import android.app.Fragment
 import android.os.Bundle

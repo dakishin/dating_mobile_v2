@@ -21,6 +21,7 @@ import com.dating.model.PRIEST_EVGEN_UUID
 import com.dating.model.PRIEST_NOKOLAY_UUID
 import com.dating.model.Treba
 import com.dating.model.TrebaStatus
+import com.dating.ui.base.BaseFragment
 import com.dating.ui.treba.*
 import com.dating.util.updateVisibility
 import com.dating.widget.TabsWidget

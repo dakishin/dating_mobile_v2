@@ -54,4 +54,53 @@
         <item name="android:layout_height">40dp</item>
     </style>
 
+
+    <style name="profile_item">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="profile_item_title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="profile_item_value">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="profile_question">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="profile_answer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="enter_data_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
 </resources>

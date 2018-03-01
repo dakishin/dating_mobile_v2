@@ -209,6 +209,11 @@
             android:theme="@style/AppTheme"
             />
 
+        <activity
+            android:name="com.dating.ui.registration.RegistrationActivity"
+            android:theme="@style/AppTheme"
+            />
+
         <receiver
             android:name=".AutoMessageHeardReceiver"
             android:exported="false">

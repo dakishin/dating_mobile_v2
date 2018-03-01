@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.dating.ui.base.BaseFragment
 import com.dating.ui.treba.*
 import com.dating.widget.TabsWidget
 import kotlinx.android.synthetic.main.fragment_info_treba.*

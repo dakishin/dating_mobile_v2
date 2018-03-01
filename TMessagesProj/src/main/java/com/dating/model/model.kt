@@ -13,7 +13,10 @@ data class CompoundUser(val user: NearUser?, val telegramUser: TLRPC.User)
 
 class TelegramUser(@JsonProperty("uuid") val uuid: String, @JsonProperty("telegramId") val telegramId: String,
                    @JsonProperty("longitude") val longitude: Double?, @JsonProperty("latitude") val latitude: Double?,
-                   @JsonProperty("city") val city: String?, @JsonProperty("firstName") val firstName: String, @JsonProperty("lastName") val lastName: String?)
+                   @JsonProperty("city") val city: String?, @JsonProperty("firstName") val firstName: String,
+                   @JsonProperty("lastName") val lastName: String?,
+                   @JsonProperty("birthDate") val birthDate:Long?
+)
 
 
 class GoogleOrder(val orderId: String, val productId: String, val purchaseToken: String)

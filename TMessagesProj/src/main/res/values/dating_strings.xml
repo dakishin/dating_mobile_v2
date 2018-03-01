@@ -124,5 +124,87 @@
     <string name="priest">priest</string>
 
 
+    <string name="register_fragment_title">Регистрация</string>
+    <string name="main_data">Основные данные</string>
+
+    <string name="registration">Регистрация</string>
+    <string name="registration_choose_sex">Выберите пол</string>
+    <string name="registration_choose_marriage">Выберите семейное положение</string>
+    <string name="registration_choose_religion">Выберите вероисповедание</string>
+    <string name="registration_choose_education">Выберите образование</string>
+    <string name="registration_choose_children">Есть ли дети</string>
+
+
+    <string name="religion_any">Любая степень воцерковления</string>
+    <string name="religion_prav_member">Член Церкви</string>
+    <string name="religion_prav_newcomer">Воцерковляюсь</string>
+    <string name="religion_prav_just_respect">Просто уважаю</string>
+    <string name="religion_catholicism">Католицизм</string>
+    <string name="religion_protestantism">Протестантизм</string>
+    <string name="religion_islam">Ислам</string>
+    <string name="religion_on_way">На пути к вере</string>
+    <string name="religion_ateism">Атеизм</string>
+    <string name="religion_other">Прочее</string>
+
+
+    <array name="sex">
+        <item>Мужчина</item>
+        <item>Женщина</item>
+    </array>
+
+
+    <array name="marriage">
+        <item>В браке не состоял(а)</item>
+        <item>В разводе</item>
+        <item>Во вдовстве</item>
+        <item>Состою в браке</item>
+        <item>Помолвлен(а)</item>
+    </array>
+
+
+    <array name="education">
+        <item>Школа</item>
+        <item>Коледж</item>
+        <item>Бакалавр</item>
+        <item>Магистр</item>
+        <item>ВУЗ</item>
+    </array>
+
+    <array name="children">
+        <item>Есть</item>
+        <item>Нет</item>
+    </array>
+
+
+    <string name="registration_error_empty_name">Укажите имя и фамилию</string>
+    <string name="registration_error_empty_email">Укажите Email</string>
+    <string name="registration_error_empty_sex">Укажите пол</string>
+
+    <string name="registration_error_empty_avatar">Выберите аватар.</string>
+
+
+    <string name="registration_error_empty_marriage">Укажите семейное положение</string>
+    <string name="registration_error_empty_religion">Укажите вероисповедание</string>
+    <string name="registration_error_empty_education">Укажите образование</string>
+    <string name="registration_error_empty_children">Укажите есть ли дети</string>
+
+    <string name="start_chat">Написать сообщение</string>
+    <string name="ban">Заблокировать</string>
+    <string name="Age">Возраст</string>
+    <string name="sex">Пол</string>
+    <string name="marriage">Семейное положение</string>
+    <string name="religion">Вероисповедание</string>
+    <string name="education">Образование</string>
+    <string name="children_question">Есть ли дети</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="height">Рост</string>
+    <string name="weight">Вес</string>
+    <string name="resume">Анкета</string>
+    <string name="splash_title">Клуб Петра и Февронии</string>
+    <string name="splash_subtitle">Православные знакомства</string>
+
+    <string name="birth_date">Дата рождения</string>
+
 
 </resources>

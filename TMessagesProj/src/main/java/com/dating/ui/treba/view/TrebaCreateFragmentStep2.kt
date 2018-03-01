@@ -8,6 +8,7 @@ import android.widget.EditText
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.dating.model.TrebaType
+import com.dating.ui.base.BaseFragment
 import com.dating.ui.treba.*
 import com.dating.util.Utils
 import com.dating.widget.TabsWidget
