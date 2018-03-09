@@ -2,9 +2,9 @@ package com.dating.ui.near
 
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
+import com.dating.interactors.GeoDataSender
+import com.dating.interactors.ProfilePreferences
 import com.dating.model.CompoundUser
-import com.dating.modules.GeoModule
-import com.dating.modules.ProfilePreferences
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.base.ApiObserver
@@ -19,6 +19,7 @@ import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
 import com.dating.viper.*
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -49,7 +50,7 @@ class NearMeContainer(
 class NearMePresenter(
     val router: Router<ToRoute, InRoute>,
     override val bag: CompositeDisposable,
-    val geoModule: GeoModule,
+    val geoModule: GeoDataSender,
     val purchaceInteractor: PurchaseInteractor,
     val profilePreferences: ProfilePreferences,
     val activity: LaunchActivity,
@@ -96,12 +97,12 @@ class NearMePresenter(
 
                         geoModule
                             .geoPermissionGranted
-                            .flatMap {
-                                geoModule.sendGeoDataObserver
+                            .flatMapCompletable {
+                                geoModule.sendGeoData()
                             }
-                            .timeout(10, TimeUnit.SECONDS)
-                            .ioScheduler()
-                            .subscribeWith(IgnoreErrorsObserver {
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
                                 renderVm {
                                     copy(isLoading = false)
                                 }
@@ -110,7 +111,8 @@ class NearMePresenter(
                                 } else {
                                     router.toRoute.onNext(ToRoute.NO_LOCATION())
                                 }
-                            })
+
+                            }, {})
                             .bindPresenter(this)
 
                         if (!Utils.isGeoPermissionGranted(activity)) {

@@ -3,8 +3,8 @@ package com.dating.ui.treba
 import android.app.Activity
 import com.dating.ui.base.PurchaseInteractor
 import com.dating.api.DatingApi
-import com.dating.modules.GeoModule
-import com.dating.modules.ProfilePreferences
+import com.dating.interactors.GeoDataSender
+import com.dating.interactors.ProfilePreferences
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +19,7 @@ class TrebaModule(val activity: TrebaActivity) {
 
     @Provides
     @TrebaScope
-    fun provideRouter(geoModule: GeoModule): TrebaRouter
+    fun provideRouter(geoModule: GeoDataSender): TrebaRouter
         = TrebaRouter(activity, bag, geoModule)
 
 
@@ -31,8 +31,8 @@ class TrebaModule(val activity: TrebaActivity) {
 
     @Provides
     @TrebaScope
-    fun providePresenter(router: TrebaRouter, geoModule: GeoModule,
-                         preferences: ProfilePreferences, api: DatingApi,purchaseInteractor: PurchaseInteractor)
+    fun providePresenter(router: TrebaRouter, geoModule: GeoDataSender,
+                         preferences: ProfilePreferences, api: DatingApi, purchaseInteractor: PurchaseInteractor)
         = TrebaPresenter(router, bag, preferences, activity, api,purchaseInteractor)
 
     @Provides

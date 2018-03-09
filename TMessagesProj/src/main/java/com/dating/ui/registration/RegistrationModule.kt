@@ -2,8 +2,8 @@ package com.dating.ui.registration
 
 import android.app.Activity
 import com.dating.api.DatingApi
-import com.dating.modules.GeoModule
-import com.dating.modules.ProfilePreferences
+import com.dating.interactors.GeoDataSender
+import com.dating.interactors.ProfilePreferences
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -19,12 +19,12 @@ class RegistrationModule(val activity: RegistrationActivity) {
 
     @Provides
     @RegistrationScope
-    fun provideRouter(geoModule: GeoModule): RegistrationRouter
+    fun provideRouter(geoModule: GeoDataSender): RegistrationRouter
         = RegistrationRouter(activity, bag, geoModule)
 
     @Provides
     @RegistrationScope
-    fun providePresenter(router: RegistrationRouter, geoModule: GeoModule,
+    fun providePresenter(router: RegistrationRouter, geoModule: GeoDataSender,
                          preferences: ProfilePreferences, api: DatingApi)
         = RegistrationPresenter(router, bag, preferences, activity, api)
 

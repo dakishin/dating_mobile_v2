@@ -11,7 +11,6 @@ package org.telegram.messenger;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
-import android.util.Log;
 
 import com.dating.modules.AppComponentInstance;
 
@@ -22,10 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import kotlin.Unit;
 
 public class UserConfig {
 
@@ -190,27 +186,7 @@ public class UserConfig {
                 .getRegisterModule()
                 .registerTelegramUser(user.id, user.first_name, user.last_name)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Unit>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Unit unit) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("UserConfig", e.getMessage(), e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                .subscribe();
         }
 
     }

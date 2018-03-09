@@ -42,11 +42,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dating.ui.near.NearModuleStarter;
-import com.dating.ui.near.view.NearMeNoCoordFragment;
 import com.dating.modules.AppComponent;
 import com.dating.modules.AppComponentInstance;
-import com.dating.ui.registration.RegistrationActivity;
+import com.dating.ui.near.NearModuleStarter;
+import com.dating.ui.near.view.NearMeNoCoordFragment;
 import com.dating.util.Utils;
 
 import org.telegram.PhoneFormat.PhoneFormat;
@@ -100,6 +99,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.reactivex.schedulers.Schedulers;
 
 
 public class LaunchActivity extends Activity implements ActionBarLayout.ActionBarLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate {
@@ -455,8 +456,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                     drawerLayoutContainer.closeDrawer(false);
                 } else if (id == -1) {
 
-//                    NearModuleStarter.start(LaunchActivity.this);
-                    RegistrationActivity.start(LaunchActivity.this);
+                    NearModuleStarter.start(LaunchActivity.this);
+//                    RegistrationActivity.start(LaunchActivity.this);
 //                    DatingUtils.startDatingSearch(LaunchActivity.this);
 //                    presentFragment(new ContactsActivity(null));
                     drawerLayoutContainer.closeDrawer(false);
@@ -659,8 +660,11 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                 if (!Utils.isGeoPermissionGranted(LaunchActivity.this)) {
                     Utils.requestGeoPermission(LaunchActivity.this, REQUEST_LOCATION_CODE);
                 } else {
-                    getAppComponent().getRegisterModule().registerTelegramUser();
-                }
+                    getAppComponent().getRegisterModule()
+                    .registerTelegramUser(UserConfig.getCurrentUser())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
+            }
             }
         });
 

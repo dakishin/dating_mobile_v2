@@ -2,6 +2,8 @@ package com.dating.viper
 
 import android.util.Log
 import com.dating.util.weak
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
 val TAG = "Daging obsevers"
@@ -63,6 +65,22 @@ fun <T> IgnoreErrorsObserver(doOnComplete: () -> Unit): Observer<T> {
 
         override fun onError(e: Throwable) {
             super.onError(e)
+            doOnComplete()
+        }
+    }
+}
+
+
+fun  CompletableIgnoreErrors(doOnComplete: () -> Unit): CompletableObserver {
+    return object : CompletableObserver {
+        override fun onComplete() {
+            doOnComplete()
+        }
+
+        override fun onSubscribe(d: Disposable) {
+        }
+
+        override fun onError(e: Throwable) {
             doOnComplete()
         }
     }

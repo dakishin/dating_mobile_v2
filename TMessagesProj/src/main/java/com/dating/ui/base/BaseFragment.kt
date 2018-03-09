@@ -7,8 +7,8 @@ import com.arellomobile.mvp.MvpDelegate
 import com.dating.api.DatingApi
 import com.dating.modules.AppComponent
 import com.dating.modules.AppComponentInstance
-import com.dating.modules.GeoModule
-import com.dating.modules.ProfilePreferences
+import com.dating.interactors.GeoDataSender
+import com.dating.interactors.ProfilePreferences
 import org.telegram.messenger.R
 
 /**
@@ -37,7 +37,7 @@ open class BaseFragment : Fragment() {
         return AppComponentInstance.getAppComponent(activity)
     }
 
-    protected fun getGeoModule(): GeoModule {
+    protected fun getGeoModule(): GeoDataSender {
         return AppComponentInstance.getAppComponent(activity).getGeoModule()
     }
 

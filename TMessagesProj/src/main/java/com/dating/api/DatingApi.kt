@@ -3,10 +3,10 @@ package com.dating.api
 import android.os.Looper
 import android.util.Log
 import android.util.MalformedJsonException
+import com.dating.interactors.ProfilePreferences
 import com.dating.model.NearUser
 import com.dating.model.Treba
 import com.dating.model.TrebaType
-import com.dating.modules.ProfilePreferences
 import com.dating.util.ErrorCode
 import com.dating.util.PifException
 import com.dating.util.Utils
@@ -24,20 +24,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  *   Created by dakishin@gmail.com
  */
-@Singleton
-class DatingApi @Inject constructor() {
+open class DatingApi(val profilePreferences: ProfilePreferences)  {
     private val service: PifService
     private val geoService: GeoService
     private val TAG = DatingApi::class.java.name
 
-    @Inject
-    lateinit var profilePreferences: ProfilePreferences
 
     init {
         val logInterceptor = HttpLoggingInterceptor()
@@ -78,7 +73,7 @@ class DatingApi @Inject constructor() {
     }
 
 
-    fun getCityByLocation(lat: Double, lon: Double): String? {
+   open fun getCityByLocation(lat: Double, lon: Double): String? {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             throw RuntimeException("вы не должны использовать главный поток")
         }
@@ -114,7 +109,7 @@ class DatingApi @Inject constructor() {
 
 
     @Throws(PifException::class)
-    fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?) =
+    open fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?) =
         service
             .registerTelegramUser(PifService.RegisterTelegramUserParam(telegramId.toString(), firstName, lastName))
 
@@ -130,7 +125,7 @@ class DatingApi @Inject constructor() {
 
 
     @Throws(PifException::class)
-    fun sendGeoData(telegramId: Int, lat: Double, lon: Double, city: String?) {
+    open fun sendGeoData(telegramId: Int, lat: Double, lon: Double, city: String?) {
         executeApiMethod(service.sendGeoData(PifService.GeoDataParam(telegramId, lat, lon, city)))
     }
 

@@ -1,18 +1,15 @@
-package com.dating.modules
+package com.dating.interactors
 
 import android.content.Context
 import android.util.Log
 import com.dating.model.TelegramUser
 import com.dating.util.BasePreferences
 import com.google.gson.Gson
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  *   Created by dakishin@gmail.com
  */
-@Singleton
-class ProfilePreferences @Inject constructor(context: Context) {
+open class ProfilePreferences(context: Context) {
 
     private val PROFILE_KEY = "PROFILE_KEY"
     private val TELEGRAM_ID_KEY = "TELEGRAM_ID_KEY_v4"
@@ -24,12 +21,11 @@ class ProfilePreferences @Inject constructor(context: Context) {
     val basePreferences: BasePreferences = BasePreferences(context, "ProfilePreferences")
 
 
-
-    fun getTelegramId(): Int? {
+    open fun getTelegramId(): Int? {
         return basePreferences.getInt(TELEGRAM_ID_KEY)
     }
 
-    fun saveTelegramId(uuid: Int) {
+    open fun saveTelegramId(uuid: Int) {
         basePreferences.setInt(TELEGRAM_ID_KEY, uuid)
     }
 
@@ -37,7 +33,7 @@ class ProfilePreferences @Inject constructor(context: Context) {
         return basePreferences.getString(LAST_NAME_KEY, null)
     }
 
-    fun saveLastName(uuid: String?) {
+   open fun saveLastName(uuid: String?) {
         basePreferences.setString(LAST_NAME_KEY, uuid)
     }
 
@@ -45,7 +41,7 @@ class ProfilePreferences @Inject constructor(context: Context) {
         return basePreferences.getString(FIRST_NAME_KEY, null)
     }
 
-    fun saveFistName(uuid: String?) {
+   open fun saveFistName(uuid: String?) {
         basePreferences.setString(FIRST_NAME_KEY, uuid)
     }
 
@@ -66,7 +62,7 @@ class ProfilePreferences @Inject constructor(context: Context) {
         return basePreferences.getBoolean(HAS_SEARCH_PURCHASE, false)
     }
 
-    fun saveHasSearchPurchase(value:Boolean) {
+    fun saveHasSearchPurchase(value: Boolean) {
         basePreferences.setBoolean(HAS_SEARCH_PURCHASE, value)
     }
 

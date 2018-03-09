@@ -5,7 +5,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 
 
-
 interface Presenter<M, V : View<M>, A, O> {
     val bag: CompositeDisposable
     val action: Observable<A>

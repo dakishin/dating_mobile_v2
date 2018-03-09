@@ -2,7 +2,7 @@ package com.dating.ui.registration
 
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
-import com.dating.modules.ProfilePreferences
+import com.dating.interactors.ProfilePreferences
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.registration.view.RegistrationView
