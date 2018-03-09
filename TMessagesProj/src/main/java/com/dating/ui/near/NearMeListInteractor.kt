@@ -4,7 +4,7 @@ import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
 import com.dating.model.CompoundUser
 import com.dating.model.NearUser
-import com.dating.modules.ProfilePreferences
+import com.dating.interactors.ProfilePreferences
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import org.telegram.tgnet.TLRPC

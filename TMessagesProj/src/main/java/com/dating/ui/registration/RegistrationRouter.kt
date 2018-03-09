@@ -1,6 +1,6 @@
 package com.dating.ui.registration
 
-import com.dating.modules.GeoModule
+import com.dating.interactors.GeoDataSender
 import com.dating.ui.base.BaseActivity
 import com.dating.ui.treba.InRoute
 import com.dating.util.Utils
@@ -26,7 +26,7 @@ sealed class ToRoute {
 }
 
 
-class RegistrationRouter(val activity: BaseActivity, override val bag: CompositeDisposable, val geoModule: GeoModule) : Router<ToRoute, InRoute> {
+class RegistrationRouter(val activity: BaseActivity, override val bag: CompositeDisposable, val geoModule: GeoDataSender) : Router<ToRoute, InRoute> {
 
     override val toRoute: PublishSubject<ToRoute> = PublishSubject.create<ToRoute>()
     override val inRoute: PublishSubject<InRoute> = PublishSubject.create<InRoute>()

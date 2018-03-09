@@ -13,7 +13,7 @@ import retrofit2.http.*
  *   Created by dakishin@gmail.com
  */
 
-class PifResponse<T> {
+open class PifResponse<T> {
     var errorCode: ErrorCode? = null
     var result: T? = null
     var apiClientVersionCode: Int = 0

@@ -6,6 +6,7 @@ import com.dating.viper.View
 import com.dating.viper.bind
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
@@ -23,6 +24,10 @@ fun <T, M, V : View<M>, A, O> DisposableObserver<T>.bindPresenter(observer: Pres
     DisposableObserver<T> {
     observer.bind(this)
     return this
+}
+
+fun <M, V : View<M>, A, O> Disposable.bindPresenter(observer: Presenter<M, V, A, O>) {
+    observer.bag.add(this)
 }
 
 fun <T, I : Any, O : Any> DisposableObserver<T>.bindRouter(observer: Router<I, O>): DisposableObserver<T> {

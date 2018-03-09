@@ -1,8 +1,10 @@
 package com.dating.modules
 
 import android.content.Context
+import android.location.LocationManager
 import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
+import com.dating.interactors.*
 import com.dating.ui.near.NearMeComponent
 import com.dating.ui.near.NearMeModule
 import com.dating.ui.registration.RegistrationComponent
@@ -12,13 +14,13 @@ import com.dating.ui.treba.TrebaModule
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 
 /**
  *   Created by dakishin@gmail.com
  */
-
 
 object AppComponentInstance {
     private var appComponent: AppComponent? = null
@@ -37,10 +39,12 @@ object AppComponentInstance {
 @Component(modules = arrayOf(AndroidModule::class))
 interface AppComponent {
     fun getProfilePreferences(): ProfilePreferences
-    fun getRegisterModule(): RegisterModule
-    fun getGeoModule(): GeoModule
+    fun getRegisterModule(): RegisterInteractor
+    fun getGeoModule(): GeoDataSender
     fun getTelegramApi(): TelegramApi
     fun getDatingApi(): DatingApi
+
+
     fun nearMeComponent(nearMeModule: NearMeModule): NearMeComponent
     fun trebaComponent(trebaModule: TrebaModule): TrebaComponent
     fun registrationComponent(trebaModule: RegistrationModule): RegistrationComponent
@@ -54,5 +58,41 @@ class AndroidModule(val context: Context) {
         return context
     }
 
+    @Provides
+    @Singleton
+    fun provideLocationInteractor(context: Context, permissionInteractor: PermissionInteractor): LocationInteractor =
+        LocationInteractor(context, Schedulers.computation(),
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager, permissionInteractor)
+
+
+    @Provides
+    @Singleton
+    fun permissionInteractor(context: Context): PermissionInteractor = PermissionInteractor(context)
+
+
+    @Provides
+    @Singleton
+    fun registerModule(datingApi: DatingApi, profilePreferences: ProfilePreferences, geoDataSender: GeoDataSender): RegisterInteractor =
+        RegisterInteractor(datingApi, profilePreferences, geoDataSender)
+
+    @Provides
+    @Singleton
+    fun profilePreferences(context: Context): ProfilePreferences = ProfilePreferences(context)
+
+    @Provides
+    @Singleton
+    fun geoPreferences(context: Context): GeoPreferences = GeoPreferences(context)
+
+
+    @Provides
+    @Singleton
+    fun datingApi(profilePreferences: ProfilePreferences): DatingApi = DatingApi(profilePreferences)
+
+    @Provides
+    @Singleton
+    fun geoDataSender(context: Context, geoPreferences: GeoPreferences,
+                      api: DatingApi, locationInteractor: LocationInteractor,
+                      profilePreferences: ProfilePreferences): GeoDataSender =
+        GeoDataSender(context, geoPreferences, api, locationInteractor, profilePreferences, Schedulers.computation())
 }
 
