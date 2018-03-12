@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.MvpDelegate
 import com.dating.api.DatingApi
+import com.dating.interactors.ProfilePreferences
+import com.dating.interactors.SaveLocationInteractor
 import com.dating.modules.AppComponent
 import com.dating.modules.AppComponentInstance
-import com.dating.interactors.GeoDataSender
-import com.dating.interactors.ProfilePreferences
 import org.telegram.messenger.R
 
 /**
@@ -37,7 +37,7 @@ open class BaseFragment : Fragment() {
         return AppComponentInstance.getAppComponent(activity)
     }
 
-    protected fun getGeoModule(): GeoDataSender {
+    protected fun getGeoModule(): SaveLocationInteractor {
         return AppComponentInstance.getAppComponent(activity).getGeoModule()
     }
 

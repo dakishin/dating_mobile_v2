@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 /**
  *   Created by dakishin@gmail.com
  */
-class PurchaseInteractor(val activity: Activity, bag: CompositeDisposable) : PurchasesUpdatedListener {
+open class PurchaseInteractor(val activity: Activity, bag: CompositeDisposable) : PurchasesUpdatedListener {
 
     val TAG = PurchaseInteractor::class.java.name
 

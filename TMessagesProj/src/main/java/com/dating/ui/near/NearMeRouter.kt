@@ -1,6 +1,6 @@
 package com.dating.ui.near
 
-import com.dating.interactors.GeoDataSender
+import com.dating.interactors.SaveLocationInteractor
 import com.dating.ui.near.view.NearMeListFragment
 import com.dating.ui.near.view.NearMeNoCoordFragment
 import com.dating.ui.treba.InRoute
@@ -28,7 +28,7 @@ sealed class ToRoute {
 }
 
 
-class NearMeRouter(val activity: LaunchActivity, override val bag: CompositeDisposable, val geoModule: GeoDataSender) : Router<ToRoute, InRoute> {
+class NearMeRouter(val activity: LaunchActivity, override val bag: CompositeDisposable, val geoModule: SaveLocationInteractor) : Router<ToRoute, InRoute> {
 
     override val toRoute: PublishSubject<ToRoute> = PublishSubject.create<ToRoute>()
     override val inRoute: PublishSubject<InRoute> = PublishSubject.create<InRoute>()
