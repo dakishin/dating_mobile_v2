@@ -19,7 +19,7 @@ open class GeoPreferences (val context: Context) {
         basePreferences.setFloat(LON_KEY, lon.toFloat())
     }
 
-    fun getLat(): Double? {
+   open  fun getLat(): Double? {
         return basePreferences.getFloat(LAT_KEY)?.toDouble()
     }
 

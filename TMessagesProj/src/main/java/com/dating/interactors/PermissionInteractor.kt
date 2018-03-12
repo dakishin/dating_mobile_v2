@@ -1,8 +1,10 @@
 package com.dating.interactors
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 
 /**
@@ -19,5 +21,9 @@ open class PermissionInteractor(val context: Context) {
             }
         }
         return true
+    }
+
+   open fun requestGeoPermission(activity: Activity, requestCode: Int) {
+        ActivityCompat.requestPermissions(activity, geoPermission, requestCode)
     }
 }

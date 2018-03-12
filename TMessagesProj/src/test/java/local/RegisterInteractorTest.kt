@@ -2,11 +2,10 @@ package local
 
 import com.dating.api.DatingApi
 import com.dating.api.PifResponse
-import com.dating.interactors.GeoDataSender
-import com.dating.interactors.RegisterInteractor
-import com.dating.model.TelegramUser
 import com.dating.interactors.ProfilePreferences
-import io.reactivex.Completable
+import com.dating.interactors.RegisterInteractor
+import com.dating.interactors.SaveLocationInteractor
+import com.dating.model.TelegramUser
 import io.reactivex.Observable
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -14,6 +13,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.*
+import util.BaseRobotoTest
 
 /**
  *   Created by dakishin@gmail.com
@@ -27,7 +27,7 @@ class RegisterInteractorTest : BaseRobotoTest() {
     lateinit var profilePreferences: ProfilePreferences
 
     @Mock
-    lateinit var geoDataSender: GeoDataSender
+    lateinit var geoDataSender: SaveLocationInteractor
 
 
     @Test
@@ -35,7 +35,7 @@ class RegisterInteractorTest : BaseRobotoTest() {
         Mockito.`when`(api.registerTelegramUser(anyInt(), anyString(), anyString()))
             .thenReturn(Observable.just(mock(PifResponse::class.java) as PifResponse<TelegramUser>))
         Mockito.`when`(profilePreferences.getTelegramId()).thenReturn(1)
-        Mockito.`when`(geoDataSender.sendGeoData()).thenReturn(Completable.complete())
+        Mockito.`when`(geoDataSender.saveLocation()).thenReturn(Observable.just(Unit))
 
 
         RegisterInteractor(api, profilePreferences, geoDataSender)
@@ -48,7 +48,7 @@ class RegisterInteractorTest : BaseRobotoTest() {
         verify(profilePreferences).saveTelegramId(anyInt())
         verify(profilePreferences).saveFistName(anyString())
         verify(profilePreferences).saveLastName(anyString())
-        verify(geoDataSender).sendGeoData()
+        verify(geoDataSender).saveLocation()
         verify(api, never()).registerTelegramUser(anyInt(), anyString(), anyString())
     }
 
@@ -59,7 +59,7 @@ class RegisterInteractorTest : BaseRobotoTest() {
         Mockito.`when`(api.registerTelegramUser(anyInt(), anyString(), anyString()))
             .thenReturn(Observable.just(mock(PifResponse::class.java) as PifResponse<TelegramUser>))
         Mockito.`when`(profilePreferences.getTelegramId()).thenReturn(1)
-        Mockito.`when`(geoDataSender.sendGeoData()).thenReturn(Completable.complete())
+        Mockito.`when`(geoDataSender.saveLocation()).thenReturn(Observable.just(Unit))
 
 
         RegisterInteractor(api, profilePreferences, geoDataSender)
@@ -72,7 +72,7 @@ class RegisterInteractorTest : BaseRobotoTest() {
         verify(profilePreferences).saveTelegramId(anyInt())
         verify(profilePreferences).saveFistName(anyString())
         verify(profilePreferences).saveLastName(anyString())
-        verify(geoDataSender).sendGeoData()
+        verify(geoDataSender).saveLocation()
 
 
         verify(api).registerTelegramUser(anyInt(), anyString(), anyString())

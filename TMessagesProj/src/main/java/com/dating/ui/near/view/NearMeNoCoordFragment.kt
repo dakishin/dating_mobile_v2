@@ -53,9 +53,8 @@ class NearMeNoCoordFragment : DatingBaseFragment(), NearMeView {
 
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, container))
         presenter = component.presenter()
-        presenter.container = container
 
 
 
