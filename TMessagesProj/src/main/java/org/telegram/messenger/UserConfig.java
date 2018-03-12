@@ -21,8 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class UserConfig {
@@ -188,18 +186,7 @@ public class UserConfig {
                 .getRegisterModule()
                 .registerTelegramUser(user.id, user.first_name, user.last_name)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Action() {
-                               @Override
-                               public void run() throws Exception {
-
-                               }
-                           },
-                    new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable o) throws Exception {
-
-                        }
-                    });
+                .subscribe();
         }
 
     }
