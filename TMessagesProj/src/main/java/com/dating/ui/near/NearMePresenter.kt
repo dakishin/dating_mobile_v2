@@ -2,8 +2,9 @@ package com.dating.ui.near
 
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
-import com.dating.interactors.GeoDataSender
+import com.dating.interactors.PermissionInteractor
 import com.dating.interactors.ProfilePreferences
+import com.dating.interactors.SaveLocationInteractor
 import com.dating.model.CompoundUser
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
@@ -14,7 +15,6 @@ import com.dating.ui.near.view.NearMeView
 import com.dating.ui.near.view.NeedUpdateFragment
 import com.dating.ui.near.view.searchSkus
 import com.dating.ui.treba.InRoute
-import com.dating.util.Utils
 import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
 import com.dating.viper.*
@@ -50,15 +50,19 @@ class NearMeContainer(
 class NearMePresenter(
     val router: Router<ToRoute, InRoute>,
     override val bag: CompositeDisposable,
-    val geoModule: GeoDataSender,
+    val saveLocationInteractor: SaveLocationInteractor,
     val purchaceInteractor: PurchaseInteractor,
     val profilePreferences: ProfilePreferences,
     val activity: LaunchActivity,
     val api: DatingApi,
-    val nearMeListInteractor: NearMeListInteractor
+    val nearMeListInteractor: NearMeListInteractor,
+    val permissionInteractor: PermissionInteractor,
+    override val container: Container<NearMeViewModel, NearMeView>
+
 ) : Presenter<NearMeViewModel, NearMeView, Action, Unit>, ApiErrorsPresenter {
 
-    override lateinit var container: Container<NearMeViewModel, NearMeView>
+    override fun start() {}
+
 
     val TAG = NearMePresenter::javaClass.name
 
@@ -67,7 +71,7 @@ class NearMePresenter(
     override val action = PublishSubject.create<Action>()
 
     init {
-
+        container.presenter = this
         action
             .subscribeWith(NextObserver<Action> {
 
@@ -95,18 +99,15 @@ class NearMePresenter(
                             copy(isLoading = true)
                         }
 
-                        geoModule
-                            .geoPermissionGranted
-                            .flatMapCompletable {
-                                geoModule.sendGeoData()
-                            }
+                        saveLocationInteractor
+                            .saveLocationWhenPermissionGranted()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
                                 renderVm {
                                     copy(isLoading = false)
                                 }
-                                if (geoModule.hasLocation()) {
+                                if (saveLocationInteractor.hasLocation()) {
                                     router.toRoute.onNext(ToRoute.NEAR_ME_LIST())
                                 } else {
                                     router.toRoute.onNext(ToRoute.NO_LOCATION())
@@ -115,10 +116,10 @@ class NearMePresenter(
                             }, {})
                             .bindPresenter(this)
 
-                        if (!Utils.isGeoPermissionGranted(activity)) {
-                            Utils.requestGeoPermission(activity, NearMeNoCoordFragment.REQUEST_GEO_PERMISSION)
+                        if (!permissionInteractor.isGeoPermissionGranted()) {
+                            permissionInteractor.requestGeoPermission(activity, NearMeNoCoordFragment.REQUEST_GEO_PERMISSION)
                         } else {
-                            geoModule.notifyPermissionGranted()
+                            saveLocationInteractor.notifyPermissionGranted()
                         }
 
                     }
@@ -221,12 +222,5 @@ class NearMePresenter(
 
 
     }
-
-
-    override fun start() {
-
-
-    }
-
 
 }

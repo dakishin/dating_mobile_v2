@@ -2,18 +2,17 @@ package com.dating.interactors
 
 import android.util.Log
 import com.dating.api.DatingApi
-import io.reactivex.Completable
 import io.reactivex.Observable
 import org.telegram.tgnet.TLRPC
 
 /**
  *   Created by dakishin@gmail.com
  */
-class RegisterInteractor(val api: DatingApi, val profilePreferences: ProfilePreferences, val geoDataSender: GeoDataSender) {
+class RegisterInteractor(val api: DatingApi, val profilePreferences: ProfilePreferences, val geoDataSender: SaveLocationInteractor) {
 
     val TAG = RegisterInteractor::javaClass.name
 
-    fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?): Completable =
+    fun registerTelegramUser(telegramId: Int, firstName: String?, lastName: String?) =
         Observable
             .fromCallable {
                 if (profilePreferences.getTelegramId() == telegramId) {
@@ -28,24 +27,24 @@ class RegisterInteractor(val api: DatingApi, val profilePreferences: ProfilePref
                 profilePreferences.saveFistName(firstName)
                 profilePreferences.saveLastName(lastName)
             }
-            .flatMapCompletable {
-                geoDataSender.sendGeoData()
+            .flatMap {
+                geoDataSender.saveLocation()
             }
             .doOnError {
                 Log.e(TAG, it.message, it)
             }
-            .onErrorComplete()
+            .onErrorReturn { Unit }
 
 
-    fun registerTelegramUser(user: TLRPC.User?): Completable =
+    fun registerTelegramUser(user: TLRPC.User?) =
         Observable
             .fromCallable {
                 registerTelegramUser(user!!.id, user.first_name, user.last_name)
             }
-            .flatMapCompletable { v -> v }
+            .flatMap { v -> v }
             .doOnError {
                 Log.e(TAG, it.message, it)
             }
-            .onErrorComplete()
+            .onErrorReturn { Unit }
 
 }

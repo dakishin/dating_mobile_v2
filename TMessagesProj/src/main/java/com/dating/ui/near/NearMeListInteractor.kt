@@ -2,9 +2,9 @@ package com.dating.ui.near
 
 import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
+import com.dating.interactors.ProfilePreferences
 import com.dating.model.CompoundUser
 import com.dating.model.NearUser
-import com.dating.interactors.ProfilePreferences
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import org.telegram.tgnet.TLRPC
@@ -12,7 +12,7 @@ import org.telegram.tgnet.TLRPC
 /**
  *   Created by dakishin@gmail.com
  */
-class NearMeListInteractor(val telegramApi: TelegramApi, val datingApi: DatingApi, val profilePreferences: ProfilePreferences) {
+open class NearMeListInteractor(val telegramApi: TelegramApi, val datingApi: DatingApi, val profilePreferences: ProfilePreferences) {
 
     fun loadUsers(chatId: Int): Observable<List<CompoundUser>>
         = telegramApi

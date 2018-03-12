@@ -15,6 +15,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Singleton
 
 
@@ -40,7 +41,7 @@ object AppComponentInstance {
 interface AppComponent {
     fun getProfilePreferences(): ProfilePreferences
     fun getRegisterModule(): RegisterInteractor
-    fun getGeoModule(): GeoDataSender
+    fun getGeoModule(): SaveLocationInteractor
     fun getTelegramApi(): TelegramApi
     fun getDatingApi(): DatingApi
 
@@ -72,7 +73,7 @@ class AndroidModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun registerModule(datingApi: DatingApi, profilePreferences: ProfilePreferences, geoDataSender: GeoDataSender): RegisterInteractor =
+    fun registerModule(datingApi: DatingApi, profilePreferences: ProfilePreferences, geoDataSender: SaveLocationInteractor): RegisterInteractor =
         RegisterInteractor(datingApi, profilePreferences, geoDataSender)
 
     @Provides
@@ -90,9 +91,9 @@ class AndroidModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun geoDataSender(context: Context, geoPreferences: GeoPreferences,
+    fun geoDataSender(geoPreferences: GeoPreferences,
                       api: DatingApi, locationInteractor: LocationInteractor,
-                      profilePreferences: ProfilePreferences): GeoDataSender =
-        GeoDataSender(context, geoPreferences, api, locationInteractor, profilePreferences, Schedulers.computation())
+                      profilePreferences: ProfilePreferences): SaveLocationInteractor =
+        SaveLocationInteractor(geoPreferences, api, locationInteractor, profilePreferences, Schedulers.computation(), PublishSubject.create())
 }
 

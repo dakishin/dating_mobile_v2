@@ -51,11 +51,8 @@ class BuySearchFragment : DatingBaseFragment(), NearMeView {
     override fun createView(context: Context): View? {
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, container))
         presenter = component.presenter()
-        presenter.container = container
-
-
 
         actionBar.setBackButtonImage(R.drawable.ic_ab_back)
         actionBar.setAllowOverlayTitle(true)

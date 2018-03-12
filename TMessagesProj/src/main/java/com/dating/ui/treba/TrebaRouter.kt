@@ -1,7 +1,7 @@
 package com.dating.ui.treba
 
+import com.dating.interactors.SaveLocationInteractor
 import com.dating.model.TrebaType
-import com.dating.interactors.GeoDataSender
 import com.dating.ui.treba.view.*
 import com.dating.util.Utils
 import com.dating.util.bindRouter
@@ -36,7 +36,7 @@ sealed class InRoute {
 }
 
 
-class TrebaRouter(val activity: TrebaActivity, override val bag: CompositeDisposable, val geoModule: GeoDataSender) : Router<ToRoute, InRoute> {
+class TrebaRouter(val activity: TrebaActivity, override val bag: CompositeDisposable, val geoModule: SaveLocationInteractor) : Router<ToRoute, InRoute> {
 
     override val toRoute: PublishSubject<ToRoute> = PublishSubject.create<ToRoute>()
     override val inRoute: PublishSubject<InRoute> = PublishSubject.create<InRoute>()

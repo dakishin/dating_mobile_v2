@@ -10,6 +10,7 @@ import android.util.Log
 import com.dating.util.Optional
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit
  *   Created by dakishin@gmail.com
  */
 open class LocationInteractor(val context: Context, val timeoutScheduler: Scheduler,
-                         val locationManager: LocationManager, val permissionInteractor: PermissionInteractor) {
+                              val locationManager: LocationManager, val permissionInteractor: PermissionInteractor) {
     val TAG = "LocationInteractor"
 
     @SuppressLint("MissingPermission")
@@ -25,11 +26,13 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
         Observable
             .fromCallable {
                 if (!permissionInteractor.isGeoPermissionGranted()) {
-                    throw  RuntimeException("geo permission required")
+                    throw RuntimeException("geo permission not granted")
+                } else {
+                    val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    Optional(lastKnownLocation)
                 }
-                val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                Optional(lastKnownLocation)
             }
+            .observeOn(AndroidSchedulers.mainThread())
             .flatMap {
                 if (it.empty()) {
                     Observable.create<Optional<Location>> { publisher ->

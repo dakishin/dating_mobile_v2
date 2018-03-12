@@ -15,8 +15,8 @@ import butterknife.Unbinder
 import com.arellomobile.mvp.MvpDelegate
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.dating.ui.near.*
 import com.dating.model.CompoundUser
+import com.dating.ui.near.*
 import com.dating.util.Utils
 import com.dating.util.updateVisibility
 import org.telegram.messenger.AndroidUtilities
@@ -89,9 +89,8 @@ class NearMeListFragment : BaseFragment(), NearMeView {
 
         getMvpDelegate().onCreate()
         getMvpDelegate().onAttach()
-        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity))
+        val component = appComponent.nearMeComponent(NearMeModule(parentActivity as LaunchActivity, container))
         presenter = component.presenter()
-        presenter.container = container
 
 
 

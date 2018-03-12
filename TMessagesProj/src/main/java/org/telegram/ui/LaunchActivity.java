@@ -100,6 +100,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -1965,7 +1966,9 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
         if (requestCode == REQUEST_LOCATION_CODE) {
             getAppComponent()
-                .getGeoModule().sendGeoDataIfNeeded();
+                .getGeoModule()
+                .saveLocationIfNeeded()
+                .subscribe();
             return;
         }
 
