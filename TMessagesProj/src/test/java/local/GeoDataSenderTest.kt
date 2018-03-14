@@ -3,8 +3,8 @@ package local
 import android.location.Location
 import com.dating.api.DatingApi
 import com.dating.interactors.GeoDataSender
-import com.dating.interactors.LocationInteractor
 import com.dating.interactors.GeoPreferences
+import com.dating.interactors.LocationInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.util.Optional
 import io.reactivex.Observable
@@ -43,6 +43,7 @@ class GeoDataSenderTest : BaseRobotoTest() {
     fun before() {
         testScheduler = TestScheduler()
     }
+
 
     @Test
     fun should_test_send_data() {
