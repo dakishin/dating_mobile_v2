@@ -13,12 +13,10 @@ repositories {
 configurations {
     compile.exclude module: 'support-v4'
 }
-kapt {
-    generateStubs = true
-}
-afterEvaluate {
-    tasks.findByName("assembleDebug").dependsOn("testDebugClasses")
-}
+
+//afterEvaluate {
+//    tasks.findByName("assembleDebug").dependsOn("testDebugClasses")
+//}
 dependencies {
     compile 'com.google.android.gms:play-services-gcm:11.4.2'
     compile 'com.google.android.gms:play-services-maps:11.4.2'
@@ -188,11 +186,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        foss {
-            debuggable false
-            jniDebuggable false
-            signingConfig signingConfigs.release
-        }
+//        foss {
+//            debuggable false
+//            jniDebuggable false
+//            signingConfig signingConfigs.release
+//        }
     }
 
 
@@ -204,9 +202,9 @@ android {
         manifest.srcFile 'config/release/AndroidManifest.xml'
     }
 
-    sourceSets.foss {
-        manifest.srcFile 'config/foss/AndroidManifest.xml'
-    }
+//    sourceSets.foss {
+//        manifest.srcFile 'config/foss/AndroidManifest.xml'
+//    }
 
     sourceSets {
         main.aidl.srcDirs += ['src/main/java']
