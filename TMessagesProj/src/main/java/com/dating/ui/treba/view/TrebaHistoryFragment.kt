@@ -96,7 +96,7 @@ class TrebaHistoryFragment : BaseFragment(), TrebaView {
         trebaHistoryRecyclerView.layoutManager = layoutManager
         trebaHistoryRecyclerView.adapter = adapter
 
-        trebaHistoryRecyclerView.addItemDecoration(object : DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL) {
+        trebaHistoryRecyclerView.addItemDecoration(object : DividerItemDecoration(activity, DividerItemDecoration.HORIZONTAL) {
 
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
                 outRect?.set(0, 0, 0, activity.resources.getDimensionPixelOffset(R.dimen.treba_history_list_item_divider))

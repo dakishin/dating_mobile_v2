@@ -1,5 +1,6 @@
 package com.dating.ui.near
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
 import com.dating.interactors.PermissionInteractor
@@ -17,7 +18,10 @@ import com.dating.ui.near.view.searchSkus
 import com.dating.ui.treba.InRoute
 import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
-import com.dating.viper.*
+import com.dating.viper.Container
+import com.dating.viper.NextObserver
+import com.dating.viper.Presenter
+import com.dating.viper.Router
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -170,16 +174,21 @@ class NearMePresenter(
                                     profilePreferences.saveHasSearchPurchase(true)
                                 }
                             }
+                            .doOnError {
+                                Log.d(TAG, it.message, it)
+                            }
+                            .onErrorReturnItem(Unit)
                             .timeout(20, TimeUnit.SECONDS)
+                            .onErrorReturnItem(Unit)
                             .ioScheduler()
-                            .subscribeWith(IgnoreErrorsObserver {
+                            .subscribe({
                                 renderVm {
                                     copy(isLoading = false)
                                 }
                                 if (profilePreferences.hasSearchPurchase()) {
                                     router.toRoute.onNext(ToRoute.NEAR_ME_LIST())
                                 }
-                            })
+                            }, {}, {})
                             .bindPresenter(this)
                     }
 
