@@ -32,7 +32,6 @@ open class SaveLocationInteractor constructor(
             .fromCallable {
                 profilePreferences.getTelegramId()
                     ?: throw RuntimeException("empty telegramId")
-                Log.d(TAG, "get location requested")
                 locationInteractor.getLocation()
             }
             .flatMap { v -> v }
@@ -45,11 +44,12 @@ open class SaveLocationInteractor constructor(
                 val city = api.getCityByLocation(optional.value.latitude, optional.value.longitude)
                 api.sendGeoData(profilePreferences.getTelegramId()!!, optional.value.latitude, optional.value.longitude, city)
             }
-            .timeout(10, TimeUnit.SECONDS, timeoutScheduler)
             .doOnError { exception ->
                 Log.e(TAG, exception.message, exception)
             }
-            .onErrorReturn { Unit }
+            .onErrorReturnItem(Unit)
+            .timeout(10, TimeUnit.SECONDS, timeoutScheduler)
+            .onErrorReturnItem(Unit)
 
 
     @SuppressLint("MissingPermission")
@@ -63,7 +63,7 @@ open class SaveLocationInteractor constructor(
             }
         }
             .flatMap { v -> v }
-            .onErrorReturn { Unit }
+            .onErrorReturnItem(Unit)
 
 
     open fun notifyPermissionGranted() {
@@ -75,7 +75,7 @@ open class SaveLocationInteractor constructor(
             .flatMap {
                 saveLocation()
             }
-            .onErrorReturn { Unit }
+            .onErrorReturnItem(Unit)
 
 
     open fun hasLocation() = geoPreferences.getLat() != null

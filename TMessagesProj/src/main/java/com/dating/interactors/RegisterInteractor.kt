@@ -33,7 +33,7 @@ class RegisterInteractor(val api: DatingApi, val profilePreferences: ProfilePref
             .doOnError {
                 Log.e(TAG, it.message, it)
             }
-            .onErrorReturn { Unit }
+            .onErrorReturnItem(Unit)
 
 
     fun registerTelegramUser(user: TLRPC.User?) =
@@ -45,6 +45,6 @@ class RegisterInteractor(val api: DatingApi, val profilePreferences: ProfilePref
             .doOnError {
                 Log.e(TAG, it.message, it)
             }
-            .onErrorReturn { Unit }
+            .onErrorReturnItem(Unit)
 
 }
