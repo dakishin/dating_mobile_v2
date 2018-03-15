@@ -11,6 +11,7 @@ import com.dating.util.Optional
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
@@ -28,14 +29,16 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
                 if (!permissionInteractor.isGeoPermissionGranted()) {
                     throw RuntimeException("geo permission not granted")
                 } else {
-                    val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    var lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    lastKnownLocation = lastKnownLocation
+                        ?: locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                     Optional(lastKnownLocation)
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap {
                 if (it.empty()) {
-                    Observable.create<Optional<Location>> { publisher ->
+                    Observable.fromPublisher<Optional<Location>> { publisher ->
                         val locationListener = object : LocationListener {
                             override fun onLocationChanged(location: Location) {
                                 publisher.onNext(Optional(location))
@@ -54,10 +57,18 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
                     Observable.just(it)
                 }
             }
-            .timeout(10, TimeUnit.SECONDS, timeoutScheduler)
-            .onErrorReturn {
+            .observeOn(Schedulers.io())
+            .doOnError {
                 Log.e(TAG, it.message, it)
-                Optional()
+            }
+            .onErrorReturnItem(Optional())
+            .timeout(10, TimeUnit.SECONDS, timeoutScheduler)
+            .onErrorReturnItem(Optional())
+            .doOnSubscribe {
+                Log.d(TAG, "get location requested")
+            }
+            .doOnNext {
+                Log.d(TAG, "location is ${it.value}")
             }
 
 
