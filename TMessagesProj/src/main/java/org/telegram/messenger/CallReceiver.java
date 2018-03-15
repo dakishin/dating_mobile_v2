@@ -22,7 +22,7 @@ public class CallReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action != null && action.equals("android.intent.action.PHONE_STATE")) {
             String phoneState = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-            if (phoneState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
+            if (TelephonyManager.EXTRA_STATE_RINGING.equals(phoneState)) {
                 String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 NotificationCenter.getInstance().postNotificationName(NotificationCenter.didReceiveCall, PhoneFormat.stripExceptNumbers(phoneNumber));
             }
