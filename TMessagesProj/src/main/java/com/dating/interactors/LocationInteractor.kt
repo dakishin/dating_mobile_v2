@@ -38,10 +38,9 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
             }
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap {
-                val provider = locationManager.getBestProvider(Criteria(), true)
-                provider ?: throw RuntimeException("location provider not found")
-
                 if (it.empty()) {
+                    val provider = locationManager.getBestProvider(Criteria(), true)
+                    provider ?: throw RuntimeException("location provider not found")
                     Observable.fromPublisher<Optional<Location>> { publisher ->
                         val locationListener = object : LocationListener {
                             override fun onLocationChanged(location: Location) {
