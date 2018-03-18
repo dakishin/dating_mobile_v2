@@ -43,6 +43,7 @@ dependencies {
     compile 'com.googlecode.mp4parser:isoparser:1.0.6'
     compile 'com.stripe:stripe-android:2.0.2'
     compile "com.google.code.gson:gson:2.8.0"
+    compile 'com.android.support:multidex:1.0.3'
 
 //    releaseCompile project(path: ':dating', configuration: 'release')
 //    debugCompile project(path: ':dating', configuration: 'debug')
@@ -232,7 +233,7 @@ android {
             sourceSets.release {
                 manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
             }
-            minSdkVersion 23
+//            minSdkVersion 23
         }
         armv7_SDK23 {
             ndk {
@@ -277,8 +278,8 @@ android {
 
 
     defaultConfig {
-        versionName "4.3.6"
-        versionCode = 10588
+        versionName "4.3.7"
+        versionCode = 10589
 
         minSdkVersion 16
         targetSdkVersion 25

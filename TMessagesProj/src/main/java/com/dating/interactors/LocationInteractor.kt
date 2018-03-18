@@ -2,6 +2,7 @@ package com.dating.interactors
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -37,6 +38,9 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
             }
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap {
+                val provider = locationManager.getBestProvider(Criteria(), true)
+                provider ?: throw RuntimeException("location provider not found")
+
                 if (it.empty()) {
                     Observable.fromPublisher<Optional<Location>> { publisher ->
                         val locationListener = object : LocationListener {
@@ -51,7 +55,7 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
 
                             override fun onProviderDisabled(provider: String) {}
                         }
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
+                        locationManager.requestLocationUpdates(provider, 0, 0f, locationListener)
                     }
                 } else {
                     Observable.just(it)

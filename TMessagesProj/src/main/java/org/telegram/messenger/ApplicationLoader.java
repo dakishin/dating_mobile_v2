@@ -11,7 +11,6 @@ package org.telegram.messenger;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +23,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 
 import com.crashlytics.android.Crashlytics;
@@ -41,7 +41,7 @@ import java.io.RandomAccessFile;
 
 import io.fabric.sdk.android.Fabric;
 
-public class ApplicationLoader extends Application {
+public class ApplicationLoader extends MultiDexApplication {
 
     @SuppressLint("StaticFieldLeak")
     public static volatile Context applicationContext;
