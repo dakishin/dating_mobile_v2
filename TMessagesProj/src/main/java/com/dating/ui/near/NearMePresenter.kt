@@ -3,6 +3,8 @@ package com.dating.ui.near
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
+import com.dating.billing.BuyInteractor
+import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.PermissionInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.interactors.SaveLocationInteractor
@@ -10,7 +12,6 @@ import com.dating.model.CompoundUser
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.base.ApiObserver
-import com.dating.ui.base.PurchaseInteractor
 import com.dating.ui.near.view.NearMeNoCoordFragment
 import com.dating.ui.near.view.NearMeView
 import com.dating.ui.near.view.NeedUpdateFragment
@@ -51,11 +52,12 @@ class NearMeContainer(
 ) : Container<NearMeViewModel, NearMeView>()
 
 
-class NearMePresenter(
+class NearMePresenter constructor(
     val router: Router<ToRoute, InRoute>,
     override val bag: CompositeDisposable,
     val saveLocationInteractor: SaveLocationInteractor,
-    val purchaceInteractor: PurchaseInteractor,
+    val purchaceInteractor: GetPurchasesInteractor,
+    val buyInteractor: BuyInteractor,
     val profilePreferences: ProfilePreferences,
     val activity: LaunchActivity,
     val api: DatingApi,
@@ -133,7 +135,7 @@ class NearMePresenter(
                         }
 
                         val sku = it.sku
-                        purchaceInteractor
+                        buyInteractor
                             .buy(sku)
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->

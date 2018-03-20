@@ -4,13 +4,15 @@ import android.util.Log
 import com.android.billingclient.api.Purchase
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
+import com.dating.billing.BuyInteractor
+import com.dating.billing.ConsumeInteractor
+import com.dating.billing.GetPurchasesInteractor
+import com.dating.interactors.ProfilePreferences
 import com.dating.model.Treba
 import com.dating.model.TrebaType
-import com.dating.interactors.ProfilePreferences
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.base.ApiObserver
-import com.dating.ui.base.PurchaseInteractor
 import com.dating.ui.treba.view.TrebaView
 import com.dating.util.bindPresenter
 import com.dating.util.ioScheduler
@@ -51,13 +53,15 @@ class TrebaContainer(
 ) : Container<TrebaViewModel, TrebaView>()
 
 
-class TrebaPresenter(
+class TrebaPresenter constructor(
     val router: Router<ToRoute, InRoute>,
     override val bag: CompositeDisposable,
     val profilePreferences: ProfilePreferences,
     val activity: TrebaActivity,
     val api: DatingApi,
-    val purchaseInteractor: PurchaseInteractor
+    val purchaseInteractor: GetPurchasesInteractor,
+    val buyInteractor: BuyInteractor,
+    val consumeInteractor: ConsumeInteractor
 ) : Presenter<TrebaViewModel, TrebaView, Action, Unit>, ApiErrorsPresenter {
 
     override lateinit var container: Container<TrebaViewModel, TrebaView>
@@ -125,19 +129,19 @@ class TrebaPresenter(
                             .flatMap { list ->
                                 list.forEach {
                                     if (sku == it.sku) {
-                                        return@flatMap purchaseInteractor.consumeByPurchaseToken(it.purchaseToken)
+                                        return@flatMap consumeInteractor.consumeByPurchaseToken(it.purchaseToken)
                                     }
                                 }
                                 Observable.just(0)
                             }
                             .doOnNext { Log.d(TAG, "start buying") }
                             .flatMap {
-                                purchaseInteractor.buy(sku)
+                                buyInteractor.buy(sku)
                             }
 
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->
-                                val purchase: Purchase = purchaseEvent.purchases?.findLast { it.sku == sku }!!
+                                val purchase: Purchase = purchaseEvent.purchases.findLast { it.sku == sku }!!
                                 api.createTreba(viewModel.selectedTrebaType!!, viewModel.names, viewModel.selectedPriestUuid!!)
                             }
                             .ioScheduler()
@@ -162,7 +166,7 @@ class TrebaPresenter(
                                 Observable.fromIterable(it)
                             }
                             .flatMap {
-                                purchaseInteractor.consumeByPurchaseToken(it.purchaseToken)
+                                consumeInteractor.consumeByPurchaseToken(it.purchaseToken)
                             }
                             .ioScheduler()
                             .subscribeWith(IgnoreErrorsObserver {

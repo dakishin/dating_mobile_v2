@@ -1,4 +1,4 @@
-package local
+package unit.tests
 
 import android.content.Context
 import android.location.Criteria
@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import org.robolectric.Shadows.shadowOf
-import util.BaseRobotoTest
+import unit.base.BaseRobotoTest
 
 
 /**
@@ -28,17 +28,12 @@ import util.BaseRobotoTest
 
 class LocationInteractorTest : BaseRobotoTest() {
 
-
-
     lateinit var permissionInteractor: PermissionInteractor
 
     @Before
     override fun setUp() {
         super.setUp()
-
         permissionInteractor = spy(PermissionInteractor(context))
-
-
     }
 
     @Test

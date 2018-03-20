@@ -1,8 +1,9 @@
-package local
+package unit.tests
 
 import com.dating.api.DatingApi
+import com.dating.billing.BuyInteractor
+import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.*
-import com.dating.ui.base.PurchaseInteractor
 import com.dating.ui.near.*
 import com.dating.ui.near.view.`NearMeView$$State`
 import com.dating.ui.treba.InRoute
@@ -17,8 +18,8 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.telegram.ui.LaunchActivity
-import util.BaseRobotoTest
-import util.TestRouter
+import unit.base.*
+import unit.base.TestRouter
 
 
 /**
@@ -33,8 +34,13 @@ class NearMePresenterTest : BaseRobotoTest() {
 
     lateinit var saveLocationInteractor: SaveLocationInteractor
 
+
     @Mock
-    lateinit var purchaceInteractor: PurchaseInteractor
+    lateinit var buyInteractor: BuyInteractor
+
+
+    @Mock
+    lateinit var purchaceInteractor: GetPurchasesInteractor
     @Mock
     lateinit var profilePreferences: ProfilePreferences
     @Mock
@@ -72,7 +78,7 @@ class NearMePresenterTest : BaseRobotoTest() {
         saveLocationInteractor = spy(SaveLocationInteractor(geoPreferences, api,
             locationInteractor, profilePreferences, testScheduler, PublishSubject.create()))
 
-        presenter = NearMePresenter(router, bag, saveLocationInteractor, purchaceInteractor,
+        presenter = NearMePresenter(router, bag, saveLocationInteractor, purchaceInteractor,buyInteractor,
             profilePreferences, activity, api, nearMeListInteractor, permissionInteractor, container)
 
 

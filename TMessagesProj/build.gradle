@@ -8,6 +8,7 @@ apply plugin: 'kotlin-kapt'
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
+    jcenter()
 }
 
 configurations {
@@ -98,6 +99,11 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
 
+    testCompile ('org.amshove.kluent:kluent-android:1.35'){
+        exclude group: 'org.jetbrains.kotlin'
+    }
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
 
 }
 
@@ -233,7 +239,7 @@ android {
             sourceSets.release {
                 manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
             }
-//            minSdkVersion 23
+            minSdkVersion 23
         }
         armv7_SDK23 {
             ndk {
@@ -278,8 +284,8 @@ android {
 
 
     defaultConfig {
-        versionName "4.3.7"
-        versionCode = 10589
+        versionName "4.3.8"
+        versionCode = 10591
 
         minSdkVersion 16
         targetSdkVersion 25

@@ -18,7 +18,7 @@ abstract class BaseActivity : Activity() {
         //        transaction.addToBackStack(null)
 
         // Commit the transaction
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
 }
