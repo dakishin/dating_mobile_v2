@@ -1,4 +1,4 @@
-package local
+package unit.tests
 
 import com.dating.api.DatingApi
 import com.dating.api.PifResponse
@@ -13,7 +13,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.*
-import util.BaseRobotoTest
+import unit.base.BaseRobotoTest
 
 /**
  *   Created by dakishin@gmail.com

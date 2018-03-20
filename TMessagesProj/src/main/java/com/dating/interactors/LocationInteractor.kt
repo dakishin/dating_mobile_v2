@@ -41,7 +41,7 @@ open class LocationInteractor(val context: Context, val timeoutScheduler: Schedu
                 if (it.empty()) {
                     val provider = locationManager.getBestProvider(Criteria(), true)
                     provider ?: throw RuntimeException("location provider not found")
-                    Observable.fromPublisher<Optional<Location>> { publisher ->
+                    Observable.create<Optional<Location>> { publisher ->
                         val locationListener = object : LocationListener {
                             override fun onLocationChanged(location: Location) {
                                 publisher.onNext(Optional(location))

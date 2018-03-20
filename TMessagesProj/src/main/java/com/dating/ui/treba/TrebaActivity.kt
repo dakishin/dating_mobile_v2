@@ -11,7 +11,7 @@ import org.telegram.messenger.R
  *   Created by dakishin@gmail.com
  */
 
-class TrebaActivity : BaseActivity() {
+open class TrebaActivity : BaseActivity() {
 
     companion object {
 
