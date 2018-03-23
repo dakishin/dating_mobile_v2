@@ -38,7 +38,7 @@ open class BaseFragment : Fragment() {
     }
 
     protected fun getGeoModule(): SaveLocationInteractor {
-        return AppComponentInstance.getAppComponent(activity).getGeoModule()
+        return AppComponentInstance.getAppComponent(activity).saveLocationInteractor()
     }
 
 

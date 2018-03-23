@@ -34,14 +34,18 @@ object AppComponentInstance {
         }
         return appComponent!!
     }
+
+    fun setAppComponent(appComponent: AppComponent) {
+        this.appComponent = appComponent
+    }
 }
 
 @Singleton
-@Component(modules = arrayOf(AndroidModule::class))
+@Component(modules = arrayOf(AndroidModule::class, PurchaseModuleProduction::class))
 interface AppComponent {
     fun getProfilePreferences(): ProfilePreferences
     fun getRegisterModule(): RegisterInteractor
-    fun getGeoModule(): SaveLocationInteractor
+    fun saveLocationInteractor(): SaveLocationInteractor
     fun getTelegramApi(): TelegramApi
     fun getDatingApi(): DatingApi
 
@@ -91,9 +95,8 @@ class AndroidModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun geoDataSender(geoPreferences: GeoPreferences,
-                      api: DatingApi, locationInteractor: LocationInteractor,
-                      profilePreferences: ProfilePreferences): SaveLocationInteractor =
+    fun saveLocationInteractor(geoPreferences: GeoPreferences,
+                               api: DatingApi, locationInteractor: LocationInteractor,
+                               profilePreferences: ProfilePreferences): SaveLocationInteractor =
         SaveLocationInteractor(geoPreferences, api, locationInteractor, profilePreferences, Schedulers.computation(), PublishSubject.create())
 }
-

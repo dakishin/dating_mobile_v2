@@ -3,12 +3,12 @@ package com.dating.ui.near
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
-import com.dating.billing.BuyInteractor
 import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.PermissionInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.interactors.SaveLocationInteractor
 import com.dating.model.CompoundUser
+import com.dating.modules.BuyInteractor
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.base.ApiObserver

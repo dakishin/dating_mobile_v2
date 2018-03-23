@@ -1,4 +1,4 @@
-package unit.tests.billing
+package ru.dating.unittest.tests.billing
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.ConsumeResponseListener
@@ -9,7 +9,7 @@ import com.nhaarman.mockito_kotlin.*
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Test
 import org.mockito.Mock
-import unit.base.BaseRobotoTest
+import ru.dating.unittest.base.BaseRobotoTest
 import java.util.concurrent.TimeUnit
 
 /**

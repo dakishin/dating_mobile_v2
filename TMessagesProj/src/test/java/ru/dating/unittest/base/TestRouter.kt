@@ -1,4 +1,4 @@
-package unit.base
+package ru.dating.unittest.base
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject

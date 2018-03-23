@@ -8,7 +8,7 @@ ext{
     androidDevSdkVersion = 21
     androidTargetSdkVersion = 27
 
-    libraryAndroidSupportVersion = "26.1.0"
+    libraryAndroidSupportVersion = "25.3.1"
 
     kotlinVersion = '1.2.10'
     ankoVersion = '0.10.4'
@@ -22,6 +22,16 @@ ext{
     retrofitVersion = "2.2.0"
     jacksonVersion = "2.8.8"
     smartLocation = "3.3.3"
+
+
+//    supportLibVersion = "27.0.2"
+    junitVersion = "4.12"
+    mockitoVersion = "1.10.19"
+    hamcrestVersion = "1.3"
+    runnerVersion = "0.5"
+    rulesVersion = "0.5"
+    espressoVersion = "2.2.2"
+    uiautomatorVersion = "2.1.2"
 
 }
 

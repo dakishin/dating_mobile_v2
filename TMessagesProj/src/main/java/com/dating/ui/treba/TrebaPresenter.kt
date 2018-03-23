@@ -1,15 +1,14 @@
 package com.dating.ui.treba
 
 import android.util.Log
-import com.android.billingclient.api.Purchase
 import com.arellomobile.mvp.InjectViewState
 import com.dating.api.DatingApi
-import com.dating.billing.BuyInteractor
 import com.dating.billing.ConsumeInteractor
 import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.model.Treba
 import com.dating.model.TrebaType
+import com.dating.modules.BuyInteractor
 import com.dating.ui.base.ApiErrors
 import com.dating.ui.base.ApiErrorsPresenter
 import com.dating.ui.base.ApiObserver
@@ -141,7 +140,7 @@ class TrebaPresenter constructor(
 
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->
-                                val purchase: Purchase = purchaseEvent.purchases.findLast { it.sku == sku }!!
+                                purchaseEvent.purchases.findLast { it.sku == sku }!!
                                 api.createTreba(viewModel.selectedTrebaType!!, viewModel.names, viewModel.selectedPriestUuid!!)
                             }
                             .ioScheduler()

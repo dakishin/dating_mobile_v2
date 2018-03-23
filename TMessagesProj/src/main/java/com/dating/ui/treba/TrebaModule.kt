@@ -5,16 +5,16 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.dating.api.DatingApi
 import com.dating.billing.BillingClientProvider
-import com.dating.billing.BuyInteractor
 import com.dating.billing.ConsumeInteractor
 import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.interactors.SaveLocationInteractor
+import com.dating.modules.BuyInteractor
+import com.dating.modules.BuyInteractorLocator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 
 /**
  *   Created by dakishin@gmail.com
@@ -42,12 +42,8 @@ class TrebaModule(val activity: TrebaActivity) {
 
     @Provides
     @TrebaScope
-    fun provideBuyInteractor() = BuyInteractor(activity, BillingClientProvider(activity, bag,
-        {
-            BillingClient.newBuilder(activity)
-                .setListener(it ?: PurchasesUpdatedListener { responseCode, purchases -> })
-                .build()
-        }), PublishSubject.create(), Schedulers.computation())
+    fun provideBuyInteractor(buyInteractorLocator: BuyInteractorLocator) =
+        buyInteractorLocator.provideBuyInteractor(activity, bag)
 
 
     @Provides

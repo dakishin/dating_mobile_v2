@@ -1,7 +1,7 @@
-package unit.tests
+package ru.dating.unittest.tests
 
 import com.dating.api.DatingApi
-import com.dating.billing.BuyInteractor
+import com.dating.billing.BuyInteractorProduction
 import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.*
 import com.dating.ui.near.*
@@ -18,8 +18,9 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.telegram.ui.LaunchActivity
-import unit.base.*
-import unit.base.TestRouter
+import ru.dating.unittest.base.BaseRobotoTest
+import ru.dating.unittest.base.TestRouter
+import ru.dating.unittest.base.*
 
 
 /**
@@ -36,7 +37,7 @@ class NearMePresenterTest : BaseRobotoTest() {
 
 
     @Mock
-    lateinit var buyInteractor: BuyInteractor
+    lateinit var buyInteractor: BuyInteractorProduction
 
 
     @Mock

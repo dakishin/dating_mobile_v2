@@ -26,7 +26,7 @@ object NearModuleStarter {
         }
 
         val hasLocation = AppComponentInstance.getAppComponent(activity)
-            .getGeoModule().hasLocation()
+            .saveLocationInteractor().hasLocation()
 
 
         if (!hasLocation) {
