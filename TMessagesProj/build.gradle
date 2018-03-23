@@ -3,12 +3,16 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'project-report'
 
 
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
     jcenter()
+    maven {
+        url "https://maven.google.com"
+    }
 }
 
 configurations {
@@ -44,11 +48,10 @@ dependencies {
     compile 'com.googlecode.mp4parser:isoparser:1.0.6'
     compile 'com.stripe:stripe-android:2.0.2'
     compile "com.google.code.gson:gson:2.8.0"
-    compile 'com.android.support:multidex:1.0.3'
+    compile 'com.android.support:multidex:1.0.1'
 
 //    releaseCompile project(path: ':dating', configuration: 'release')
 //    debugCompile project(path: ':dating', configuration: 'debug')
-
 
 
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
@@ -76,6 +79,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
     provided 'javax.annotation:jsr250-api:1.0'
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
 
 
     compile 'com.arello-mobile:moxy-app-compat:1.5.3'
@@ -86,11 +90,54 @@ dependencies {
 
     compile 'com.android.billingclient:billing:1.0'
 
-    testCompile 'junit:junit:4.12'
+//    testCompile 'junit:junit:4.12'
+//    androidTestCompile 'junit:junit:4.12'
+//
+//    testCompile "org.robolectric:robolectric:3.7.1"
+//
+//    testCompile "org.mockito:mockito-core:2.15.0"
+//    androidTestCompile "org.mockito:mockito-android:2.15.0"
+//
+//    testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
+//        exclude group: 'org.jetbrains.kotlin'
+//    }
+//    androidTestCompile('com.nhaarman:mockito-kotlin:1.5.0') {
+//        exclude group: 'org.jetbrains.kotlin'
+//    }
+//
+//    testCompile('org.amshove.kluent:kluent-android:1.35') {
+//        exclude group: 'org.jetbrains.kotlin'
+//    }
+//
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1') {
+//        exclude module: 'support-annotations'
+//    }
+
+
+
+
+    // Dependencies for local unit tests
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile "org.robolectric:robolectric:3.7.1"
 
-    testCompile "org.mockito:mockito-core:2.15.0"
-    androidTestCompile "org.mockito:mockito-android:2.15.0"
+    // Android Testing Support Library's runner and rules
+    androidTestCompile ("com.android.support.test:runner:$rootProject.ext.runnerVersion"){
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile ("com.android.support.test:rules:$rootProject.ext.rulesVersion"){
+        exclude module: 'support-annotations'
+    }
+
+    // Espresso UI Testing
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+
+    // UIAutomator Testing. Learn about this dependency in this projects README file.
+    androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.ext.uiautomatorVersion"
+
+    // Resolve conflicts between main and test APK:
+    androidTestCompile "com.android.support:support-annotations:$rootProject.libraryAndroidSupportVersion"
 
     testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
         exclude group: 'org.jetbrains.kotlin'
@@ -98,12 +145,29 @@ dependencies {
     androidTestCompile('com.nhaarman:mockito-kotlin:1.5.0') {
         exclude group: 'org.jetbrains.kotlin'
     }
-
     testCompile ('org.amshove.kluent:kluent-android:1.35'){
         exclude group: 'org.jetbrains.kotlin'
     }
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+//    // AndroidJUnitRunner and JUnit Rules
+//    androidTestCompile 'com.android.support.test:runner:1.0.1'
+//    androidTestCompile 'com.android.support.test:rules:1.0.1'
+//
+//    // Espresso dependencies
+//    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion"){
+        exclude module: 'support-annotations'
+        exclude group: 'com.android.support'
+    }
+//    androidTestCompile 'com.android.support.test.espresso:espresso-intents:3.0.1'
+//    androidTestCompile ("com.android.support.test.espresso:espresso-accessibility:$rootProject.ext.espressoVersion"){
+//        exclude module: 'support-annotations'
+//    }
+//    androidTestCompile 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
+//
+//    // The following Espresso dependency can be either "compile"
+//    // or "androidTestCompile", depending on your app's implementation
+//    androidTestCompile 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
 
 }
 
@@ -173,7 +237,7 @@ android {
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/datingdev/"'
         }
 
-        prerel{
+        prerel {
             debuggable true
             jniDebuggable false
             signingConfig signingConfigs.release
@@ -297,6 +361,8 @@ android {
                 abiFilters "armeabi-v7a", "x86"
             }
         }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 }
 

@@ -1959,13 +1959,13 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
         if (requestCode == NearMeNoCoordFragment.REQUEST_GEO_PERMISSION) {
             getAppComponent()
-                .getGeoModule().notifyPermissionGranted();
+                .saveLocationInteractor().notifyPermissionGranted();
             return;
         }
 
         if (requestCode == REQUEST_LOCATION_CODE) {
             getAppComponent()
-                .getGeoModule()
+                .saveLocationInteractor()
                 .saveLocationIfNeeded()
                 .subscribeOn(Schedulers.io())
                 .subscribe();

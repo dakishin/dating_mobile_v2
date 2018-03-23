@@ -1,4 +1,4 @@
-package unit.base
+package ru.dating.unittest.base
 
 import com.nhaarman.mockito_kotlin.KArgumentCaptor
 

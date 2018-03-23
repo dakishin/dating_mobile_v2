@@ -1,4 +1,4 @@
-package unit.tests
+package ru.dating.unittest.tests
 
 import android.content.Context
 import android.location.Criteria
@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import org.robolectric.Shadows.shadowOf
-import unit.base.BaseRobotoTest
+import ru.dating.unittest.base.BaseRobotoTest
 
 
 /**

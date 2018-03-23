@@ -1,16 +1,17 @@
-package unit.tests.billing
+package ru.dating.unittest.tests.billing
 
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.Purchase
 import com.dating.billing.BillingClientProvider
-import com.dating.billing.BuyInteractor
+import com.dating.billing.BuyInteractorProduction
+import com.dating.modules.DatingPurchase
+import com.dating.modules.PurchaseEvent
 import com.dating.ui.treba.TrebaActivity
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 import org.mockito.Mock
-import unit.base.BaseRobotoTest
+import ru.dating.unittest.base.BaseRobotoTest
 import java.util.concurrent.TimeUnit
 
 /**
@@ -27,18 +28,18 @@ class BuyInteractorTest : BaseRobotoTest() {
     @Mock
     lateinit var billingClientProvider: BillingClientProvider
 
-    lateinit var buyInteractor: BuyInteractor
+    lateinit var buyInteractor: BuyInteractorProduction
 
     lateinit var testScheduler: TestScheduler
 
-    val purchaseCreated = PublishSubject.create<BuyInteractor.PurchaseEvent>()
+    val purchaseCreated = PublishSubject.create<PurchaseEvent>()
 
     override fun setUp() {
         super.setUp()
         testScheduler = TestScheduler()
         whenever(billingClientProvider.provide(any())).thenReturn(billingClient)
         doReturn(true).`when`(billingClient).isReady
-        buyInteractor = BuyInteractor(activity, billingClientProvider, purchaseCreated, testScheduler)
+        buyInteractor = BuyInteractorProduction(activity, billingClientProvider, purchaseCreated, testScheduler)
     }
 
     @Test
@@ -51,7 +52,7 @@ class BuyInteractorTest : BaseRobotoTest() {
             .test()
 
         testScheduler.advanceTimeBy(1, TimeUnit.MILLISECONDS)
-        purchaseCreated.onNext(BuyInteractor.PurchaseEvent(BillingClient.BillingResponse.OK, listOf(mock<Purchase>())))
+        purchaseCreated.onNext(PurchaseEvent(BillingClient.BillingResponse.OK, listOf(mock<DatingPurchase>())))
         test
             .assertValue { it.purchases.isNotEmpty() }
     }
@@ -104,7 +105,7 @@ class BuyInteractorTest : BaseRobotoTest() {
             .test()
 
         testScheduler.advanceTimeBy(1, TimeUnit.MILLISECONDS)
-        purchaseCreated.onNext(BuyInteractor.PurchaseEvent(BillingClient.BillingResponse.OK, listOf(mock<Purchase>())))
+        purchaseCreated.onNext(PurchaseEvent(BillingClient.BillingResponse.OK, listOf(mock<DatingPurchase>())))
 
         test.assertValue { it.purchases.isNotEmpty() }
 

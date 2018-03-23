@@ -1,4 +1,4 @@
-package unit.tests
+package ru.dating.unittest.tests
 
 import android.location.Location
 import com.dating.api.DatingApi
@@ -15,7 +15,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.*
-import unit.base.BaseRobotoTest
+import ru.dating.unittest.base.BaseRobotoTest
 import java.util.concurrent.TimeUnit
 
 /**

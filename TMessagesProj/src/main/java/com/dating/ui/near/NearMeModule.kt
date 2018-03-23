@@ -6,29 +6,31 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.dating.api.DatingApi
 import com.dating.api.TelegramApi
 import com.dating.billing.BillingClientProvider
-import com.dating.billing.BuyInteractor
+import com.dating.billing.BuyInteractorProduction
 import com.dating.billing.GetPurchasesInteractor
 import com.dating.interactors.PermissionInteractor
 import com.dating.interactors.ProfilePreferences
 import com.dating.interactors.SaveLocationInteractor
+import com.dating.modules.BuyInteractor
+import com.dating.modules.BuyInteractorLocator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 import org.telegram.ui.LaunchActivity
 
 /**
  *   Created by dakishin@gmail.com
  */
 @Module
-class NearMeModule(val activity: LaunchActivity, val container: NearMeContainer) {
+class NearMeModule constructor(val activity: LaunchActivity, val container: NearMeContainer) {
 
     val bag = CompositeDisposable()
 
     @Provides
     @NearMeScope
-    fun provideRouter(geoModule: SaveLocationInteractor): NearMeRouter = NearMeRouter(activity, bag, geoModule)
+    fun provideRouter(saveLocationInteractor: SaveLocationInteractor): NearMeRouter =
+        NearMeRouter(activity, bag, saveLocationInteractor)
 
 
     @Provides
@@ -40,15 +42,11 @@ class NearMeModule(val activity: LaunchActivity, val container: NearMeContainer)
                 .build()
         }), Schedulers.computation())
 
+
     @Provides
     @NearMeScope
-    fun provideBuyInteractor() = BuyInteractor(activity, BillingClientProvider(activity, bag,
-        {
-            BillingClient.newBuilder(activity)
-                .setListener(it ?: PurchasesUpdatedListener { responseCode, purchases -> })
-                .build()
-        }
-    ), PublishSubject.create(), Schedulers.computation())
+    fun provideBuyInteractor(buyInteractorLocator: BuyInteractorLocator): BuyInteractor =
+        buyInteractorLocator.provideBuyInteractor(activity, bag)
 
 
     @Provides

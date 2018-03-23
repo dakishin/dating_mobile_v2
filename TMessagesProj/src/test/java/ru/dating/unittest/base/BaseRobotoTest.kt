@@ -1,4 +1,4 @@
-package unit.base
+package ru.dating.unittest.base
 
 import android.content.Context
 import android.os.Build
