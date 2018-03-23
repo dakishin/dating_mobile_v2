@@ -28,6 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import org.telegram.messenger.BuildConfig
 import org.telegram.ui.LaunchActivity
 import java.util.concurrent.TimeUnit
 
@@ -139,7 +140,7 @@ class NearMePresenter constructor(
                             .buy(sku)
                             .observeOn(Schedulers.io())
                             .flatMap { purchaseEvent ->
-                                val purchase = purchaseEvent.purchases?.findLast { it.sku == sku }
+                                val purchase = purchaseEvent.purchases.findLast { it.sku == sku }
                                 purchase?.let {
                                     profilePreferences.saveHasSearchPurchase(true)
                                     api.createPurchase(purchase.sku, purchase.orderId)
@@ -187,7 +188,7 @@ class NearMePresenter constructor(
                                 renderVm {
                                     copy(isLoading = false)
                                 }
-                                if (profilePreferences.hasSearchPurchase()) {
+                                if (profilePreferences.hasSearchPurchase() && !BuildConfig.IS_TEST_PAYMENT) {
                                     router.toRoute.onNext(ToRoute.NEAR_ME_LIST())
                                 }
                             }, {}, {})

@@ -5,6 +5,7 @@ import com.dating.ui.near.view.BuySearchFragment
 import com.dating.ui.near.view.NearMeListFragment
 import com.dating.ui.near.view.NearMeNoCoordFragment
 import com.dating.util.Utils
+import org.telegram.messenger.BuildConfig
 import org.telegram.ui.LaunchActivity
 
 /**
@@ -14,6 +15,10 @@ object NearModuleStarter {
 
     @JvmStatic
     fun start(activity: LaunchActivity) {
+        if (BuildConfig.IS_TEST_PAYMENT){
+            activity.presentFragment(BuySearchFragment.create())
+            return
+        }
 
         val hasSearchPurchase = AppComponentInstance.getAppComponent(activity)
             .getProfilePreferences().hasSearchPurchase()

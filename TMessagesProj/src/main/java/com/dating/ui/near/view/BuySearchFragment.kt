@@ -12,6 +12,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.dating.ui.near.*
 import com.dating.util.updateVisibility
 import com.dating.viper.DatingBaseFragment
+import org.telegram.messenger.BuildConfig
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.LaunchActivity
@@ -20,7 +21,7 @@ import org.telegram.ui.LaunchActivity
 /**
  *   Created by dakishin@gmail.com
  */
-val searchSkus = arrayOf("inapp_search_v2_200", "inapp_search_v2_400", "inapp_search_v2_1000", "test_inapp2", "test_app")
+val searchSkus = arrayOf("inapp_search_v2_200", "inapp_search_v2_400", "inapp_search_v2_1000",  "test_app_2")
 
 class BuySearchFragment : DatingBaseFragment(), NearMeView {
 
@@ -79,7 +80,11 @@ class BuySearchFragment : DatingBaseFragment(), NearMeView {
 
     @OnClick(R.id.donate_200)
     fun onClickDonate200() {
-        presenter.action.onNext(Action.BUY(searchSkus[0]))
+        if(BuildConfig.IS_TEST_PAYMENT){
+            presenter.action.onNext(Action.BUY(searchSkus[3]))
+        }else{
+            presenter.action.onNext(Action.BUY(searchSkus[0]))
+        }
     }
 
 

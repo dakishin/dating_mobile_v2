@@ -235,6 +235,8 @@ android {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".beta"
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/datingdev/"'
+            buildConfigField 'Boolean', 'IS_TEST_PAYMENT', 'false'
+
         }
 
         prerel {
@@ -245,6 +247,7 @@ android {
             shrinkResources false
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/dating/"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'Boolean', 'IS_TEST_PAYMENT', 'true'
         }
 
         release {
@@ -255,6 +258,7 @@ android {
             shrinkResources false
             buildConfigField 'String', 'SERVER_URL', '"http://healthstatus.online:8191/dating/"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'Boolean', 'IS_TEST_PAYMENT', 'false'
         }
 
 //        foss {
@@ -348,8 +352,8 @@ android {
 
 
     defaultConfig {
-        versionName "4.3.8"
-        versionCode = 10591
+        versionName "4.3.9"
+        versionCode = 10592
 
         minSdkVersion 16
         targetSdkVersion 25
