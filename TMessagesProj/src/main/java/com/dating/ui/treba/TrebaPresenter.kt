@@ -86,7 +86,7 @@ class TrebaPresenter constructor(
                             .getUserTrebs()
                             .ioScheduler()
                             .subscribeWith(
-                                object : ApiObserver<List<Treba>>(this) {
+                                object : ApiObserver<List<Treba>>(this, profilePreferences) {
                                     override fun onNext(next: List<Treba>) {
                                         super.onNext(next)
                                         if (next.isEmpty()) {
@@ -145,7 +145,7 @@ class TrebaPresenter constructor(
                             }
                             .ioScheduler()
                             .subscribeWith(
-                                object : ApiObserver<Any>(this) {
+                                object : ApiObserver<Any>(this, profilePreferences) {
                                     override fun onNext(next: Any) {
                                         super.onNext(next)
                                         router.toRoute.onNext(ToRoute.SHOW_HISTORY_TAB())
