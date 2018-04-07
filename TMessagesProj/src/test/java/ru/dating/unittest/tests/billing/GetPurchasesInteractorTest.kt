@@ -94,7 +94,7 @@ class GetPurchasesInteractorTest : BaseRobotoTest() {
 
         whenever(billingClient.queryPurchaseHistoryAsync(any(), any())).doAnswer<Unit> {
             val listener = it.arguments[1] as PurchaseHistoryResponseListener
-            listener.onPurchaseHistoryResponse(-1, listOf(mock<Purchase>()))
+            listener.onPurchaseHistoryResponse(-6, listOf(mock<Purchase>()))
         }
         val test = purchaseInteractor
             .downloadPurchases()

@@ -87,7 +87,7 @@ class NearMePresenter constructor(
                         nearMeListInteractor
                             .loadUsers(it.chatId)
                             .ioScheduler()
-                            .subscribeWith(object : ApiObserver<List<CompoundUser>>(this@NearMePresenter) {
+                            .subscribeWith(object : ApiObserver<List<CompoundUser>>(this@NearMePresenter,profilePreferences) {
                                 override fun onNext(next: List<CompoundUser>) {
                                     super.onNext(next)
                                     renderVm {
@@ -149,7 +149,7 @@ class NearMePresenter constructor(
                             }
                             .ioScheduler()
                             .subscribeWith(
-                                object : ApiObserver<Any>(this) {
+                                object : ApiObserver<Any>(this,profilePreferences) {
                                     override fun onNext(next: Any) {
                                         super.onNext(next)
                                         if (profilePreferences.hasSearchPurchase()) {

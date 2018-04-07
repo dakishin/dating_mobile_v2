@@ -1,7 +1,9 @@
 package com.dating.ui.base
 
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.dating.api.ClientNeedUpdateException
+import com.dating.interactors.ProfilePreferences
 import com.dating.viper.Observer
 import io.reactivex.subjects.PublishSubject
 
@@ -17,7 +19,7 @@ interface ApiErrorsPresenter {
     val apiErrors: PublishSubject<ApiErrors>
 }
 
-open class ApiObserver<T>(val presenter: ApiErrorsPresenter) : Observer<T>() {
+open class ApiObserver<T>(val presenter: ApiErrorsPresenter, val preferences: ProfilePreferences) : Observer<T>() {
 
     var isErrorHandled = false
 
@@ -34,6 +36,9 @@ open class ApiObserver<T>(val presenter: ApiErrorsPresenter) : Observer<T>() {
             return
         }
 
+
+        Crashlytics.log("error. telegramId:${preferences.getTelegramId()}")
+        Crashlytics.logException(e)
         presenter.apiErrors.onNext(ApiErrors.INTERNAL_ERROR())
     }
 
