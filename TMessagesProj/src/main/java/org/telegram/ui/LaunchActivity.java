@@ -157,6 +157,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         NativeCrashManager.handleDumpFiles(this);
         AndroidUtilities.checkDisplaySize(this, getResources().getConfiguration());
 
+        Utils.saveProxy();
+
         if (!UserConfig.isClientActivated()) {
             Intent intent = getIntent();
             if (intent != null && intent.getAction() != null && (Intent.ACTION_SEND.equals(intent.getAction()) || intent.getAction().equals(Intent.ACTION_SEND_MULTIPLE))) {
@@ -385,7 +387,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                         presentFragment(new ChatActivity(args));
                     } else {
                         runLinkRequest(chatPublicName, null, null, null,
-                            null, null, false, 0, null, new String[]{}, 0);
+                                null, null, false, 0, null, new String[]{}, 0);
                     }
                     drawerLayoutContainer.closeDrawer(false);
 
@@ -417,7 +419,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                         presentFragment(new ChatActivity(args));
                     } else {
                         runLinkRequest(chatPublicName, null, null, null,
-                            null, null, false, 0, null, new String[]{}, 0);
+                                null, null, false, 0, null, new String[]{}, 0);
                     }
 
                     drawerLayoutContainer.closeDrawer(false);
@@ -431,7 +433,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                         presentFragment(new ChatActivity(args));
                     } else {
                         runLinkRequest(chatPublicName, null, null, null,
-                            null, null, false, 0, null, new String[]{}, 0);
+                                null, null, false, 0, null, new String[]{}, 0);
                     }
 
 
@@ -661,10 +663,10 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                     Utils.requestGeoPermission(LaunchActivity.this, REQUEST_LOCATION_CODE);
                 } else {
                     getAppComponent().getRegisterModule()
-                    .registerTelegramUser(UserConfig.getCurrentUser())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe();
-            }
+                            .registerTelegramUser(UserConfig.getCurrentUser())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe();
+                }
             }
         });
 
@@ -1959,16 +1961,16 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
         if (requestCode == NearMeNoCoordFragment.REQUEST_GEO_PERMISSION) {
             getAppComponent()
-                .saveLocationInteractor().notifyPermissionGranted();
+                    .saveLocationInteractor().notifyPermissionGranted();
             return;
         }
 
         if (requestCode == REQUEST_LOCATION_CODE) {
             getAppComponent()
-                .saveLocationInteractor()
-                .saveLocationIfNeeded()
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+                    .saveLocationInteractor()
+                    .saveLocationIfNeeded()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
             return;
         }
 

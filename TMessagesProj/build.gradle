@@ -203,12 +203,11 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("config/release.keystore")
-            storePassword "qweasd"
-            keyAlias "key0"
-            keyPassword "qweasd"
+            storeFile file("config/pif.keystore.jks")
+            keyAlias "pif"
+            storePassword "nQixBpn5HVl4EuY"
+            keyPassword "nQixBpn5HVl4EuY"
             v2SigningEnabled false
-//            ext.enableCrashlytics = false
         }
 
 //        release {

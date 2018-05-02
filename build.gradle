@@ -24,7 +24,6 @@ ext{
     smartLocation = "3.3.3"
 
 
-//    supportLibVersion = "27.0.2"
     junitVersion = "4.12"
     mockitoVersion = "1.10.19"
     hamcrestVersion = "1.3"

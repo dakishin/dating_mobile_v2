@@ -8,11 +8,16 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.Base64
 import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import org.telegram.messenger.ApplicationLoader
+import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
+import org.telegram.messenger.Utilities
+import org.telegram.tgnet.ConnectionsManager
 import org.telegram.ui.LaunchActivity
 import java.io.*
 import java.nio.charset.Charset
@@ -165,12 +170,12 @@ object Utils {
     }
 
     val moderatorsIds = arrayListOf(
-        131287297//Виталий
-        , 500934221 //Отец Евгений
-        , 545721132// Мила
-        , 390363236 //Наталия
-        , 411437832 //Отец Николай
-        , 501729897 //Admin
+            131287297//Виталий
+            , 500934221 //Отец Евгений
+            , 545721132// Мила
+            , 390363236 //Наталия
+            , 411437832 //Отец Николай
+            , 501729897 //Admin
     )
 
     @JvmStatic
@@ -182,16 +187,48 @@ object Utils {
     fun isShowChannelUsers(chatId: Int?, currentUser: Int?, context: Context?): Boolean {
         chatId ?: return true
         currentUser ?: return true
-        context?:return false
+        context ?: return false
 
         if (isModerator(currentUser)) {
             return true
         }
         val datingChats = arrayOf(context.resources.getInteger(R.integer.living_room_id),
-            context.resources.getInteger(R.integer.ask_priest_room_id),
-            context.resources.getInteger(R.integer.bogoslov_room_id))
+                context.resources.getInteger(R.integer.ask_priest_room_id),
+                context.resources.getInteger(R.integer.bogoslov_room_id))
 
         return !datingChats.contains(chatId)
+
+    }
+
+
+    @JvmStatic
+    fun saveProxy(context: Context) {
+        if (!context.resources.getBoolean(R.bool.is_russian_mode)) {
+            return
+        }
+
+        val address = "54.38.55.41"
+        val port = "2080"
+        val password = "wS2qsta6"
+        val user = "soksuser"
+        val editor = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE).edit()
+        editor.putBoolean("proxy_enabled", true)
+        editor.putString("proxy_ip", address)
+        val p = Utilities.parseInt(port)!!
+        editor.putInt("proxy_port", p)
+        if (TextUtils.isEmpty(password)) {
+            editor.remove("proxy_pass")
+        } else {
+            editor.putString("proxy_pass", password)
+        }
+        if (TextUtils.isEmpty(user)) {
+            editor.remove("proxy_user")
+        } else {
+            editor.putString("proxy_user", user)
+        }
+        editor.commit()
+        ConnectionsManager.native_setProxySettings(address, p, user, password)
+        NotificationCenter.getInstance().postNotificationName(NotificationCenter.proxySettingsChanged)
 
     }
 }
