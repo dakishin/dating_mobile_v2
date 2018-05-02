@@ -199,7 +199,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         }
 
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= 24)     {
             AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
         }
         Theme.createChatResources(this, false);

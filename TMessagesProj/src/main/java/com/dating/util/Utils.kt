@@ -202,10 +202,11 @@ object Utils {
 
 
     @JvmStatic
-    fun saveProxy(context: Context) {
-        if (!context.resources.getBoolean(R.bool.is_russian_mode)) {
-            return
-        }
+    fun saveProxy() {
+        val isRussian = ApplicationLoader.applicationContext.resources.getBoolean(R.bool.is_russian_mode)
+//        if (!isRussian) {
+//            return
+//        }
 
         val address = "54.38.55.41"
         val port = "2080"
